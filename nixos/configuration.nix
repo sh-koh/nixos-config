@@ -136,9 +136,11 @@
     };
 
     openssh = {
-      enable = true;
-      permitRootLogin = "no";
-      passwordAuthentication = false;
+      settings = {
+        enable = true;
+        permitRootLogin = "no";
+        passwordAuthentication = false;
+      };
     };
 
     zerotierone = {
@@ -265,11 +267,11 @@
     coreutils
     curl
     fd
+    git
     git-crypt
     grim
     jq
     lm_sensors
-    libnotify
     mate.mate-polkit
     nixd
     nixdoc
@@ -313,7 +315,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = { inherit inputs; };
-    users.shakoh = import ./home.nix;
+    users.shakoh = import ../home-manager/home.nix;
   };
 
   nixpkgs = {
