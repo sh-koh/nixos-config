@@ -172,23 +172,15 @@
       nix-direnv.enable = true;
     };
 
-    gh = {
-      enable = true;
-      enableGitCredentialHelper = true;
-    };
-
     git = {
       enable = true;
       userName = "Shakohh";
       userEmail = "70974710+Shakohh@users.noreply.github.com";
       lfs.enable = true;
-      diff-so-fancy = {
-        enable = true;
-        changeHunkIndicators = true;
-        markEmptyLines = true;
-        stripLeadingSymbols = true;
-        useUnicodeRuler = true;
-      };
+      extraConfig = ''
+        [safe]
+          directory = *
+      '';
     };
 
     fish = {
