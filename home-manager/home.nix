@@ -37,6 +37,7 @@
       eww-wayland
       firefox-wayland
       gimp
+      git-credential-manager
       glfw-wayland
       godot_4
       grc
@@ -172,15 +173,14 @@
       nix-direnv.enable = true;
     };
 
+    gh.enable = true;
     git = {
       enable = true;
-      userName = "Shakohh";
+      userName = "Shakoh";
       userEmail = "70974710+Shakohh@users.noreply.github.com";
+      package = pkgs.gitFull;
+      delta.enable = true;
       lfs.enable = true;
-      extraConfig = ''
-        [safe]
-          directory = *
-      '';
     };
 
     fish = {
@@ -193,6 +193,32 @@
         { name = "grc"; src = pkgs.fishPlugins.grc.src; }
         { name = "colored-man-pages"; src = pkgs.fishPlugins.colored-man-pages.src; }
         { name = "tide"; src = pkgs.fishPlugins.tide.src; }
+      ];
+    };
+
+    neovim = {
+      enable = lib.mkDefault true;
+      viAlias = true;
+      vimAlias = true;
+      defaultEditor = true;
+      extraPackages = [ pkgs.gcc ];
+      plugins = with pkgs.vimPlugins; [
+        nvchad
+        nvchad-ui
+        nvchad-extensions
+        vim-nix
+        vim-parinfer
+        yuck-vim
+        nvterm
+        nvim-web-devicons
+        gitsigns-nvim
+        mason-nvim
+        mason-lspconfig-nvim
+        nvim-cmp
+        telescope-nvim
+        nvim-autopairs
+        indent-blankline-nvim
+        which-key-nvim
       ];
     };
 
@@ -357,7 +383,7 @@
         color7 = "#${config.colorScheme.colors.base0E}";
         color15 = "#${config.colorScheme.colors.base0F}";
 
-        window_padding_width = 7;
+        window_padding_width = 0;
 
         repaint_delay = 10;
         sync_to_monitor = "yes";
