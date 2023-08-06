@@ -9,7 +9,8 @@
 }: {
 
   imports = [
-    inputs.nix-colors.homeManagerModules.default
+    inputs.nixvim.homeManagerModules.nixvim
+    inputs.stylix.homeManagerModules.stylix
   ];
 
   home.username = "shakoh";
@@ -58,7 +59,7 @@
       swww
       tetrio-desktop
       thunderbird-wayland
-      wineWow64Packages.waylandFull
+      wine-staging
       yuzu-early-access
 
       # Nix gaming packages from the flake
@@ -73,7 +74,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    (pkgs.nerdfonts.override { fonts = [ "Mononoki" ]; })
+    #(pkgs.nerdfonts.override { fonts = [ "JetBrainsMono-Regular" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -113,10 +114,6 @@
 
   gtk = {
     enable = true;
-    theme = {
-      name = "palenight";
-      package = pkgs.palenight-theme;
-    };
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
@@ -134,37 +131,18 @@
     gtk.enable = true;
     size = 16;
   };
-
-  colorScheme = {
-    slug = "mountain-peek";
-    name = "Mountain Peek";
-    author = "https://github.com/nautilor/mountain-peek";
-    colors = {
-      # Black
-      base00 = "#232730";
-      base01 = "#1B1E25";
-      # Red
-      base02 = "#973d46";
-      base03 = "#742f37";
-      # Green
-      base04 = "#7ca25c";
-      base05 = "#638349";
-      # Yellow
-      base06 = "#e0ae4a";
-      base07 = "#d19723";
-      # Blue
-      base08 = "#517ba5";
-      base09 = "#406182";
-      # Magenta
-      base0A = "#94628a";
-      base0B = "#744e6d";
-      # Cyan
-      base0C = "#5f9f9e";
-      base0D = "#4d807f";
-      # White
-      base0E = "#d6deed";
-      base0F = "#a7b5cd";
+  
+  stylix = {
+    fonts.sizes = {
+      applications = 10;
+      desktop = 10;
+      popups = 10;
+      terminal = 10;
     };
+    polarity = "dark";
+    image = ./bg/canyon.jpg;
+    targets = { rofi.enable = false; };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml"; 
   };
 
   programs = {
@@ -196,29 +174,39 @@
       ];
     };
 
-    neovim = {
-      enable = lib.mkDefault true;
+    nixvim = {
+      enable = true;
       viAlias = true;
       vimAlias = true;
-      defaultEditor = true;
-      extraPackages = [ pkgs.gcc ];
-      plugins = with pkgs.vimPlugins; [
-        nvchad
-        nvchad-ui
-        nvchad-extensions
-        vim-nix
-        vim-parinfer
-        yuck-vim
-        nvterm
-        nvim-web-devicons
-        gitsigns-nvim
-        mason-nvim
-        mason-lspconfig-nvim
-        nvim-cmp
-        telescope-nvim
-        nvim-autopairs
-        indent-blankline-nvim
-        which-key-nvim
+      plugins = {
+	nvim-cmp.enable = true;
+	chadtree.enable = true;
+	treesitter.enable = true;
+	telescope.enable = true;
+	indent-blankline.enable = true;
+	which-key.enable = true;
+        lsp = {
+          enable = true;
+          servers = {
+          rust-analyzer.enable = true;
+          nixd.enable = true;
+          rnix-lsp.enable = true;
+          lua-ls.enable = true;
+          html.enable = true;
+          cssls.enable = true;
+          gdscript.enable = true;
+          bashls.enable = true;
+          clangd.enable = true;
+          };
+        };
+      };
+      extraPlugins = with pkgs.vimPlugins; [
+	vim-parinfer
+	vim-nix
+	yuck-vim
+	nvchad
+	nvchad-ui
+	nvchad-extensions
       ];
     };
 
@@ -239,7 +227,7 @@
         modi = "drun";
         display-drun = "󰍉";
         drun-display-format = "{name}";
-        font = "Mononoki 10";
+        font = "JetBrainsMono 10";
         show-icons = true;
         icon-theme = "Papirus-Dark";
       };
@@ -256,7 +244,6 @@
           blue = mkLiteral "#517ba5";
           magenta = mkLiteral "#94628a";
           cyan = mkLiteral "#5f9f9e";
-
           background-color = mkLiteral "@background";
           border-radius = mkLiteral "3px";
         };
@@ -306,7 +293,7 @@
           vertical-align = mkLiteral "0.5";
           background-color = mkLiteral "@green";
           text-color = mkLiteral "@background";
-          font = mkLiteral ''"Mononoki 26"'';
+          font = mkLiteral ''"JetBrainsMono-Regular 26"'';
         };
 
         "entry" = {
@@ -345,61 +332,16 @@
       enable = true;
       shellIntegration.enableFishIntegration = true;
       settings = {
-        font_family = "Mononoki";
-        bold_font = "Mononoki Bold";
-        italic_font = "Mononoki Italic";
-        bold_italic_font = "Mononoki Italic";
+        font_family = "JetBrainsMono-Regular";
+        bold_font = "JetBrainsMono-Bold";
+        italic_font = "JetBrainsMono-Italic";
+        bold_italic_font = "JetBrainsMono-BoldItalic";
         font_size = 10;
-
-        # Black
-        color0 = "#${config.colorScheme.colors.base00}";
-        color8 = "#${config.colorScheme.colors.base01}";
-
-        # Red
-        color1 = "#${config.colorScheme.colors.base02}";
-        color9 = "#${config.colorScheme.colors.base03}";
-
-        # Green
-        color2 = "#${config.colorScheme.colors.base04}";
-        color10 = "#${config.colorScheme.colors.base05}";
-
-        # Yellow
-        color3 = "#${config.colorScheme.colors.base06}";
-        color11 = "#${config.colorScheme.colors.base07}";
-
-        # Blue
-        color4 = "#${config.colorScheme.colors.base08}";
-        color12 = "#${config.colorScheme.colors.base09}";
-
-        # Magenta
-        color5 = "#${config.colorScheme.colors.base0A}";
-        color13 = "#${config.colorScheme.colors.base0B}";
-
-        # Cyan
-        color6 = "#${config.colorScheme.colors.base0C}";
-        color14 = "#${config.colorScheme.colors.base0D}";
-
-        # White
-        color7 = "#${config.colorScheme.colors.base0E}";
-        color15 = "#${config.colorScheme.colors.base0F}";
-
         window_padding_width = 0;
-
         repaint_delay = 10;
         sync_to_monitor = "yes";
         confirm_os_window_close = 0;
         enable_audio_bell = 0;
-
-        background_opacity = "0.95";
-
-        background = "#${config.colorScheme.colors.base00}";
-        foreground = "#${config.colorScheme.colors.base0E}";
-
-        selection_background = "#${config.colorScheme.colors.base0E}";
-        selection_foreground = "#${config.colorScheme.colors.base00}";
-
-        cursor = "#${config.colorScheme.colors.base0E}";
-        cursor_text_color = "#${config.colorScheme.colors.base00}";
       };
     };
 
@@ -425,7 +367,7 @@
       discord-canary = {
         name = "Discord Canary";
         icon = "discord-canary";
-        exec = "discordcanary --enable-features=UseOzonePlatform --ozone-platform=wayland";
+        exec = "discordcanary --enable-features=UseOzonePlatform --ozone-platform=wayland --no-sandbox --ignore-gpu-blocklist --enable-features=VaapiVideoDecoder --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy";
       };
       steam = {
         name = "Steam";

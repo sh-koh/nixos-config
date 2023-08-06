@@ -14,8 +14,11 @@
     # Nix User Repository
     nur.url = "github:nix-community/NUR";
 
-    # Nix colors and base16-schemes
-    nix-colors.url = "github:misterio77/nix-colors";
+    # Stylix
+    stylix.url = "github:danth/stylix";
+
+    # NixVim
+    nixvim.url = "github:nix-community/nixvim";
 
     # Home manager
     home-manager = {
@@ -58,17 +61,18 @@
   };
 
   outputs = {
-    self,
-    nixpkgs,
-    nix-gaming,
-    nur,
-    nix-colors,
-    home-manager,
-    eww,
-    rust-overlay,
-    hyprsome,
-    hyprland,
-    ...
+    self
+  , nixpkgs
+  , nix-gaming
+  , nur
+  , stylix
+  , nixvim
+  , home-manager
+  , eww
+  , rust-overlay
+  , hyprsome
+  , hyprland
+  , ...
   } @inputs:
   let
       inherit (self) outputs;
@@ -110,7 +114,7 @@
         B450 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            ./nixos/configuration.nix
+            ./hosts/B450/configuration.nix
           ];
         };
       };
