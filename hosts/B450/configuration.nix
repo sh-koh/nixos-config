@@ -345,22 +345,22 @@
       lighter = "#e3e4e8";
     in
     {
-      base00 = blacker;
-      base01 = black;
-      base02 = darker;
-      base03 = dark;
-      base04 = white;
-      base05 = whiter;
-      base06 = light;
-      base07 = lighter;
-      base08 = red;
-      base09 = yellow1;
-      base0A = yellow;
-      base0B = green;
-      base0C = cyan;
-      base0D = blue;
-      base0E = magenta;
-      base0F = magenta1;
+      base00 = blacker; # Noir le plus noir
+      base01 = black; # ---
+      base02 = darker; # --
+      base03 = dark; # -
+      base04 = white;# +
+      base05 = whiter; # ++
+      base06 = light; # +++
+      base07 = lighter; # Blanc le plus blanc
+      base08 = red; # Rouge
+      base09 = yellow1; # Orange
+      base0A = yellow; # Jaune
+      base0B = green; # Vert
+      base0C = cyan; # Cyan
+      base0D = blue; # Bleu
+      base0E = magenta; # Violet
+      base0F = magenta1; # Rose
     }; 
   };
 
