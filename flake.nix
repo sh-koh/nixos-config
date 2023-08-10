@@ -27,17 +27,7 @@
     };
 
     # Elkowar's EWW + temporary workaround rust-overlay: https://github.com/elkowar/eww/issues/817
-    eww = {
-      url = "github:elkowar/eww";
-      inputs = { 
-        nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
-      };
-    };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    eww.url = "github:patrickshaw/eww";
 
     # Hyprland and hyprsome
     hyprsome.url = "github:sopa0/hyprsome";
@@ -48,6 +38,7 @@
   };
 
   nixConfig = {
+    builders-use-substitutes = true;
     extra-substituters = [
       "https://nix-gaming.cachix.org"
       "https://hyprland.cachix.org"
@@ -64,6 +55,7 @@
     self
   , nixpkgs
   , nix-gaming
+  , dipc
   , nur
   , stylix
   , nixvim

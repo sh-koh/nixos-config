@@ -11,6 +11,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.hyprland.nixosModules.default
     inputs.nur.nixosModules.nur
+    inputs.stylix.nixosModules.stylix
     ./hardware-configuration.nix
   ];
   
@@ -61,6 +62,7 @@
     LC_TELEPHONE = "fr_FR.UTF-8";
     LC_TIME = "fr_FR.UTF-8";
     LC_ALL = "fr_FR.UTF-8";
+    LANG = "fr_FR.UTF-8";
     LANGUAGE = "fr_FR";
   };
 
@@ -221,7 +223,7 @@
   programs = {
     command-not-found.enable = false;
     dconf.enable = true;
-    fish.enable = lib.mkDefault true;
+    zsh.enable = lib.mkDefault true;
     noisetorch.enable = true;
     gamescope = {
       enable = true;
@@ -258,7 +260,7 @@
 
   users = {
     users.shakoh = {
-      shell = pkgs.fish;
+      shell = pkgs.zsh;
       isNormalUser = true;
       description = "Shakoh";
       extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" "kvm" "libvirtd" "docker" ];
@@ -283,11 +285,12 @@
     slurp
     socat
     virt-manager
-    wget
-    wl-clipboard
     vulkan-headers
     vulkan-validation-layers
     vulkan-extension-layer
+    wbg
+    wget
+    wl-clipboard
     xdg-user-dirs
     xdg-utils
     xorg.xrandr
@@ -304,6 +307,62 @@
 
   # Theming 
   gtk.iconCache.enable = true;
+  stylix = {
+    opacity = {
+      applications = 1.0;
+      desktop = 1.0;
+      popups = 1.0;
+      terminal = 0.96;
+    };
+    fonts.sizes = {
+      applications = 10;
+      desktop = 10;
+      popups = 10;
+      terminal = 10;
+    };
+    polarity = "dark";
+    image = ../../home-manager/bg/ww-island.jpg;
+    base16Scheme = let 
+      blacker = "#161821";
+      black = "#292d3d";
+      darker = "#484b5b";
+      dark = "#6b7089";
+      red = "#e27878";
+      red1 = "#e98989";
+      green = "#b4be82";
+      green1 = "#c0ca8e";
+      yellow = "#e2a478";
+      yellow1 = "#e9b189";
+      blue = "#84a0c6";
+      blue1 = "#91acd1";
+      magenta = "#a093c7";
+      magenta1 = "#ada0d3";
+      cyan = "#89b8c2";
+      cyan1 = "#95c4ce";
+      white = "#9ba0b5";
+      whiter = "#c6c8d1";
+      light = "#d2d4de";
+      lighter = "#e3e4e8";
+    in
+    {
+      base00 = blacker;
+      base01 = black;
+      base02 = darker;
+      base03 = dark;
+      base04 = white;
+      base05 = whiter;
+      base06 = light;
+      base07 = lighter;
+      base08 = red;
+      base09 = yellow1;
+      base0A = yellow;
+      base0B = green;
+      base0C = cyan;
+      base0D = blue;
+      base0E = magenta;
+      base0F = magenta1;
+    }; 
+  };
 
   # Fonts
   fonts = {
@@ -322,9 +381,6 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      inputs.hyprland.overlays.default
-      inputs.eww.overlays.default
-      inputs.rust-overlay.overlays.default
     ];
   };
       

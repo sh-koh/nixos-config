@@ -6,11 +6,10 @@
   inputs,
   outputs,
   ...
-}: {
+}:{
 
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    inputs.stylix.homeManagerModules.stylix
   ];
 
   home.username = "shakoh";
@@ -21,8 +20,10 @@
 
       nix-gaming = inputs.nix-gaming.packages.${pkgs.system};
       hyprsome = inputs.hyprsome.packages.${pkgs.system};
+      eww = inputs.eww.packages.${pkgs.system};
 
-    in with pkgs; [
+    in with pkgs;
+    [
 
       # Applications
       blender
@@ -35,7 +36,7 @@
       discord-canary
       dolphin-emu
       dunst
-      eww-wayland
+      eww.eww-wayland
       firefox-wayland
       gimp
       git-credential-manager
@@ -56,9 +57,9 @@
       vkbasalt-cli
       steam
       steam-run
-      swww
       tetrio-desktop
       thunderbird-wayland
+      webcord
       wine-staging
       yuzu-early-access
 
@@ -68,13 +69,9 @@
       #nix-gaming.wine-ge
 
       # Hyprland things from the flakes
-      hyprsome.default 
+      hyprsome.default
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    #(pkgs.nerdfonts.override { fonts = [ "JetBrainsMono-Regular" ]; })
+      (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -84,31 +81,23 @@
     # '')
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  xdg.dataFile = {
+    wine-ge = let
+      version = "GE-Proton8-13";
+      name = "wine-lutris-${version}-x86_64";
+    in {
+      recursive = false;
+      source = builtins.fetchTarball {
+        url = "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/${version}/${name}.tar.xz";
+        sha256 = "1chrhh1wlhsqjacpvpi4bqp20920k408hfsybli4s2pcgn15kk34";
+      };
+      target = "lutris/runners/wine/${name}";
+    };
+  };
+  
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
   };
 
-  # You can also manage environment variables but you will have to manually
-  # source
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/shakoh/etc/profile.d/hm-session-vars.sh
-  #
-  # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
   };
 
@@ -131,19 +120,6 @@
     gtk.enable = true;
     size = 16;
   };
-  
-  stylix = {
-    fonts.sizes = {
-      applications = 10;
-      desktop = 10;
-      popups = 10;
-      terminal = 10;
-    };
-    polarity = "dark";
-    image = ./bg/canyon.jpg;
-    targets = { rofi.enable = false; };
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml"; 
-  };
 
   programs = {
     direnv = {
@@ -161,17 +137,15 @@
       lfs.enable = true;
     };
 
-    fish = {
+    zsh = {
       enable = true;
-      interactiveShellInit = ''
-        direnv hook fish | source  
-      '';
-      plugins = [
-        { name = "done"; src = pkgs.fishPlugins.done.src; }
-        { name = "grc"; src = pkgs.fishPlugins.grc.src; }
-        { name = "colored-man-pages"; src = pkgs.fishPlugins.colored-man-pages.src; }
-        { name = "tide"; src = pkgs.fishPlugins.tide.src; }
-      ];
+      enableCompletion = true;
+      enableAutosuggestions = true;
+      oh-my-zsh = {
+        enable = true;
+        theme = "agnoster";
+        #plugins = [ ];
+      };
     };
 
     nixvim = {
@@ -212,7 +186,7 @@
 
     tmux = {
       enable = true;
-      shell = "${pkgs.fish}/bin/fish";
+      shell = "${pkgs.zsh}/bin/zsh";
       aggressiveResize = true;
       clock24 = true;
       keyMode = "vi";
@@ -330,7 +304,7 @@
 
     kitty = {
       enable = true;
-      shellIntegration.enableFishIntegration = true;
+      shellIntegration.enableZshIntegration = true;
       settings = {
         font_family = "JetBrainsMono-Regular";
         bold_font = "JetBrainsMono-Bold";
@@ -389,7 +363,16 @@
         icon = "osu-lazer";
         exec = "env SDL_VIDEODRIVER=x11 osu-lazer";
       };
+      webcord = {
+        name = "WebCord";
+        icon = "webcord";
+        exec = "env NIXOS_OZONE_WL= webcord --use-gl=desktop";
+      };
     };
+  };
+
+  stylix.targets = {
+    rofi.enable = false;
   };
 
   # Reload system units when changing configs
