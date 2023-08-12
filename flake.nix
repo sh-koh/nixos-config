@@ -28,11 +28,17 @@
 
     # Elkowar's EWW + temporary workaround rust-overlay: https://github.com/elkowar/eww/issues/817
     eww.url = "github:patrickshaw/eww";
+    eww.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprland and hyprsome
     hyprsome.url = "github:sopa0/hyprsome";
     hyprland = {
       url = "github:hyprwm/hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    anyrun = {
+      url = "github:kirottu/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -42,11 +48,13 @@
     extra-substituters = [
       "https://nix-gaming.cachix.org"
       "https://hyprland.cachix.org"
+      "https://anyrun.cachix.org"
       "https://nix-community.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
@@ -64,6 +72,7 @@
   , rust-overlay
   , hyprsome
   , hyprland
+  , anyrun
   , ...
   } @inputs:
   let
@@ -78,7 +87,7 @@
     in
     rec {
       # Your custom packages
-      # Acessible through 'nix build', 'nix shell', etc
+      # Accessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./pkgs { inherit pkgs; }
@@ -103,10 +112,16 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
-        B450 = nixpkgs.lib.nixosSystem {
+        atrebois = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            ./hosts/B450/configuration.nix
+            ./hosts/atrebois/default.nix
+          ];
+        };
+        rocaille = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/rocaille/default.nix
           ];
         };
       };

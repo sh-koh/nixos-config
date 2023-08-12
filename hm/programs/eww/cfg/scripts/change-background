@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+WALLPAPER_DIR=~/Images/Backgrounds
+WALLPAPER=$(fd --type=f . $WALLPAPER_DIR | shuf -n 1)
+
+swww img $WALLPAPER \
+  --transition-type simple \
+  --transition-fps 144 \
+  --transition-pos top

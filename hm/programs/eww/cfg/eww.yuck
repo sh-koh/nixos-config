@@ -1,0 +1,35 @@
+;; Import other yucks
+(include "widgets/clock.yuck")
+(include "widgets/bar.yuck")
+(include "widgets/date.yuck")
+
+;; Windows definition
+(defwindow bar
+  :monitor 1
+  :exclusive "true"
+  :focusable false
+  :geometry (geometry
+    :width "100%"
+    :height "3%"
+    :anchor "top center")
+  (bar))
+
+(defwindow clock
+  :monitor 1
+  :focusable "false"
+  :stacking "bg"
+  :geometry (geometry
+    :width "20%"
+    :height "20%"
+    :anchor "bottom right")
+  (clock))
+
+(defwindow date
+  :monitor 1
+  :focusable "false"
+  :stacking "bg"
+  :geometry (geometry
+    :width "20%"
+    :height "20%"
+    :anchor "bottom left")
+  (date))

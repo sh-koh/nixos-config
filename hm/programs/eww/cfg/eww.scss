@@ -1,0 +1,177 @@
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+  font-family: JetBrainsMono;
+  font-size: 100%;
+  border-radius: 3px;
+  padding: 2px;
+}
+
+// ICEBERG
+  $blacker: #161821;
+  $black: #292d3d;
+  $darker: #484b5b;
+  $dark: #6b7089;
+  $red: #e27878;
+  $red1: #e98989;
+  $green: #b4be82;
+  $green1: #c0ca8e;
+  $yellow: #e2a478;
+  $yellow1: #e9b189;
+  $blue: #84a0c6;
+  $blue1: #91acd1;
+  $magenta: #a093c7;
+  $magenta1: #ada0d3;
+  $cyan: #89b8c2;
+  $cyan1: #95c4ce;
+  $white: #9ba0b5;
+  $whiter: #c6c8d1;
+  $light: #d2d4de;
+  $lighter: #e3e4e8;
+
+tooltip {
+  background-color: $blacker;
+  color: $white;
+  border-width: 1px;
+  border-color: $red;
+}
+
+.bar {
+  background-color: $blacker;
+  border-radius: 0px;
+}
+
+.time {
+  background-color: rgba($black, 0.9);
+  color: $whiter;
+  text-shadow: 0 2 2 rgba($blacker, 0.6);
+  padding: 0 4px 0 4px;
+}
+
+.handle {
+  background-color: $red;
+  color: $blacker;
+  border-radius: 0px;
+  padding: 0px;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+}
+
+.workspaces {
+  background-color: rgba($black, 0.9);
+  padding: 0 8px 0 5px;
+  font-size: 120%;
+}
+
+.empty {
+  color: rgba($blue, 0.1);
+  text-shadow: 0 0 0;
+}
+
+.occupied {
+  color: rgba($blue, 0.6);
+  text-shadow: 0 2 2 rgba($blacker, 0.2);
+}
+
+.current {
+  color: $whiter;
+  text-shadow: 0 2 2 rgba($blacker, 0.6);
+}
+
+.leftmenu {
+  background-color: $blue;
+  color: $blacker;
+  font-size: 105%;
+  padding: 0.2px;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+}
+
+.rightmenu {
+  background-color: $red;
+  color: $blacker;
+  padding: 0.2px;
+  margin-left: 0px;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  &_box {
+    padding: 0px;
+  }
+}
+
+.window_w {
+  background-color: $green;
+  color: $blacker;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+}
+
+.storage {
+  background-color: $black;
+  padding: 2px 4px 2px 4px;
+  margin: 0px;
+}
+
+.hwinfo {
+  padding: 0px;
+  margin: 0px;
+  min-width: 30px;
+  min-height: 30px;
+  &_root {
+    color: $red;
+    background-color: $darker;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+  }
+  &_home {
+    color: $yellow;
+    background-color: $darker;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+  }
+  &_ssd {
+    color: $blue;
+    background-color: $darker;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+  }
+  &_sshd {
+    color: $green;
+    background-color: $darker;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+  }
+}
+
+.value-in-circles {
+  font-size: 90%;
+  padding: 6px;
+  background-color: $blacker;
+}
+
+//-------------------------------------------
+
+.clock {
+  color: rgba($blue, 0.4);
+  font-size: 240%;
+}
+
+.date {
+  color: rgba($blue, 0.4);
+  font-size: 120%;
+}
+
+.jourmois {
+  color: rgba($blue, 0.4);
+  font-size: 120%;
+  padding-right: 6px;
+}
+
+.jour-n {
+  color: rgba($blue, 0.4);
+  font-size: 290%;
+  padding-left: 6px;
+  border-left: 2px solid rgba($blue, 0.3);
+  border-radius: 0px;
+}

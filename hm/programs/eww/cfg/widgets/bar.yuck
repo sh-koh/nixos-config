@@ -1,0 +1,299 @@
+(defpoll time :interval "60s" "date '+%R'")
+(defvar date_reveal "false")
+(defwidget time []
+  (box
+    :class "rightmenu_box"
+    :space-evenly false
+    (label
+      :text "|"
+      :class "handle"
+    )
+    (eventbox
+      :onhover "${EWW_CMD} update date_reveal=true"
+      :onhoverlost "${EWW_CMD} update date_reveal=false"
+      :class "time"
+      (box
+        :space-evenly false
+        :class "time"
+        (revealer
+          :reveal date_reveal
+          :transition "slideleft"
+        )
+        (revealer
+          :reveal date_reveal
+          :transition "slideleft"
+          (box
+            :class "time"
+            :space-evenly false
+            jour
+            jour-n
+            mois
+          )
+        )
+        (revealer
+          :reveal date_reveal
+          :transition "slideleft"
+          (label
+            :text "|"
+            :class "time"
+          )
+        )
+        (label
+          :text time
+          :class "time"
+        )
+      )
+    )
+    (label
+      :text "|"
+      :class "handle"
+    )
+  )
+)
+
+(defvar workspaces_reveal true)
+(defwidget leftmenu []
+  (eventbox
+    :class "leftmenu"
+    :onclick "${workspaces_reveal ? (EWW_CMD + ` update workspaces_reveal=false`) : (EWW_CMD + ` update workspaces_reveal=true`)}"
+    (box
+      :space-evenly false
+      :halign "start"
+      :class "leftmenu"
+      (label
+        :text ""
+        :class "leftmenu"
+        :width 38
+        :height 10
+        :xalign 0.40
+        :wrap true
+      )
+      (revealer
+        :reveal workspaces_reveal
+        :transition "slideright"
+        :class "leftmenu"
+        (workspaces)
+      )
+    )
+  )
+)
+
+(defvar storage_reveal false)
+(defwidget rightmenu []
+  (box :class "rightmenu_box"
+    (eventbox
+      :onhover "${EWW_CMD} update storage_reveal=true"
+      :onhoverlost "${EWW_CMD} update storage_reveal=false"
+      (box
+        :space-evenly false
+        :halign "start"
+        :class "rightmenu"
+        (revealer
+          :reveal storage_reveal
+          :transition "slideleft"
+          :class "rightmenu"
+          (storage)
+        )
+        (label
+          :text ""
+          :class "rightmenu"
+          :width 37
+          :height 30
+          :xalign 0.44
+          :wrap true
+        )
+      )
+    )
+  )
+)
+
+(deflisten window :initial "..." "sh scripts/get-window-title")
+(defwidget window_w []
+  (eventbox
+    :onclick "anyrun &"
+    :halign "fill"
+    :hexpand true
+    (box
+      :class "window_w"
+      (label
+        :text "${window}"
+        :limit-width "70"
+        :width "650"
+      )
+    )
+  )
+)
+
+(deflisten workspaces :initial "[]" "sh scripts/get-workspaces")
+(deflisten current_workspace :initial "[]" "sh scripts/get-active-workspace")
+(defwidget workspaces []
+  (box
+    :halign "start"
+    :space-evenly false
+    :spacing 1
+    :class "workspaces"
+    (label
+      :text "${workspaces} ${current_workspace}"
+      :visible false)
+    (for workspace in workspaces
+      (button :onclick "hyprctl dispatch workspace ${workspace.id}"
+        (box :class "${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+          (label :text "${workspace.id == current_workspace ? "󱓻" : "" + workspace.windows > 0 ? "󱓻" : "󱓼"}")
+        )
+      )
+    )
+  )
+)
+
+(defvar root_usage_reveal "false")
+(defwidget root_usage []
+  (eventbox
+    :onhover "${EWW_CMD} update root_usage_reveal=true"
+    :onhoverlost "${EWW_CMD} update root_usage_reveal=false"
+    :class "storage"
+    (circular-progress
+        :value {EWW_DISK["/"].used_perc}
+        :thickness 4
+        :start-at "75"
+        :clockwise "false"
+        :class "hwinfo_root"
+      (box
+        :class "hwinfo"
+        :tooltip {"Root: " + (100 - round(EWW_DISK["/"].used_perc,0)) + "% libre"}
+        (box
+          :class "value-in-circles"
+          :valign "fill"
+          :halign "fill"
+          "${root_usage_reveal == true ? (round(EWW_DISK["/"].used_perc,0)) : "󰉑"}"
+        )
+      )      
+    )
+  )
+)
+
+(defvar home_usage_reveal "false")
+(defwidget home_usage []
+  (eventbox
+    :onhover "${EWW_CMD} update home_usage_reveal=true"
+    :onhoverlost "${EWW_CMD} update home_usage_reveal=false"
+    :class "storage"
+    (circular-progress
+        :value {EWW_DISK["/home"].used_perc}
+        :thickness 4
+        :start-at "75"
+        :clockwise "false"
+        :class "hwinfo_home"
+      (box
+        :class "hwinfo"
+        :tooltip {"Home: " + (100 - round(EWW_DISK["/home"].used_perc,0)) + "% libre"}
+        (box
+          :class "value-in-circles"
+          :valign "fill"
+          :halign "fill"
+          "${home_usage_reveal == true ? (round(EWW_DISK["/home"].used_perc,0)) : "󱂵"}"
+        )
+      )      
+    )
+  )
+)
+
+(defvar ssd_usage_reveal "false")
+(defwidget ssd_usage []
+  (eventbox
+    :onhover "${EWW_CMD} update ssd_usage_reveal=true"
+    :onhoverlost "${EWW_CMD} update ssd_usage_reveal=false"
+    :class "storage"
+    (circular-progress
+        :value {EWW_DISK["/media/SSD"].used_perc}
+        :thickness 4
+        :start-at "75"
+        :clockwise "false"
+        :class "hwinfo_ssd"
+      (box
+        :class "hwinfo"
+        :tooltip {"SSD: " + (100 - round(EWW_DISK["/media/SSD"].used_perc,0)) + "% libre"}
+        (box
+          :class "value-in-circles"
+          :valign "fill"
+          :halign "fill"
+          "${ssd_usage_reveal == true ? (round(EWW_DISK["/media/SSD"].used_perc,0)) : "󱧺"}"
+        )
+      )      
+    )
+  )
+)
+
+(defvar sshd_usage_reveal "false")
+(defwidget sshd_usage []
+  (eventbox
+    :onhover "${EWW_CMD} update sshd_usage_reveal=true"
+    :onhoverlost "${EWW_CMD} update sshd_usage_reveal=false"
+    :class "storage"
+    (circular-progress
+        :value {EWW_DISK["/media/SSHD"].used_perc}
+        :thickness 4
+        :start-at "75"
+        :clockwise "false"
+        :class "hwinfo_sshd"
+      (box
+        :class "hwinfo"
+        :tooltip {"SSHD: " + (100 - round(EWW_DISK["/media/SSHD"].used_perc,0)) + "% libre"}
+        (box
+          :class "value-in-circles"
+          :valign "fill"
+          :halign "fill"
+          "${sshd_usage_reveal == true ? (round(EWW_DISK["/media/SSHD"].used_perc,0)) : "󱋣"}"
+        )
+      )      
+    )
+  )
+)
+
+(defwidget storage []
+  (box
+    :class "storage"
+    :space-evenly false
+    :vexpand true
+    :spacing 4
+    (root_usage)
+    (home_usage)
+    (ssd_usage)
+    (sshd_usage)
+  )
+)
+
+(defwidget left []
+  (box 
+    :hexpand false
+    :halign "start"
+    :space-evenly false
+    (leftmenu)
+  )
+)
+
+(defwidget middle []
+  (box 
+    :hexpand true
+    :halign "center"
+    :space-evenly false
+    (window_w)
+  )
+)
+
+(defwidget right []
+  (box 
+    :hexpand false
+    :halign "end"
+    :space-evenly false
+    (time)
+    (rightmenu)
+  )
+)
+
+(defwidget bar []
+  (centerbox
+    (left)
+    (middle)
+    (right)
+  )
+)

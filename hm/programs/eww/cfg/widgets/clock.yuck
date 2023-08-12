@@ -1,0 +1,3 @@
+(defwidget clock []
+  (box :class "clock" :orientation "v" :halign "center" :valign "center"
+    time))
