@@ -105,8 +105,8 @@
       };
       osu-lazer-bin = {
         name = "osu!";
-        icon = "osu-lazer";
-        exec = "env SDL_VIDEODRIVER=x11 osu-lazer";
+        icon = "osu!";
+        exec = "env SDL_VIDEODRIVER=x11 osu\!";
       };
       webcord = {
         name = "WebCord";
