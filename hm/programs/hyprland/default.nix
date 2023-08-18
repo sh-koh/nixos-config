@@ -39,17 +39,16 @@
         #split-monitor-workspaces
       ];
       extraConfig = with config.lib.stylix.colors; ''
-        # See https://wiki.hyprland.org/Configuring/Monitors/
-        monitor=HDMI-1-A,2560x1080@75,0x0,1
-        workspace=HDMI-1-A,1
+        monitor=DP-3, 1920x1080@240, auto, 1
+        workspace=DP-3, 11
 
-        monitor=DP-3,1920x1080@240,2560x0,1
-        workspace=DP-3,11
+        workspace=HDMI-1-A, 1
 
         # Execute your favorite apps at launch
         exec-once = eww open-many bar clock date
         exec-once = dunst
         exec-once = swww init
+        exec-once = sleep 2 && swww img ${config.stylix.image}
         exec-once = firefox
         exec-once = sleep 2 && noisetorch -i
         exec-once = xrandr --output DP-3 --primary

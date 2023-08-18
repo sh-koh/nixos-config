@@ -35,21 +35,33 @@
     kernel.sysctl  = { "vm.max_map_count" = "16777216"; };
   };
 
+  # Configuration réseau.
   networking = {
     hostName = "atrebois";
     networkmanager.enable = true;
     enableIPv6 = false;
+    firewall = {
+      enable = true;
+      interfaces.enp34s0 = {
+        allowedUDPPorts = [ 9999 ];
+        allowedTCPPorts = [ 9999 ];
+      };
+      interfaces.ztfp6jndkb = {
+        allowedUDPPorts = [ 9999 ];
+        allowedTCPPorts = [ 9999 ];
+      };
+    };
   };
 
-  # Set your time zone.
+  # Heure de Paris.
   time.timeZone = "Europe/Paris";
 
-  # Configure console
+  # Clavier US-International dans le TTY.
   console = {
     keyMap = "us-acentos";
   };
 
-  # Select internationalisation properties.
+  # Locale et langue.
   i18n.defaultLocale = "fr_FR.UTF-8";
   i18n.supportedLocales = [ "fr_FR.UTF-8/UTF-8" ];
   i18n.extraLocaleSettings = {
@@ -105,7 +117,7 @@
     };
   };
 
-  # Configure doas 
+  # Remplacement de 'sudo' par 'opendoas' et rtkit pour pipewire en temps réel.
   security = {
     sudo.enable = false;
     polkit.enable = true;
@@ -118,7 +130,7 @@
     }];
   };
 
-  # System services and daemon
+  # Services et démons
   services = {
     getty.autologinUser = "shakoh";
     fstrim.enable = true;
@@ -166,7 +178,7 @@
     };
   };
 
-  # Docker and libvirt
+  # Docker et libvirt
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -189,7 +201,7 @@
     };
   };
 
-  # Libvirtd cpu cores isolation for better performance in VMs
+  # Isolation CPU pour la machine virtuelle 'Windows11' via QEMU et libvirt.
   systemd.services.libvirtd.preStart = let
     qemuHook = pkgs.writeScript "qemu-hook" ''
       #!${pkgs.stdenv.shell}
@@ -220,11 +232,12 @@
     ln -sf ${qemuHook} /var/lib/libvirt/hooks/qemu
   '';
 
-  # Programs properties
+  # Configuration des programmes.
   programs = {
     dconf.enable = true;
     zsh.enable = lib.mkDefault true;
     noisetorch.enable = true;
+    adb.enable = true;
     gamescope = {
       enable = true;
       package = pkgs.gamescope;
@@ -250,16 +263,18 @@
       };
     };
   };
-
+  
+  # Utilisateur(s) et groupes.
   users = {
     users.shakoh = {
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Shakoh";
-      extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" "kvm" "libvirtd" "docker" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" "kvm" "libvirtd" "docker" "adbusers" ];
     };
   };
-
+  
+  # Paquets installés sur le système global.
   environment.systemPackages = with pkgs; [
     coreutils
     curl
@@ -289,7 +304,7 @@
     xorg.xrandr
   ];
 
-  # XDG utilities
+  # Portails XDG pour les interactions interapplications.
   xdg = {
     sounds.enable = true;
     portal = {
@@ -298,7 +313,7 @@
     };
   };
 
-  # Theming 
+  # Thème avec 'Stylix'.
   gtk.iconCache.enable = true;
   stylix = {
     opacity = {
@@ -378,11 +393,12 @@
     }; 
   };
 
-  # Fonts
+  # Polices.
   fonts = {
     packages = with pkgs; [ jetbrains-mono lexend nerdfonts ];
   };
-
+  
+  # Home-manager
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -390,6 +406,7 @@
     users.shakoh = import ../../hm/default.nix;
   };
 
+  # Paramètres de nix et overlays
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [
@@ -397,10 +414,10 @@
       outputs.overlays.modifications
     ];
   };
-      
+
   nix = {
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs; # Add each inputs as a nix registry
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry; # For legacy commands
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs; # Ajoute chaque inputs de la flake système dans les registres nix.
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry; # Permet l'utilisation des commandes 'legacy' avec les flakes d'actives.
     settings = {
       trusted-users = [ "root" "@wheel" ];
       experimental-features = [ "nix-command" "flakes" ];

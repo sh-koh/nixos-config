@@ -4,7 +4,8 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
 
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -12,36 +13,36 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   boot.supportedFilesystems = [ "ntfs" ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/Root";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/Root";
+    fsType = "ext4";
+  };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-label/Home";
-      fsType = "ext4";
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/Home";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/EFI-BOOT";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/EFI-BOOT";
+    fsType = "vfat";
+  };
 
-  fileSystems."/media/SSD" =
-    { device = "/dev/disk/by-label/SSD";
-      fsType = "btrfs";
-    };
+  fileSystems."/media/SSD" = {
+    device = "/dev/disk/by-label/SSD";
+    fsType = "btrfs";
+  };
 
-  fileSystems."/media/SSHD" =
-    { device = "/dev/disk/by-label/SSHD";
-      fsType = "btrfs";
-    };
+  fileSystems."/media/SSHD" = {
+    device = "/dev/disk/by-label/SSHD";
+    fsType = "btrfs";
+  };
 
   swapDevices = [ ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  zramSwap.enable = true;
 
-  security.tpm2.enable = true;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -60,16 +61,7 @@
       modesetting.enable = true;
       nvidiaSettings = false;
       powerManagement.enable = true;
-      nvidiaPersistenced = true;
       open = true;
-      #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      #  version = "535.86.05";
-      #  sha256_64bit = "sha256-hhDsgkR8/3LLXxizZX7ppjSlFRZiuK2QHrgfTE+2F/4=";
-      #  openSha256 = "sha256-dktHCoESqoNfu5M73aY5MQGROlZawZwzBqs3RkOyfoQ=";
-      #  settingsSha256 = "sha256-qNjfsT9NGV151EHnG4fgBonVFSKc4yFEVomtXg9uYD4=";
-      #  persistencedSha256 = "sha256-ci86XGlno6DbHw6rkVSzBpopaapfJvk0+lHcR4LDq50=";
-      #  ibtSupport = true;
-      #};
     };
   };
 }

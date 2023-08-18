@@ -1,12 +1,9 @@
-* {
-  all: unset; //Unsets everything so you can style everything from scratch
-  font-family: JetBrainsMono;
-  font-size: 100%;
-  border-radius: 3px;
-  padding: 2px;
-}
+/*=========================================*/
+/*==============- VARIABLES -==============*/
+/*=========================================*/
+/* 	   	 - ICEBERG -	   	   */
+/*	 Github: cocopon/iceberg.vim	   */
 
-// ICEBERG
   $blacker: #161821;
   $black: #292d3d;
   $darker: #484b5b;
@@ -28,6 +25,20 @@
   $light: #d2d4de;
   $lighter: #e3e4e8;
 
+
+
+
+/*=========================================*/
+/*===========- GLOBAL SETTINGS -===========*/
+/*=========================================*/
+
+* {
+  all: unset;
+  font-family: JetBrainsMono;
+  font-size: 100%;
+  border-radius: 3px;
+}
+
 tooltip {
   background-color: $blacker;
   color: $white;
@@ -38,6 +49,84 @@ tooltip {
 .bar {
   background-color: $blacker;
   border-radius: 0px;
+  padding: 4px;
+}
+
+
+
+
+/*=========================================*/
+/*==============- LEFT PART -==============*/
+/*=========================================*/
+
+.leftmenu {
+  background-color: $blue;
+  color: $blacker;
+  font-size: 105%;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px; 
+}
+
+.workspaces {
+  background-color: rgba($black, 0.9);
+  border-radius: 0px;
+}
+
+.empty {
+  color: rgba($blue, 0.1);
+  text-shadow: 0 0 0;
+  font-size: 120%;
+  padding: 6px;
+}
+
+.occupied {
+  color: rgba($blue, 0.6);
+  text-shadow: 0 2 2 rgba($blacker, 0.2);
+  font-size: 120%;
+  padding: 6px;
+}
+
+.current {
+  color: $whiter;
+  text-shadow: 0 2 2 rgba($blacker, 0.6);
+  font-size: 120%;
+  padding: 6px;
+}
+
+.lefthandle {
+  background-color: $cyan;
+  color: $blacker;
+  border-radius: 0px;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+}
+
+
+
+
+/*=========================================*/
+/*=============- CENTER PART -=============*/
+/*=========================================*/
+
+.window_w {
+  background-color: $green;
+  color: $blacker;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+}
+
+
+
+
+/*=========================================*/
+/*=============- RIGHT  PART -=============*/
+/*=========================================*/
+
+.rightmenu {
+  background-color: $red;
+  color: $blacker;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 .time {
@@ -47,99 +136,34 @@ tooltip {
   padding: 0 4px 0 4px;
 }
 
-.handle {
-  background-color: $red;
-  color: $blacker;
-  border-radius: 0px;
-  padding: 0px;
-  text-shadow: 0 2 2 rgba($blacker, 0.3);
-}
-
-.workspaces {
-  background-color: rgba($black, 0.9);
-  padding: 0 8px 0 5px;
-  font-size: 120%;
-}
-
-.empty {
-  color: rgba($blue, 0.1);
-  text-shadow: 0 0 0;
-}
-
-.occupied {
-  color: rgba($blue, 0.6);
-  text-shadow: 0 2 2 rgba($blacker, 0.2);
-}
-
-.current {
-  color: $whiter;
-  text-shadow: 0 2 2 rgba($blacker, 0.6);
-}
-
-.leftmenu {
-  background-color: $blue;
-  color: $blacker;
-  font-size: 105%;
-  padding: 0.2px;
-  text-shadow: 0 2 2 rgba($blacker, 0.3);
-}
-
-.rightmenu {
-  background-color: $red;
-  color: $blacker;
-  padding: 0.2px;
-  margin-left: 0px;
-  text-shadow: 0 2 2 rgba($blacker, 0.3);
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  &_box {
-    padding: 0px;
-  }
-}
-
-.window_w {
-  background-color: $green;
-  color: $blacker;
-  text-shadow: 0 2 2 rgba($blacker, 0.3);
-}
-
 .storage {
   background-color: $black;
-  padding: 2px 4px 2px 4px;
+  padding: 2px 5px 2px 5px;
+  border-radius: 0px;
   margin: 0px;
 }
 
 .hwinfo {
-  padding: 0px;
-  margin: 0px;
   min-width: 30px;
   min-height: 30px;
   &_root {
     color: $red;
     background-color: $darker;
-    padding: 0px;
-    margin: 0px;
     border-radius: 0px;
   }
   &_home {
     color: $yellow;
     background-color: $darker;
-    padding: 0px;
-    margin: 0px;
     border-radius: 0px;
   }
   &_ssd {
     color: $blue;
     background-color: $darker;
-    padding: 0px;
-    margin: 0px;
     border-radius: 0px;
   }
   &_sshd {
     color: $green;
     background-color: $darker;
-    padding: 0px;
-    margin: 0px;
     border-radius: 0px;
   }
 }
@@ -150,17 +174,28 @@ tooltip {
   background-color: $blacker;
 }
 
-//-------------------------------------------
-
-.clock {
-  color: rgba($blue, 0.4);
-  font-size: 240%;
+.righthandle {
+  background-color: $yellow;
+  color: $blacker;
+  border-radius: 0px;
+  text-shadow: 0 2 2 rgba($blacker, 0.3);
 }
 
-.date {
-  color: rgba($blue, 0.4);
-  font-size: 120%;
-}
+
+
+
+/*=========================================*/
+/*================- EXTRA -================*/
+/*=========================================*/
+
+
+
+
+
+
+/*=========================================*/
+/*===============- DESKTOP -===============*/
+/*=========================================*/
 
 .jourmois {
   color: rgba($blue, 0.4);
@@ -175,3 +210,19 @@ tooltip {
   border-left: 2px solid rgba($blue, 0.3);
   border-radius: 0px;
 }
+.clock {
+  color: rgba($blue, 0.4);
+  font-size: 240%;
+}
+
+.date {
+  color: rgba($blue, 0.4);
+  font-size: 120%;
+}
+
+
+
+
+/*=========================================*/
+/*=================- EOF -=================*/
+/*=========================================*/

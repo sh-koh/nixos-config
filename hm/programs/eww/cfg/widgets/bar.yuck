@@ -1,86 +1,154 @@
-(defpoll time :interval "60s" "date '+%R'")
-(defvar date_reveal "false")
-(defwidget time []
-  (box
-    :class "rightmenu_box"
-    :space-evenly false
-    (label
-      :text "|"
-      :class "handle"
-    )
-    (eventbox
-      :onhover "${EWW_CMD} update date_reveal=true"
-      :onhoverlost "${EWW_CMD} update date_reveal=false"
-      :class "time"
-      (box
-        :space-evenly false
-        :class "time"
-        (revealer
-          :reveal date_reveal
-          :transition "slideleft"
-        )
-        (revealer
-          :reveal date_reveal
-          :transition "slideleft"
-          (box
-            :class "time"
-            :space-evenly false
-            jour
-            jour-n
-            mois
-          )
-        )
-        (revealer
-          :reveal date_reveal
-          :transition "slideleft"
-          (label
-            :text "|"
-            :class "time"
-          )
-        )
-        (label
-          :text time
-          :class "time"
-        )
-      )
-    )
-    (label
-      :text "|"
-      :class "handle"
-    )
-  )
-)
+;;=========================================;;
+;;==============- VARIABLES -==============;;
+;;=========================================;;
 
 (defvar workspaces_reveal true)
+(defvar date_reveal "false")
+(defvar storage_reveal false)
+(defvar root_usage_reveal "false")
+(defvar home_usage_reveal "false")
+(defvar ssd_usage_reveal "false")
+(defvar sshd_usage_reveal "false")
+
+
+
+
+;;=========================================;;
+;;===============- SCRIPTS -===============;;
+;;=========================================;;
+
+(deflisten workspaces :initial "[]" "sh scripts/get-workspaces")
+(deflisten current_workspace :initial "[]" "sh scripts/get-active-workspace")
+(deflisten window :initial "..." "sh scripts/get-window-title")
+(defpoll time :interval "60s" "date '+%R'")
+
+
+
+
+;;=========================================;;
+;;==============- LEFT PART -==============;;
+;;=========================================;;
+
+(defwidget left []
+  (box 
+    :hexpand false
+    :halign "start"
+    :space-evenly false
+    (leftmenu)
+  )
+)
+
 (defwidget leftmenu []
-  (eventbox
-    :class "leftmenu"
-    :onclick "${workspaces_reveal ? (EWW_CMD + ` update workspaces_reveal=false`) : (EWW_CMD + ` update workspaces_reveal=true`)}"
-    (box
-      :space-evenly false
-      :halign "start"
-      :class "leftmenu"
-      (label
-        :text ""
+  (box 
+    :space-evenly false
+    (eventbox
+      :onclick "${workspaces_reveal ? (EWW_CMD + ` update workspaces_reveal=false`) : (EWW_CMD + ` update workspaces_reveal=true`)}"
+      (box
+        :space-evenly false
+        :halign "start"
         :class "leftmenu"
-        :width 38
-        :height 10
-        :xalign 0.40
-        :wrap true
+        (label
+          :text ""
+          :class "leftmenu"
+          :width 37
+          :height 30
+          :xalign 0.44
+          :wrap true
+        )
+        (revealer
+          :reveal workspaces_reveal
+          :transition "slideright"
+          :class "leftmenu"
+          (workspaces)
+        )
       )
-      (revealer
-        :reveal workspaces_reveal
-        :transition "slideright"
-        :class "leftmenu"
-        (workspaces)
+    )
+    (label
+      :text "|"
+      :class "lefthandle"
+    )
+  )
+)
+
+(defwidget workspaces []
+  (box
+    :halign "start"
+    :space-evenly false
+    :class "workspaces"
+    (label
+      :text "${workspaces} ${current_workspace}"
+      :visible false
+      :class "workspaces"
+    )
+    (for workspace in workspaces
+      (button :onclick "hyprctl dispatch workspace ${workspace.id}"
+        (box
+          :class "${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+          (label
+            :text "${workspace.id == current_workspace ? "󱓻" : "" + workspace.windows > 0 ? "󱓻" : "󱓼"}"
+          )
+        )
+      )
+    )
+    (label
+      :text "|"
+      :class "lefthandle"
+    )
+  )
+)
+
+
+
+
+;;=========================================;;
+;;=============- CENTER PART -=============;;
+;;=========================================;;
+
+(defwidget middle []
+  (box 
+    :hexpand true
+    :halign "center"
+    :space-evenly false
+    (window_w)
+  )
+)
+
+(defwidget window_w []
+  (eventbox
+    :onclick "anyrun &"
+    :halign "fill"
+    :hexpand true
+    (box
+      :class "window_w"
+      (label
+        :text "${window}"
+        :limit-width "70"
+        :width "650"
       )
     )
   )
 )
 
-(defvar storage_reveal false)
+
+
+
+;;=========================================;;
+;;=============- RIGHT  PART -=============;;
+;;=========================================;;
+
+(defwidget right []
+  (box 
+    :hexpand false
+    :halign "end"
+    :space-evenly false
+    (time)
+    (rightmenu)
+  )
+)
+
 (defwidget rightmenu []
-  (box :class "rightmenu_box"
+  (box
+    :space-evenly false
     (eventbox
       :onhover "${EWW_CMD} update storage_reveal=true"
       :onhoverlost "${EWW_CMD} update storage_reveal=false"
@@ -107,45 +175,19 @@
   )
 )
 
-(deflisten window :initial "..." "sh scripts/get-window-title")
-(defwidget window_w []
-  (eventbox
-    :onclick "anyrun &"
-    :halign "fill"
-    :hexpand true
-    (box
-      :class "window_w"
-      (label
-        :text "${window}"
-        :limit-width "70"
-        :width "650"
-      )
-    )
-  )
-)
-
-(deflisten workspaces :initial "[]" "sh scripts/get-workspaces")
-(deflisten current_workspace :initial "[]" "sh scripts/get-active-workspace")
-(defwidget workspaces []
+(defwidget storage []
   (box
-    :halign "start"
+    :class "storage"
     :space-evenly false
-    :spacing 1
-    :class "workspaces"
-    (label
-      :text "${workspaces} ${current_workspace}"
-      :visible false)
-    (for workspace in workspaces
-      (button :onclick "hyprctl dispatch workspace ${workspace.id}"
-        (box :class "${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
-          (label :text "${workspace.id == current_workspace ? "󱓻" : "" + workspace.windows > 0 ? "󱓻" : "󱓼"}")
-        )
-      )
-    )
+    :vexpand true
+    :spacing 4
+    (root_usage)
+    (home_usage)
+    (ssd_usage)
+    (sshd_usage)
   )
 )
 
-(defvar root_usage_reveal "false")
 (defwidget root_usage []
   (eventbox
     :onhover "${EWW_CMD} update root_usage_reveal=true"
@@ -171,7 +213,6 @@
   )
 )
 
-(defvar home_usage_reveal "false")
 (defwidget home_usage []
   (eventbox
     :onhover "${EWW_CMD} update home_usage_reveal=true"
@@ -197,7 +238,6 @@
   )
 )
 
-(defvar ssd_usage_reveal "false")
 (defwidget ssd_usage []
   (eventbox
     :onhover "${EWW_CMD} update ssd_usage_reveal=true"
@@ -223,7 +263,6 @@
   )
 )
 
-(defvar sshd_usage_reveal "false")
 (defwidget sshd_usage []
   (eventbox
     :onhover "${EWW_CMD} update sshd_usage_reveal=true"
@@ -249,51 +288,76 @@
   )
 )
 
-(defwidget storage []
+(defwidget time []
   (box
-    :class "storage"
+    :class "rightmenu_box"
     :space-evenly false
-    :vexpand true
-    :spacing 4
-    (root_usage)
-    (home_usage)
-    (ssd_usage)
-    (sshd_usage)
+    (label
+      :text "|"
+      :class "righthandle"
+    )
+    (eventbox
+      :onhover "${EWW_CMD} update date_reveal=true"
+      :onhoverlost "${EWW_CMD} update date_reveal=false"
+      :class "time"
+      (box
+        :space-evenly false
+        :class "time"
+        (revealer
+          :reveal date_reveal
+          :transition "slideleft"
+        )
+        (revealer
+          :reveal date_reveal
+          :transition "slideleft"
+          (box
+            :class "time"
+            :space-evenly false
+            (label
+              :text "${jour + jour-n + mois}"
+            )
+          )
+        )
+        (revealer
+          :reveal date_reveal
+          :transition "slideleft"
+          (label
+            :text "|"
+            :class "righthandle"
+          )
+        )
+        (label
+          :text time
+          :class "time"
+        )
+      )
+    )
+    (label
+      :text "|"
+      :class "righthandle"
+    )
   )
 )
 
-(defwidget left []
-  (box 
-    :hexpand false
-    :halign "start"
-    :space-evenly false
-    (leftmenu)
-  )
-)
 
-(defwidget middle []
-  (box 
-    :hexpand true
-    :halign "center"
-    :space-evenly false
-    (window_w)
-  )
-)
 
-(defwidget right []
-  (box 
-    :hexpand false
-    :halign "end"
-    :space-evenly false
-    (time)
-    (rightmenu)
-  )
-)
+
+;;=========================================;;
+;;============- FINAL  WIDGET -============;;
+;;=========================================;;
 
 (defwidget bar []
   (centerbox
+    :class "bar"
     (left)
     (middle)
     (right)
   )
 )
+
+
+
+
+;;=========================================;;
+;;=================- EOF -=================;;
+;;=========================================;;

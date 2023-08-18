@@ -10,12 +10,11 @@
     with pkgs;
     [
       cemu
-      #citra-canary
-      discord-canary
+      citra-canary
       dolphin-emu
       glfw-wayland
+      gpu-screen-recorder-gtk
       lutris
-      parsec-bin
       prismlauncher
       vkbasalt
       vkbasalt-cli
@@ -23,7 +22,8 @@
       steam-run
       tetrio-desktop
       yuzu-early-access
-      nix-gaming.osu-lazer-bin
+      #nix-gaming.osu-lazer-bin
+      osu-lazer-bin
       nix-gaming.proton-ge
     ];
 
