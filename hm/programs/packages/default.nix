@@ -12,7 +12,6 @@
       blender
       btop
       celluloid
-      cemu
       cinnamon.nemo
       dex
       discord-canary
@@ -31,9 +30,10 @@
       parsec-bin
       qbittorrent
       swww
+      termshark
       thunderbird-wayland
       webcord
-      wine-staging
+      wineWow64Packages.waylandFull
       hyprsome.default
 
       (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })

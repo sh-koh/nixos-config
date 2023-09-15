@@ -10,7 +10,6 @@
 
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    inputs.hyprland.nixosModules.default
     inputs.nur.nixosModules.nur
     inputs.stylix.nixosModules.stylix
     ./hardware-configuration.nix
@@ -86,7 +85,7 @@
       GBM_BACKEND = "nvidia-drm";
       LIBVA_DRIVER_NAME = "nvidia";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      __GL_SYNC_DISPLAY_DEVICE = "DP-3";
+      __GL_SYNC_DISPLAY_DEVICE = "DP-1";
       __GL_SYNC_TO_VBLANK = "1";
       __GL_YIELD = "USLEEP";
       __GL_GSYNC_ALLOWED = "1";
@@ -191,6 +190,7 @@
     docker = {
       enable = true;
       enableNvidia = true;
+      extraOptions = "--default-runtime=nvidia";
       enableOnBoot = false;
     };
   };
@@ -235,9 +235,11 @@
   # Configuration des programmes.
   programs = {
     dconf.enable = true;
+    command-not-found.enable = false;
     zsh.enable = lib.mkDefault true;
     noisetorch.enable = true;
     adb.enable = true;
+    wireshark.enable = true;
     gamescope = {
       enable = true;
       package = pkgs.gamescope;
@@ -270,7 +272,7 @@
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Shakoh";
-      extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" "kvm" "libvirtd" "docker" "adbusers" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" "kvm" "libvirtd" "docker" "wireshark" "adbusers" ];
     };
   };
   
@@ -287,8 +289,6 @@
     lm_sensors
     mate.mate-polkit
     nixd
-    nixdoc
-    nix-index
     num-utils
     slurp
     socat
@@ -402,7 +402,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs outputs; };
     users.shakoh = import ../../hm/default.nix;
   };
 

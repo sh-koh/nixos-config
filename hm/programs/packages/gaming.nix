@@ -11,6 +11,7 @@
     [
       cemu
       citra-canary
+      #davinci-resolve
       dolphin-emu
       glfw-wayland
       gpu-screen-recorder-gtk

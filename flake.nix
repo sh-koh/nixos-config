@@ -29,10 +29,7 @@
 
     # Hyprland and hyprsome
     hyprsome.url = "github:sopa0/hyprsome";
-    hyprland = {
-      url = "github:hyprwm/hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland.url = "github:hyprwm/hyprland";
 
     anyrun = {
       url = "github:kirottu/anyrun";

@@ -20,14 +20,14 @@
 
   xdg.dataFile = {
     wine-ge = let
-      version = "GE-Proton8-13";
+      version = "GE-Proton8-14";
       name = "wine-lutris-${version}-x86_64";
     in {
       recursive = false;
       target = "lutris/runners/wine/${name}";
       source = builtins.fetchTarball {
         url = "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/${version}/${name}.tar.xz";
-        sha256 = "1chrhh1wlhsqjacpvpi4bqp20920k408hfsybli4s2pcgn15kk34";
+        sha256 = "1xfxvd7wd1siwladlcxxwwrmvf14q7x2ll17r69j5dmb2pj0dcc0";
       };
     };
   };
