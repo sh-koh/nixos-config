@@ -52,16 +52,15 @@
     opentabletdriver.enable = true;
     opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl libvdpau nvidia-vaapi-driver libva egl-wayland ];
     };
     nvidia = {
-      package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.latest;
       modesetting.enable = true;
       nvidiaSettings = false;
       powerManagement.enable = true;
       open = true;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
     };
   };
 }

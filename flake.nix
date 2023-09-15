@@ -23,9 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Elkowar's EWW + temporary workaround rust-overlay: https://github.com/elkowar/eww/issues/817
-    eww.url = "github:patrickshaw/eww";
-    eww.inputs.nixpkgs.follows = "nixpkgs";
+    # Aylur's AGS
+    ags.url = "github:aylur/ags";
 
     # Hyprland and hyprsome
     hyprsome.url = "github:sopa0/hyprsome";
@@ -62,10 +61,10 @@
   , stylix
   , nixvim
   , home-manager
-  , eww
   , rust-overlay
   , hyprsome
   , hyprland
+  , ags
   , anyrun
   , ...
   } @inputs:

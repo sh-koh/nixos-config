@@ -17,7 +17,7 @@
     ./neovim/default.nix
     ./git/default.nix
     ./hyprland/default.nix
-    ./eww/iceberg.nix
+    #./eww/iceberg.nix
   ];
 
   gtk = {

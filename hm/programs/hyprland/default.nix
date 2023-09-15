@@ -10,18 +10,13 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    enableNvidiaPatches = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    plugins = [
-      #split-monitor-workspaces
-    ];
     extraConfig = with config.lib.stylix.colors; ''
       monitor=DP-1, 1920x1080@240, auto, 1
       workspace=DP-1, 11
       workspace=HDMI-1-A, 1
 
       # Execute your favorite apps at launch
-      exec-once = eww open-many bar clock date
+      exec-once = ags
       exec-once = dunst
       exec-once = swww init
       exec-once = sleep 2 && swww img ${config.stylix.image}

@@ -12,6 +12,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.nur.nixosModules.nur
     inputs.stylix.nixosModules.stylix
+    inputs.hyprland.nixosModules.default
     ./hardware-configuration.nix
   ];
   
@@ -20,9 +21,25 @@
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "max";
     loader.efi.canTouchEfiVariables = true;
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
-    kernelParams = [ "amd_iommu=on" "iommu=pt" "mitigations=off" "tsc=reliable" "clocksource=tsc" "spectre_v2=off" "pcie_aspm.policy=performance" ];
-    kernelModules = [ "kvm-amd" "kvm" "vfio_pci" "vfio" "vfio_virqfd" "vfio_iommu_type1" "acpi-cpufreq" ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    kernelParams = [
+      "amd_iommu=on"
+      "iommu=pt"
+      "mitigations=off"
+      "tsc=reliable"
+      "clocksource=tsc"
+      "spectre_v2=off"
+      "pcie_aspm.policy=performance"
+    ];
+    kernelModules = [
+      "kvm-amd"
+      "kvm"
+      "vfio_pci"
+      "vfio"
+      "vfio_virqfd"
+      "vfio_iommu_type1"
+      "acpi-cpufreq"
+    ];
     extraModprobeConfig = ''
       options nvidia NVreg_UsePageAttributeTable=1
       options nvidia NVreg_InitializeSystemMemoryAllocations=1
@@ -239,7 +256,18 @@
     zsh.enable = lib.mkDefault true;
     noisetorch.enable = true;
     adb.enable = true;
-    wireshark.enable = true;
+
+    wireshark = {
+      enable = true;
+      #package = pkgs.wireshark;
+    };
+
+    hyprland = {
+      enable = true;
+      enableNvidiaPatches = true;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland-nvidia;
+    };
+
     gamescope = {
       enable = true;
       package = pkgs.gamescope;
@@ -292,6 +320,7 @@
     num-utils
     slurp
     socat
+    termshark
     virt-manager
     vulkan-headers
     vulkan-validation-layers
@@ -423,12 +452,6 @@
       experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
       builders-use-substitutes = true;
-    };
-
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
     };
   };
 
