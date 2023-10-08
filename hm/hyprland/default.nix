@@ -6,22 +6,18 @@
 , outputs
 , ...
 }:
-{
-
-  wayland.windowManager.hyprland = {
+{ wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = with config.lib.stylix.colors; ''
-      monitor=DP-1, 1920x1080@240, auto, 1
-      workspace=DP-1, 11
-      workspace=HDMI-1-A, 1
+      monitor = DP-1, 1920x1080@240, auto, 1
+      monitor = HDMI-1-A, 2560x1080@60, auto, 1
 
-      # Execute your favorite apps at launch
-      exec-once = ags
+      exec-once = eww open-many bar clock date
       exec-once = dunst
       exec-once = swww init
       exec-once = sleep 2 && swww img ${config.stylix.image}
       exec-once = firefox
-      exec-once = sleep 2 && noisetorch -i
+      exec-once = sleep 3 && noisetorch -i
       exec-once = xrandr --output DP-1 --primary
       exec-once = /nix/store/$(ls -la /nix/store | grep 'mate-polkit' | grep '4096' | awk '{print $9}' | sed -n '$p')/libexec/polkit-mate-authentication-agent-1
 
@@ -34,7 +30,6 @@
         follow_mouse = 1
         sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
         force_no_accel = 1
-
         touchpad {
           natural_scroll = yes
         }
@@ -63,6 +58,12 @@
         animation = workspaces, 1, 3, myBezier
       }
 
+      decoration {
+        blur {
+          enabled = false
+        }
+      }
+
       misc {
         disable_hyprland_logo = true
         disable_splash_rendering = true
@@ -88,7 +89,12 @@
         workspace_swipe = on
       }
 
+      # Variables
       $mainMod = SUPER
+
+      # Move/resize windows with mainMod + LMB/RMB and dragging
+      bindm = $mainMod, mouse:272, movewindow
+      bindm = $mainMod, mouse:273, resizewindow
 
       # Binds
       bind = $mainMod, Tab, exec, $HOME/.config/hypr/layoutswitch
@@ -110,24 +116,24 @@
       bind = $mainMod, O, workspace, m-1
 
       # Binding workspaces for hyprsome
-      workspace = 1, monitor:HDMI-1-A
-      workspace = 2,monitor:HDMI-1-A
-      workspace = 3,monitor:HDMI-1-A
-      workspace = 4,monitor:HDMI-1-A
-      workspace = 5,monitor:HDMI-1-A
-      workspace = 6,monitor:HDMI-1-A
-      workspace = 7,monitor:HDMI-1-A
-      workspace = 8,monitor:HDMI-1-A
-      workspace = 9,monitor:HDMI-1-A
-      workspace = 11,monitor:DP-1
-      workspace = 12,monitor:DP-1
-      workspace = 13,monitor:DP-1
-      workspace = 14,monitor:DP-1
-      workspace = 15,monitor:DP-1
-      workspace = 16,monitor:DP-1
-      workspace = 17,monitor:DP-1
-      workspace = 18,monitor:DP-1
-      workspace = 19,monitor:DP-1
+      workspace = 1, monitor:HDMI-1-A, default:true
+      workspace = 2, monitor:HDMI-1-A
+      workspace = 3, monitor:HDMI-1-A
+      workspace = 4, monitor:HDMI-1-A
+      workspace = 5, monitor:HDMI-1-A
+      workspace = 6, monitor:HDMI-1-A
+      workspace = 7, monitor:HDMI-1-A
+      workspace = 8, monitor:HDMI-1-A
+      workspace = 9, monitor:HDMI-1-A
+      workspace = 11, monitor:DP-1, default:true
+      workspace = 12, monitor:DP-1
+      workspace = 13, monitor:DP-1
+      workspace = 14, monitor:DP-1
+      workspace = 15, monitor:DP-1
+      workspace = 16, monitor:DP-1
+      workspace = 17, monitor:DP-1
+      workspace = 18, monitor:DP-1
+      workspace = 19, monitor:DP-1
 
       # Switch workspaces 
       bind = $mainMod, 1, exec, hyprsome workspace 1
@@ -139,7 +145,6 @@
       bind = $mainMod, 7, exec, hyprsome workspace 7
       bind = $mainMod, 8, exec, hyprsome workspace 8
       bind = $mainMod, 9, exec, hyprsome workspace 9
-      bind = $mainMod, 0, exec, hyprsome workspace 10
 
       # Take active window with you to a workspace with Mod + Ctrl 
       bind = $mainMod CTRL, 1, exec, hyprsome movefocus 1
@@ -151,7 +156,6 @@
       bind = $mainMod CTRL, 7, exec, hyprsome movefocus 7
       bind = $mainMod CTRL, 8, exec, hyprsome movefocus 8
       bind = $mainMod CTRL, 9, exec, hyprsome movefocus 9
-      bind = $mainMod CTRL, 0, exec, hyprsome movefocus 10
 
       # Send active window to a workspace with Mod + Shift
       bind = $mainMod SHIFT, 1, exec, hyprsome move 1
@@ -163,16 +167,9 @@
       bind = $mainMod SHIFT, 7, exec, hyprsome move 7
       bind = $mainMod SHIFT, 8, exec, hyprsome move 8
       bind = $mainMod SHIFT, 9, exec, hyprsome move 9
-      bind = $mainMod SHIFT, 0, exec, hyprsome move 10
 
-      # Move/resize windows with mainMod + LMB/RMB and dragging
-      bindm = $mainMod, mouse:272, movewindow
-      bindm = $mainMod, mouse:273, resizewindow
-
-      workspace = 11,monitor:DP-1,default:true
-      workspace = 1,monitor:HDMI-A-1,default:true
-
+      workspace = HDMI-A-1, 1
+      workspace = DP-1, 11
     '';
   };
-
 }

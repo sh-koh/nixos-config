@@ -204,9 +204,6 @@
     slurp
     socat
     virt-manager
-    vulkan-headers
-    vulkan-validation-layers
-    vulkan-extension-layer
     wbg
     wget
     wl-clipboard

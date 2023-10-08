@@ -12,10 +12,21 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.nur.nixosModules.nur
     inputs.stylix.nixosModules.stylix
-    inputs.hyprland.nixosModules.default
     ./hardware-configuration.nix
   ];
-  
+
+  nix = {
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs; # Ajoute chaque inputs de la flake système dans les registres nix.
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry; # Permet l'utilisation des commandes 'legacy' avec les flakes d'actives.
+    settings = {
+      trusted-users = [ "root" "@wheel" ];
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
+      builders-use-substitutes = true;
+    };
+  };
+
+
   # Bootloader.
   boot = {
     loader.systemd-boot.enable = true;
@@ -26,10 +37,7 @@
       "amd_iommu=on"
       "iommu=pt"
       "mitigations=off"
-      "tsc=reliable"
-      "clocksource=tsc"
       "spectre_v2=off"
-      "pcie_aspm.policy=performance"
     ];
     kernelModules = [
       "kvm-amd"
@@ -44,17 +52,20 @@
       options nvidia NVreg_UsePageAttributeTable=1
       options nvidia NVreg_InitializeSystemMemoryAllocations=1
       options nvidia NVreg_EnableGpuFirmware=1
-      options nvidia NVreg_OpenRmEnableUnsupportedGpus=1
+      options nvidia NVreg_EnablePCIeGen3=1
+      options nvidia NVreg_EnableMSI=1
       options nvidia NVreg_RegistryDwords="PowerMizerEnable=0x1; PowerMizerLevel=0x3; PowerMizerDefault=0x3; PowerMizerDefaultAC=0x3; PerfLevelSrc=0x3333; OverrideMaxPerf=0x1"
     '';
     blacklistedKernelModules = [ "nouveau" "wacom" ];
     kernel.sysctl  = { "vm.max_map_count" = "16777216"; };
+    initrd.systemd.dbus.enable = true;
   };
 
   # Configuration réseau.
   networking = {
     hostName = "atrebois";
     networkmanager.enable = true;
+    wireless.enable = false;
     enableIPv6 = false;
     firewall = {
       enable = true;
@@ -98,7 +109,6 @@
   # Environment and session variables  
   environment = { 
     variables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${inputs.nix-gaming.packages.${pkgs.system}.proton-ge}";
       GBM_BACKEND = "nvidia-drm";
       LIBVA_DRIVER_NAME = "nvidia";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -124,20 +134,19 @@
       QT_QPA_PLATFORM = "wayland;xcb";
       SDL_VIDEODRIVER = "wayland,x11";
       WLR_NO_HARDWARE_CURSORS = "1";
-      WLR_RENDERER = "vulkan";
       CLUTTER_BACKEND = "wayland";
       MOZ_ENABLE_WAYLAND = "1";
       MOZ_WEBRENDER = "1";
-      GDK_BACKEND = "wayland";
+      GDK_BACKEND = "wayland,x11";
       KITTY_ENABLE_WAYLAND = "1";
     };
   };
 
-  # Remplacement de 'sudo' par 'opendoas' et rtkit pour pipewire en temps réel.
+  # Remplacement de 'sudo' par 'opendoas'.
   security = {
+    rtkit.enable = true;
     sudo.enable = false;
     polkit.enable = true;
-    rtkit.enable = true;
     doas.enable = true;
     doas.extraRules = [{
       users = [ "shakoh" ];
@@ -150,7 +159,8 @@
   services = {
     getty.autologinUser = "shakoh";
     fstrim.enable = true;
-
+    dbus.enable = true;
+    dbus.implementation = "broker";
     xserver = {
       videoDrivers = [ "nvidia" ];
       layout = "us";
@@ -163,18 +173,11 @@
 
     pipewire = {
       enable = true;
+      audio.enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
       wireplumber.enable = true;
-    };
-
-    openssh = {
-      settings = {
-        enable = true;
-        permitRootLogin = "no";
-        passwordAuthentication = false;
-      };
     };
 
     zerotierone = {
@@ -186,11 +189,6 @@
       enable = true;
       drivers = [ pkgs.epson-escpr ];
       defaultShared = true;
-    };
-
-    dbus = {
-      enable = true;
-      implementation = "broker";
     };
   };
 
@@ -256,24 +254,19 @@
     zsh.enable = lib.mkDefault true;
     noisetorch.enable = true;
     adb.enable = true;
-
     wireshark = {
       enable = true;
       #package = pkgs.wireshark;
     };
-
     hyprland = {
       enable = true;
       enableNvidiaPatches = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland-nvidia;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
-
     gamescope = {
       enable = true;
-      package = pkgs.gamescope;
       capSysNice = true;
     };
-
     gamemode = {
       enable = true;
       enableRenice = true;
@@ -300,7 +293,7 @@
       shell = pkgs.zsh;
       isNormalUser = true;
       description = "Shakoh";
-      extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" "kvm" "libvirtd" "docker" "wireshark" "adbusers" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "audio" "input" "kvm" "libvirtd" "docker" "adbusers" ];
     };
   };
   
@@ -313,18 +306,25 @@
     git
     git-crypt
     grim
+    jaq
     jq
+    libcamera
     lm_sensors
     mate.mate-polkit
     nixd
     num-utils
+    pciutils
+    ripgrep
     slurp
     socat
     termshark
     virt-manager
+    usbutils
     vulkan-headers
     vulkan-validation-layers
     vulkan-extension-layer
+    wayland
+    wayland-protocols
     wbg
     wget
     wl-clipboard
@@ -335,7 +335,6 @@
 
   # Portails XDG pour les interactions interapplications.
   xdg = {
-    sounds.enable = true;
     portal = {
       enable = true;
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -441,18 +440,8 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
+      outputs.overlays.stable-packages
     ];
-  };
-
-  nix = {
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs; # Ajoute chaque inputs de la flake système dans les registres nix.
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry; # Permet l'utilisation des commandes 'legacy' avec les flakes d'actives.
-    settings = {
-      trusted-users = [ "root" "@wheel" ];
-      experimental-features = [ "nix-command" "flakes" ];
-      auto-optimise-store = true;
-      builders-use-substitutes = true;
-    };
   };
 
   # https://nixos.org/nixos/options.html

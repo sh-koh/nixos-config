@@ -2,11 +2,9 @@
   description = "Shakoh's nixos configuration flake";
 
   inputs = {
-    # Nixpkgs
+    # Nixpkgs et Nixpkgs-Stable
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # Nix gaming
-    nix-gaming.url = "github:fufexan/nix-gaming";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
     # Nix User Repository
     nur.url = "github:nix-community/NUR";
@@ -23,17 +21,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Aylur's AGS
-    ags.url = "github:aylur/ags";
-
-    # Hyprland and hyprsome
-    hyprsome.url = "github:sopa0/hyprsome";
+    # Hyprland and tools
     hyprland.url = "github:hyprwm/hyprland";
-
-    anyrun = {
-      url = "github:kirottu/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprsome.url = "github:sopa0/hyprsome";
+    anyrun.url = "github:kirottu/anyrun";
+    eww.url = "github:patrickshaw/eww";
   };
 
   nixConfig = {
@@ -52,52 +44,29 @@
     ];
   };
 
-  outputs = {
-    self
-  , nixpkgs
-  , nix-gaming
-  , dipc
-  , nur
-  , stylix
-  , nixvim
-  , home-manager
-  , rust-overlay
-  , hyprsome
-  , hyprland
-  , ags
-  , anyrun
-  , ...
-  } @inputs:
-  let
+  outputs = { self, nixpkgs, ... }@inputs:
+    let
       inherit (self) outputs;
-      forAllSystems = nixpkgs.lib.genAttrs [
+      systems = [
         "aarch64-linux"
         "i686-linux"
         "x86_64-linux"
         "aarch64-darwin"
         "x86_64-darwin"
       ];
-    in
-    rec {
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in {
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; }
-        );
-
-      # Devshell for bootstrapping
-      # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
-        );
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
+
       # Reusable nixos modules you might want to export
       # These are usually stuff you would upstream into nixpkgs
       nixosModules = import ./modules/nixos;
+
       # Reusable home-manager modules you might want to export
       # These are usually stuff you would upstream into home-manager
       homeManagerModules = import ./modules/home-manager;
@@ -107,15 +76,11 @@
       nixosConfigurations = {
         atrebois = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/atrebois/default.nix
-          ];
+          modules = [ ./hosts/atrebois/default.nix ];
         };
         rocaille = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/rocaille/default.nix
-          ];
+          modules = [ ./hosts/rocaille/default.nix ];
         };
       };
     };

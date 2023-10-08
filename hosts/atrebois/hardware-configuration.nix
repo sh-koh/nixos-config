@@ -48,7 +48,6 @@
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     bluetooth.enable = true;
     logitech.wireless.enable = true;
-    keyboard.qmk.enable = true;
     opentabletdriver.enable = true;
     opengl = {
       enable = true;
@@ -58,7 +57,7 @@
     nvidia = {
       modesetting.enable = true;
       nvidiaSettings = false;
-      powerManagement.enable = true;
+      powerManagement.enable = false;
       open = true;
       package = config.boot.kernelPackages.nvidiaPackages.production;
     };
