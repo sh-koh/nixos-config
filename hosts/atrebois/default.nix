@@ -125,7 +125,6 @@
       EDITOR = "nvim";
       #VISUAL = "codium";
       WLR_NO_HARDWARE_CURSORS = "1";
-      WLR_RENDERER = "vulkan";
       XDG_CURRENT_DESKTOP = "river";
       XDG_SESSION_DESKTOP = "river";
       XDG_SESSION_TYPE = "wayland";
@@ -263,6 +262,7 @@
         mate.mate-polkit
         mpv
         ristate-git
+        rivercarro
         slurp
         swww
         wl-clipboard

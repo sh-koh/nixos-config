@@ -22,6 +22,19 @@
         hash = "sha256-7cYLP2FID/DW4A06/Ujtqp2LE7NlHwaymQLiIA8xrMk=";
       };
     });
+    rivercarro = prev.rivercarro.overrideAttrs (oldAttrs: {
+      version = "0.3.0-dev";
+      src = prev.fetchFromSourcehut {
+        owner = "~novakane";
+        repo = "rivercarro";
+        rev = "80765efdefea5f82578c784050c0ba89d52698c5";
+        fetchSubmodules = true;
+        hash = "sha256-3jKBt88cRFBypTWweFLBO7FdH3KLTGNF4wnMJWAZMco=";
+      };
+      nativeBuildInputs = [
+        final.pkg-config final.river final.wayland final.wayland-protocols final.zig_0_10.hook
+      ];
+    });
     godot_4_updated = prev.godot_4.overrideAttrs (oldAttrs: {
       version = "4.1.2";
       commitHash = "399c9dc393f6f84c0b4e4d4117906c70c048ecf2";

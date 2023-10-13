@@ -14,7 +14,7 @@
     ./neovim/default.nix
     ./git/default.nix
     #./hyprland/default.nix
-    #./eww/default.nix
+    ./eww/default.nix
     ./river/default.nix
   ];
 
