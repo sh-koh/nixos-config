@@ -13,7 +13,7 @@
       width = {absolute = 656; };
       height = { absolute = 350; };
       x = { fraction = 0.5; };
-      y = { fraction = 0.17; };
+      y = { fraction = 0.5; };
       hideIcons = false;
       ignoreExclusiveZones = false;
       layer = "overlay";

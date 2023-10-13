@@ -13,8 +13,9 @@
     ./kitty/default.nix
     ./neovim/default.nix
     ./git/default.nix
-    ./hyprland/default.nix
-    #./eww/iceberg.nix
+    #./hyprland/default.nix
+    #./eww/default.nix
+    ./river/default.nix
   ];
 
   home = {
@@ -22,37 +23,24 @@
     homeDirectory = "/home/shakoh";
   };
 
-  home.packages =
-    let
-      hyprsome = inputs.hyprsome.packages.${pkgs.system};
-      eww = inputs.eww.packages.${pkgs.system};
-    in
-    with pkgs;
-    [
-      blender
-      btop
-      celluloid
-      discord-canary
-      eww.eww-wayland
-      firefox
-      gimp
-      grc
-      hyprsome.default
-      imv
-      lf
-      libreoffice
-      molotov
-      obs-studio
-      parsec-bin
-      pcmanfm
-      qbittorrent
-      swww
-      thunderbird
+  home.packages = with pkgs; [
+    blender
+    discord-canary
+    firefox
+    gimp
+    libreoffice
+    molotov
+    obs-studio
+    parsec-bin
+    qbittorrent
+    thunderbird
+
+    inputs.eww.packages.${pkgs.system}.eww-wayland
 
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    ];
+  ];
 
     
   programs = {
@@ -107,7 +95,7 @@
       webcord = {
         name = "WebCord";
         icon = "webcord";
-        exec = "env NIXOS_OZONE_WL= webcord --use-gl=desktop --no-sandbox --enable-gpu-rasterization --enable-zero-copy";
+        exec = "env NIXOS_OZONE_WL= webcord --use-gl=desktop";
       };
     };
   };
@@ -126,8 +114,7 @@
 
   qt = {
     enable = true;
-    style.package = pkgs.libsForQt5.breeze-qt5;
-    style.name = "breeze";
+    platformTheme = "gtk";
   };
 
   home.pointerCursor = {
@@ -137,6 +124,7 @@
     gtk.enable = true;
     size = 16;
   };
+
   # Reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 

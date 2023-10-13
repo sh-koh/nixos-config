@@ -52,7 +52,7 @@
     opengl = {
       enable = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl libvdpau nvidia-vaapi-driver libva egl-wayland ];
+      extraPackages = with pkgs; [ nv-codec-headers-12 vaapiVdpau libvdpau-va-gl libvdpau nvidia-vaapi-driver libva egl-wayland ];
     };
     nvidia = {
       modesetting.enable = true;

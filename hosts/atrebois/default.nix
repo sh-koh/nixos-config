@@ -5,9 +5,7 @@
   inputs,
   outputs,
   ...
-}:
-{
-
+}: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.nur.nixosModules.nur
@@ -25,7 +23,6 @@
       builders-use-substitutes = true;
     };
   };
-
 
   # Bootloader.
   boot = {
@@ -58,7 +55,6 @@
     '';
     blacklistedKernelModules = [ "nouveau" "wacom" ];
     kernel.sysctl  = { "vm.max_map_count" = "16777216"; };
-    initrd.systemd.dbus.enable = true;
   };
 
   # Configuration réseau.
@@ -127,13 +123,14 @@
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
       EDITOR = "nvim";
-      VISUAL = "codium";
+      #VISUAL = "codium";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      WLR_RENDERER = "vulkan";
+      XDG_CURRENT_DESKTOP = "river";
+      XDG_SESSION_DESKTOP = "river";
       XDG_SESSION_TYPE = "wayland";
-      XDG_CURRENT_DESKTOP = "Hyprland";
-      XDG_SESSION_DESKTOP = "Hyprland";
       QT_QPA_PLATFORM = "wayland;xcb";
       SDL_VIDEODRIVER = "wayland,x11";
-      WLR_NO_HARDWARE_CURSORS = "1";
       CLUTTER_BACKEND = "wayland";
       MOZ_ENABLE_WAYLAND = "1";
       MOZ_WEBRENDER = "1";
@@ -157,7 +154,6 @@
 
   # Services et démons
   services = {
-    getty.autologinUser = "shakoh";
     fstrim.enable = true;
     dbus.enable = true;
     dbus.implementation = "broker";
@@ -254,14 +250,28 @@
     zsh.enable = lib.mkDefault true;
     noisetorch.enable = true;
     adb.enable = true;
+    river = {
+      enable = true;
+      #package = ;
+      extraPackages = with pkgs; [
+        btop
+        dunst
+        grim
+        imv
+        jq
+        lf
+        mate.mate-polkit
+        mpv
+        ristate-git
+        slurp
+        swww
+        wl-clipboard
+        wlr-randr
+      ];
+    };
     wireshark = {
       enable = true;
       #package = pkgs.wireshark;
-    };
-    hyprland = {
-      enable = true;
-      enableNvidiaPatches = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
     gamescope = {
       enable = true;
@@ -302,21 +312,16 @@
     coreutils
     curl
     docker-compose
-    fd
+    ffmpeg-full
     git
     git-crypt
     grim
-    jaq
     jq
     libcamera
     lm_sensors
-    mate.mate-polkit
     nixd
     num-utils
     pciutils
-    ripgrep
-    slurp
-    socat
     termshark
     virt-manager
     usbutils
@@ -325,21 +330,11 @@
     vulkan-extension-layer
     wayland
     wayland-protocols
-    wbg
     wget
-    wl-clipboard
     xdg-user-dirs
     xdg-utils
     xorg.xrandr
   ];
-
-  # Portails XDG pour les interactions interapplications.
-  xdg = {
-    portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    };
-  };
 
   # Thème avec 'Stylix'.
   gtk.iconCache.enable = true;
@@ -421,6 +416,26 @@
     }; 
   };
 
+  xdg = {
+    portal = {
+      enable = lib.mkForce true;
+      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+      wlr = {
+        enable = true;
+        settings = {
+          screencast = {
+            output_name = "DP-1";
+            max_fps = 60;
+            #exec_before = "disable_notifications.sh";
+            #exec_after = "enable_notifications.sh";
+            chooser_type = "simple";
+            chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+          };
+        };
+      };
+    };
+  };
+
   # Polices.
   fonts = {
     packages = with pkgs; [ jetbrains-mono lexend nerdfonts ];
@@ -446,5 +461,4 @@
 
   # https://nixos.org/nixos/options.html
   system.stateVersion = "23.05";
-
 }
