@@ -138,7 +138,7 @@
         firefox &
         sleep 5 && noisetorch -i &
         ${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1 &
-        ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --primary &
+        ${lib.getExe pkgs.xorg.xrandr} --output DP-1 --primary &
         exec rivercarro
       '';
     };
