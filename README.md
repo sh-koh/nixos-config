@@ -1,7 +1,7 @@
 <h1 align="center">Shakoh's NixOS configuration files</h1>
 
 ## 🗿 Desktop
-- WM: [river](https://github.com/riverwm/river)
+- Compositor: [river](https://github.com/riverwm/river)
 - Font: [jetbrains-mono](https://github.com/JetBrains/JetBrainsMono)
 - Term: [kitty](https://github.com/kovidgoyal/kitty)
 - Bar/Widgets: [eww](https://github.com/elkowar/eww)
