@@ -35,8 +35,6 @@
     qbittorrent
     thunderbird
 
-    inputs.eww.packages.${pkgs.system}.eww-wayland
-
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
