@@ -13,7 +13,7 @@
 - Task manager: [btop](https://github.com/aristocratos/btop)
 - Image viewer: [imv](https://sr.ht/~exec64/imv)
 - Video player: [mpv](https://github.com/mpv-player/mpv)
-- GTK Theme: adw-gtk3 with mountain peek using [stylix](https://github.com/danth/stylix)
+- GTK Theme: adw-gtk3 with [stylix](https://github.com/danth/stylix)
 - Color scheme: [iceberg](https://github.com/cocopon/iceberg.vim)
 
 <img src="https://cdn.discordapp.com/attachments/885297123669716992/1162744522053271672/image.png?ex=653d0d38&is=652a9838&hm=775539441a973e4f1a3c451778cd83ae3b162fdf7c5f570b65a2b718fc454624&" alt="Desktop Preview">
