@@ -88,6 +88,7 @@
         :halign "center"
         :valign "center"
         :onclick "riverctl set-focused-tags $((1 << (${tag} - 1)))"
+        :onrightclick "riverctl toggle-focused-tags $((1 << (${tag} - 1)))"
         (box
           :class `${(tag =~ focused_tags ? "focused" : "${tag =~ used_tags ? 'used' : ''}")}`
           :halign "center"
