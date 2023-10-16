@@ -4,16 +4,7 @@
   inputs = {
     # Nixpkgs et Nixpkgs-Stable
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
-
-    # Nix User Repository
-    nur.url = "github:nix-community/NUR";
-
-    # Stylix
-    stylix.url = "github:danth/stylix";
-
-    # NixVim
-    nixvim.url = "github:nix-community/nixvim";
+    nixpkgs-master.url = "github:nixos/nixpkgs";
 
     # Home manager
     home-manager = {
@@ -21,9 +12,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Anyrun et Eww
+    # Stylix
+    stylix.url = "github:danth/stylix";
+
+    # NixVim
+    nixvim.url = "github:nix-community/nixvim";
+
+    # Anyrun
     anyrun.url = "github:kirottu/anyrun";
-    eww.url = "github:patrickshaw/eww";
   };
 
   nixConfig = {

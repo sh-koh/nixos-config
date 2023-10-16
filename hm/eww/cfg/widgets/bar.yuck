@@ -53,7 +53,7 @@
 
 (defwidget date_bar []
   (box
-    :space-evenly false
+    :space-evenly true
     :halign "center"
     :class "date_bar"
     (label

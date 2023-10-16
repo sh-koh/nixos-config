@@ -7,7 +7,7 @@
   modifications = final: prev: {
     discord-canary = prev.discord-canary.override { withOpenASAR = true; };
     nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-    wlroots_0_16 = prev.wlroots_0_16.overrideAttrs (oldAttrs: {
+    wlroots = prev.wlroots.overrideAttrs (oldAttrs: {
       extraPatch = builtins.fetchurl {
         url = "https://raw.githubusercontent.com/hyprwm/Hyprland/main/nix/patches/wlroots-nvidia.patch";
         sha256 = "0m8pw52r0x78xmpvb867w1gpadbn4qrm1737is7mp7p6ziyd3x0x";
@@ -47,8 +47,8 @@
     });
   };
 
-  stable-packages = final: _prev: {
-    stable = import inputs.nixpkgs-stable {
+  master-packages = final: _prev: {
+    master = import inputs.nixpkgs-master {
       system = final.system;
       config.allowUnfree = true;
     };

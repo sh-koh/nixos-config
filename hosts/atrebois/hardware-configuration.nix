@@ -1,14 +1,10 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}:
-{
-
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix") ];
+{ config
+, lib
+, pkgs
+, modulesPath
+, ...
+}: {
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   boot.supportedFilesystems = [ "ntfs" ];
@@ -38,29 +34,37 @@
     fsType = "btrfs";
   };
 
-  swapDevices = [ ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    nvidiaSettings = false;
+    nvidiaPersistenced = true;
+    powerManagement.enable = true;
+    open = true;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+  };
+  services.xserver.videoDrivers = [ "nvidia" ];
 
-  zramSwap.enable = true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     bluetooth.enable = true;
     logitech.wireless.enable = true;
-    opentabletdriver.enable = true;
     opengl = {
       enable = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [ nv-codec-headers-12 vaapiVdpau libvdpau-va-gl libvdpau nvidia-vaapi-driver libva egl-wayland ];
-    };
-    nvidia = {
-      modesetting.enable = true;
-      nvidiaSettings = false;
-      nvidiaPersistenced = true;
-      powerManagement.enable = true;
-      open = true;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      extraPackages = with pkgs; [
+        nv-codec-headers-12
+        vaapiVdpau
+        libvdpau-va-gl
+        libvdpau
+        nvidia-vaapi-driver
+        libva
+        egl-wayland
+      ];
     };
   };
+
+  swapDevices = [ ];
+  zramSwap.enable = true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

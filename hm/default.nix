@@ -90,11 +90,6 @@
         icon = "osu!";
         exec = "env SDL_VIDEODRIVER=x11 osu\!";
       };
-      webcord = {
-        name = "WebCord";
-        icon = "webcord";
-        exec = "env NIXOS_OZONE_WL= webcord --use-gl=desktop";
-      };
     };
   };
 
