@@ -72,11 +72,6 @@
   xdg = {
     enable = true;
     desktopEntries = {
-      discord-canary = {
-        name = "Discord Canary";
-        icon = "discord-canary";
-        exec = "discordcanary --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WebRTCPipeWireCapturer --ignore-gpu-blocklist --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy";
-      };
       steam = {
         name = "Steam";
         icon = "steam";
