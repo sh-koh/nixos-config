@@ -97,11 +97,6 @@
         icon = "osu!";
         exec = "env SDL_VIDEODRIVER=x11 osu\!";
       };
-      webcord = {
-        name = "WebCord";
-        icon = "webcord";
-        exec = "webcord --disable-gpu";
-      };
     };
   };
 
