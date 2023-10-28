@@ -11,8 +11,7 @@
     cemu
     citra-canary
     dolphin-emu
-    glfw-wayland
-    godot_4_updated
+    godot_4
     lutris
     prismlauncher
     vkbasalt

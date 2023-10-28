@@ -14,6 +14,7 @@
     kernelModules = [ "acpi-cpufreq" ];
     extraModprobeConfig = ''
       options nvidia NVreg_UsePageAttributeTable=1
+      options nvidia NVreg_PreserveVideoMemoryAllocations=1
       options nvidia NVreg_InitializeSystemMemoryAllocations=1
       options nvidia NVreg_EnableGpuFirmware=1
       options nvidia NVreg_EnablePCIeGen3=1

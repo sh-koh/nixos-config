@@ -19,7 +19,21 @@
       "vfio_iommu_type1"
     ];
   };
-  environment.systemPackages = with pkgs; [ docker-compose virt-manager ];
+
+  virtualisation.docker = {
+    enable = true;
+    enableNvidia = true;
+    extraOptions = "--default-runtime=nvidia";
+    enableOnBoot = false;
+  };
+
+  environment.systemPackages = with pkgs; [
+    docker-compose
+    virt-manager
+    win-spice
+    win-virtio
+  ];
+
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -29,13 +43,8 @@
         ovmf.packages = [ pkgs.OVMFFull.fd ];
       };
     };
-    docker = {
-      enable = true;
-      enableNvidia = true;
-      extraOptions = "--default-runtime=nvidia";
-      enableOnBoot = false;
-    };
   };
+
   environment.etc = {
     "ovmf/edk2-x86_64-secure-code.fd" = {
       source = config.virtualisation.libvirtd.qemu.package + "/share/qemu/edk2-x86_64-secure-code.fd";

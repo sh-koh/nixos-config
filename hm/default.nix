@@ -4,9 +4,7 @@
 , inputs
 , outputs
 , ...
-}:
-{
-
+}: {
   imports = [
     ./gaming.nix
     ./anyrun/default.nix
@@ -25,12 +23,12 @@
 
   home.packages = with pkgs; [
     blender
-    discord-canary
+    vesktop
     firefox
     gimp
     libreoffice
     molotov
-    obs-studio
+    obs-cli
     parsec-bin
     qbittorrent
     thunderbird
@@ -39,7 +37,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];
-
     
   programs = {
     zsh = {
@@ -51,7 +48,6 @@
         theme = "agnoster";
       };
     };
-
     tmux = {
       enable = true;
       shell = "${pkgs.zsh}/bin/zsh";
@@ -59,6 +55,17 @@
       clock24 = true;
       keyMode = "vi";
       plugins = with pkgs.tmuxPlugins; [{ plugin = vim-tmux-navigator; }];
+    };
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-nvfbc
+        obs-pipewire-audio-capture
+        obs-vaapi
+        obs-vkcapture
+        obs-websocket
+        wlrobs
+      ];
     };
   };
 
@@ -90,6 +97,11 @@
         icon = "osu!";
         exec = "env SDL_VIDEODRIVER=x11 osu\!";
       };
+      webcord = {
+        name = "WebCord";
+        icon = "webcord";
+        exec = "webcord --disable-gpu";
+      };
     };
   };
 
@@ -104,6 +116,8 @@
       package = pkgs.numix-cursor-theme;
     };
   };
+
+  xfconf.enable = false;
 
   qt = {
     enable = true;

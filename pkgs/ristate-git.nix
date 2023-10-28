@@ -2,7 +2,7 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "ristate-git";
-  version = "unstable-2023-23-08";
+  version = "git";
 
   src = fetchFromGitLab {
     owner = "snakedye";
@@ -11,5 +11,5 @@ rustPlatform.buildRustPackage rec {
     sha256 = "sha256-6slH7R6kbSXQBd7q38oBEbngaCbFv0Tyq34VB1PAfhM=";
   };
 
-  cargoSha256 = "sha256-UYkg0cewnxo8f5M2ZFZh1alEfKMAOO4doz1pGHGLLzU=";
+  cargoSha256 = "sha256-omQHSu97JjgCNxwLezFu53LHRUIbDe6jS31CUidxK2A=";
 }

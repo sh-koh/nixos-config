@@ -40,7 +40,7 @@
     nvidiaPersistenced = true;
     powerManagement.enable = true;
     open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 

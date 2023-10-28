@@ -34,6 +34,7 @@
         riverctl map normal Super W close
 
         riverctl map normal Super+Shift S spawn "slurp | grim -g - - | wl-copy"
+        riverctl map normal Super+Shift A spawn "obs-cli replaybuffer save"
 
         # Super+J and Super+K to focus the next/previous view in the layout stack
         riverctl map normal Super J focus-view next

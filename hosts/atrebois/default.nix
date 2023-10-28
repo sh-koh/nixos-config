@@ -28,15 +28,11 @@
       pulse.enable = true;
       wireplumber.enable = true;
     };
-    zerotierone = {
-      enable = true;
-      joinNetworks = [ "52b337794fa1f40e" ];
-    };
-    printing = {
-      enable = true;
-      drivers = [ pkgs.epson-escpr ];
-      defaultShared = true;
-    };
+  };
+
+  hardware.opentabletdriver = {
+    enable = true;
+    daemon.enable = true;
   };
 
   # Configuration des programmes.
@@ -49,6 +45,7 @@
 
   programs.river = {
     enable = true;
+    package = pkgs.river-git;
     extraPackages = with pkgs; [
       btop
       dunst
@@ -59,12 +56,17 @@
       mate.mate-polkit
       mpv
       ristate-git
-      rivercarro
+      rivercarro-git
       slurp
       swww
       wl-clipboard
       wlr-randr
     ];
+  };
+
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
   };
 
   programs.gamemode = {
@@ -80,7 +82,7 @@
     };
     settings.custom = {
       start = "${pkgs.libnotify}/bin/notify-send 'Gamemode activé !'";
-      end = "${pkgs.libnotify}/bin/notify-send 'Gamemode désactivé...'";
+      end = "${pkgs.libnotify}/bin/notify-send 'Gamemode désactivé.'";
     };
   };
 
@@ -135,24 +137,10 @@
     }];
   };
 
-  xdg = {
-    portal = {
-      enable = lib.mkForce true;
-      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-      wlr = {
-        enable = true;
-        settings = {
-          screencast = {
-            output_name = "DP-1";
-            max_fps = 60;
-            #exec_before = "disable_notifications.sh";
-            #exec_after = "enable_notifications.sh";
-            chooser_type = "simple";
-            chooser_cmd = "${lib.getExe pkgs.slurp} -f %o -or";
-          };
-        };
-      };
-    };
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    wlr.enable = true;
   };
 
   time.timeZone = "Europe/Paris"; # Heure de Paris.

@@ -9,7 +9,6 @@
     userName = "sh-koh";
     userEmail = "abdel.briand.a@gmail.com";
     package = pkgs.gitFull;
-    delta.enable = true;
     lfs.enable = true;
   };
 
