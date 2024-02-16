@@ -9,6 +9,8 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   boot.supportedFilesystems = [ "ntfs" ];
 
+  swapDevices = [ ];
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/Root";
     fsType = "ext4";
@@ -34,20 +36,19 @@
     fsType = "btrfs";
   };
 
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     nvidiaSettings = false;
-    nvidiaPersistenced = true;
     powerManagement.enable = true;
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
-  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware = {
+    enableAllFirmware = lib.mkDefault true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     bluetooth.enable = true;
-    logitech.wireless.enable = true;
     opengl = {
       enable = true;
       driSupport32Bit = true;
@@ -63,7 +64,6 @@
     };
   };
 
-  swapDevices = [ ];
   zramSwap.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

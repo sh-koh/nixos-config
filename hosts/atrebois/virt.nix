@@ -8,77 +8,74 @@
   boot = {
     kernelParams = [
       "amd_iommu=on"
-      "iommu=pt"
+      "vfio_iommu_type1.allow_unsafe_interrupts=1"
+      "kvm.ignore_msrs=1"
+      "kvm.allow_unsafe_assigned_interrupts=1"
     ];
     kernelModules = [
       "kvm-amd"
       "kvm"
-      "vfio_pci"
-      "vfio"
-      "vfio_virqfd"
-      "vfio_iommu_type1"
     ];
-  };
-
-  virtualisation.docker = {
-    enable = true;
-    enableNvidia = true;
-    extraOptions = "--default-runtime=nvidia";
-    enableOnBoot = false;
+    extraModprobeConfig = "options vfio-pci ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb";
   };
 
   environment.systemPackages = with pkgs; [
-    docker-compose
-    virt-manager
     win-spice
     win-virtio
   ];
 
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu = { 
-        swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
-      };
+  virtualisation.podman = {
+    enable = true;
+    enableNvidia = true;
+  };
+
+  programs.virt-manager.enable = true;
+
+  virtualisation.spiceUSBRedirection.enable = true;
+
+  virtualisation.libvirtd = {
+    enable = true;
+    package = pkgs.master.libvirt;
+    onBoot = "ignore";
+    onShutdown = "shutdown";
+    qemu = { 
+      package = pkgs.qemu_kvm;
+      swtpm.enable = true;
+      ovmf.packages = [ pkgs.OVMFFull.fd ];
     };
   };
 
-  environment.etc = {
-    "ovmf/edk2-x86_64-secure-code.fd" = {
-      source = config.virtualisation.libvirtd.qemu.package + "/share/qemu/edk2-x86_64-secure-code.fd";
-    };
-  };
+  virtualisation.libvirtd.hooks.qemu.Windows11 = pkgs.writeShellScript "Windows11" ''
+    GUEST_NAME="$1"
+    OPERATION="$2"
+    SUB_OPERATION="$3"
+    GPU="26:00"
 
-  # Isolation CPU pour la machine virtuelle 'Windows11' via QEMU et libvirt.
-  systemd.services.libvirtd.preStart = let
-    qemuHook = pkgs.writeScript "qemu-hook" ''
-      #!${pkgs.stdenv.shell}
+    if [ "$GUEST_NAME" == "Windows11" ]; then
+      if [ "$OPERATION" == "prepare" ]; then
+        modprobe -r -a nvidia_uvm nvidia_drm nvidia_modeset nvidia i2c_nvidia_gpu 
+        modprobe -a vfio vfio_virqfd vfio_iommu_type1 vfio_pci
+        sleep 2
+        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_0
+        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_1
+        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_2
+        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_3
+        systemctl set-property --runtime -- system.slice AllowedCPUs=4-7,12-15
+        systemctl set-property --runtime -- user.slice AllowedCPUs=4-7,12-15
+        systemctl set-property --runtime -- init.scope AllowedCPUs=4-7,12-15
 
-      GUEST_NAME="$1"
-      OPERATION="$2"
-      SUB_OPERATION="$3"
-
-      if [ "$GUEST_NAME" == "Windows11" ]; then
-        if [ "$OPERATION" == "start" ]; then
-          systemctl set-property --runtime -- system.slice AllowedCPUs=0-3,8-11
-          systemctl set-property --runtime -- user.slice AllowedCPUs=0-3,8-11
-          systemctl set-property --runtime -- init.scope AllowedCPUs=0-3,8-11
-        fi
-
-        if [ "$OPERATION" == "stopped" ]; then
-          systemctl set-property --runtime -- system.slice AllowedCPUs=0-15
-          systemctl set-property --runtime -- user.slice AllowedCPUs=0-15
-          systemctl set-property --runtime -- init.scope AllowedCPUs=0-15
-        fi
+      elif [ "$OPERATION" == "release" ]; then
+        systemctl set-property --runtime -- system.slice AllowedCPUs=0-15
+        systemctl set-property --runtime -- user.slice AllowedCPUs=0-15
+        systemctl set-property --runtime -- init.scope AllowedCPUs=0-15
+        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_3
+        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_2
+        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_1
+        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_0
+        sleep 2
+        modprobe -a nvidia_uvm nvidia_drm nvidia_modeset nvidia i2c_nvidia_gpu 
+        modprobe -r -a vfio vfio_virqfd vfio_iommu_type1 vfio_pci
       fi
-    '';
-  in ''
-    mkdir -p /var/lib/libvirt/hooks
-    chmod 755 /var/lib/libvirt/hooks
-
-    # Copy hook files
-    ln -sf ${qemuHook} /var/lib/libvirt/hooks/qemu
+    fi
   '';
 }

@@ -6,16 +6,7 @@
 , ...
 }: {
   environment.variables = {
-    GBM_BACKEND = "nvidia-drm";
-    LIBVA_DRIVER_NAME = "nvidia";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    __GL_SYNC_DISPLAY_DEVICE = "DP-1";
-    __GL_YIELD = "USLEEP";
-    __GL_GSYNC_ALLOWED = "1";
-    __GL_VRR_ALLOWED = "1";
-    __GL_DXVK_OPTIMIZATIONS = "1";
-    __GL_ALLOW_UNOFFICIAL_PROTOCOL = "1";
-    __NVD_BACKEND = "direct";
+    LIBVA_DRIVER_NAME = "iHD";
     STAGING_SHARED_MEMORY = "1";
     STAGING_WRITECOPY = "1";
     LIBSEAT_BACKEND = "logind";
@@ -25,7 +16,6 @@
     NIXOS_OZONE_WL = "1";
     EDITOR = "nvim";
     VISUAL = "codium";
-    WLR_NO_HARDWARE_CURSORS = "1";
     XDG_CURRENT_DESKTOP = "river";
     XDG_SESSION_DESKTOP = "river";
     XDG_SESSION_TYPE = "wayland";

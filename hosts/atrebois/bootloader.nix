@@ -10,8 +10,8 @@
     loader.systemd-boot.consoleMode = "max";
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
-    kernelParams = [ "mitigations=off" "spectre_v2=off" ];
-    kernelModules = [ "acpi-cpufreq" ];
+    kernelParams = [ "mitigations=off" "spectre_v2=off" "nvidia-drm.fbdev=1" ];
+    kernelModules = [ "acpi-cpufreq" "nvidia" "nvidia_drm" "nvidia_uvm" "nvidia_modeset" ];
     extraModprobeConfig = ''
       options nvidia NVreg_UsePageAttributeTable=1
       options nvidia NVreg_PreserveVideoMemoryAllocations=1
@@ -23,5 +23,6 @@
     '';
     blacklistedKernelModules = [ "nouveau" "wacom" ];
     kernel.sysctl  = { "vm.max_map_count" = "16777216"; };
+    tmp.useTmpfs = true;
   };
 }

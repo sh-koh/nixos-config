@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  river-git = pkgs.callPackage ./river-git.nix { };
-  ristate-git = pkgs.callPackage ./ristate-git.nix { };
-  rivercarro-git = pkgs.callPackage ./rivercarro-git.nix { };
+  river-bedload = pkgs.callPackage ./river-bedload { };
+  river = pkgs.callPackage ./river { };
+  rivercarro = pkgs.callPackage ./rivercarro { };
 }

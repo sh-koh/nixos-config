@@ -4,12 +4,11 @@
 - Compositor: [river](https://github.com/riverwm/river)
 - Font: [jetbrains-mono](https://github.com/JetBrains/JetBrainsMono)
 - Term: [kitty](https://github.com/kovidgoyal/kitty)
-- Bar/Widgets: [eww](https://github.com/elkowar/eww)
+- Bar/Widgets: [ags](https://github.com/aylur/ags)
 - App launcher: [anyrun](https://github.com/Kirottu/anyrun)
 - Icon theme: [papirus-icon-theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
-- Notification daemon: [dunst](https://github.com/dunst-project/dunst)
 - Text editor: [neovim](https://github.com/neovim/neovim)
-- File manager: cd or [lf](https://github.com/gokcehan/lf)
+- File manager: zoxide or [lf](https://github.com/gokcehan/lf)
 - Task manager: [btop](https://github.com/aristocratos/btop)
 - Image viewer: [imv](https://sr.ht/~exec64/imv)
 - Video player: [mpv](https://github.com/mpv-player/mpv)
@@ -21,8 +20,8 @@
 <img src="https://media.discordapp.net/attachments/885297123669716992/1162748153099976834/image.png?ex=653d109a&is=652a9b9a&hm=dbc91e465d71e392eae63561c68af8a2cc4f93884dcb576ddb737db5a3f74cf4&" alt="Desktop Preview">
 
 ## 💡 Nix related projects it uses
+- [Nix-starter-configs](https://github.com/Misterio77/nix-starter-configs)
 - [Home-manager](https://github.com/nix-community/home-manager)
 - [NixVim](https://github.com/nix-community/nixvim)
 - [Stylix](https://github.com/danth/stylix)
-- [NUR](https://github.com/nix-community/NUR)
-- [Nix-starter-configs](https://github.com/Misterio77/nix-starter-configs)
+- [Agenix](https://github.com/ryantm/agenix)

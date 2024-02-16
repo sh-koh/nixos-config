@@ -7,18 +7,10 @@
   modifications = final: prev: {
     discord-canary = prev.discord-canary.override { withOpenASAR = true; };
     nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-    wlroots = prev.wlroots_0_16.overrideAttrs (oldAttrs: { patches = ./patches/wlroots-nvidia.patch; });
-    godot_4 = prev.godot_4.overrideAttrs (oldAttrs: {
-      version = "4.1.2";
-      commitHash = "399c9dc393f6f84c0b4e4d4117906c70c048ecf2";
-      src = prev.fetchFromGitHub {
-        owner = "godotengine";
-        repo = "godot";
-        rev = "399c9dc393f6f84c0b4e4d4117906c70c048ecf2";
-        hash = "sha256-MmGjzVgFudYpjZDKQ0zkhT0SYekaMx1v93vKa2c+oP4=";
-      };
-    });
-  };
+    glfw = prev.glfw.override { waylandSupport = true; };
+    wlroots-nvidia = prev.wlroots_0_16.overrideAttrs (oldAttrs: { patches = ./patches/wlroots-nvidia.patch; });
+    ags = prev.ags.override { extraPackages = [ inputs.nixpkgs.legacyPackages.${final.system}.sassc ]; };
+ };
 
   master-packages = final: _prev: {
     master = import inputs.nixpkgs-master {
