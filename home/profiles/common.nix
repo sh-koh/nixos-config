@@ -11,8 +11,6 @@
     ../kitty
     ../neovim
     ../git
-    #./hyprland
-    #./eww
     ../river
     ../vscodium
     ../shell
