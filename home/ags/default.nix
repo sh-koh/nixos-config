@@ -10,12 +10,11 @@
   programs.ags = {
     enable = true;
     #package = ;
-    #configDir = ./cfg;
+    configDir = ./cfg;
     extraPackages = with pkgs; [
       bash
       dart-sass
       coreutils
-      jq
       river-bedload
       river
     ];

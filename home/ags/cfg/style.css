@@ -1,0 +1,174 @@
+/*=========================================*/
+/*==============- VARIABLES -==============*/
+/*=========================================*/
+/*               - ICEBERG -               */
+/*       Github: cocopon/iceberg.vim       */
+/*=========================================*/
+/*===========- GLOBAL SETTINGS -===========*/
+/*=========================================*/
+/*=========================================*/
+/*===========- GLOBAL SETTINGS -===========*/
+/*=========================================*/
+* {
+  all: unset;
+  font-family: JetBrainsMono;
+  font-size: 100%;
+  border-radius: 2px;
+}
+
+menu {
+  background-color: #161821;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #292d3d;
+}
+menu separator {
+  background-color: #292d3d;
+}
+menu menuitem {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 4px;
+  margin: 2px;
+}
+menu menuitem:hover {
+  background-color: #484b5b;
+}
+
+/*=========================================*/
+/*================- BAR -==================*/
+/*=========================================*/
+.bar {
+  background-color: rgba(22, 24, 33, 0.99);
+  border-radius: 0px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: #292d3d;
+}
+.bar > box {
+  min-height: 28px;
+  padding: 3px;
+}
+
+.powermenu {
+  background-color: #89b8c2;
+  color: #292d3d;
+  padding: 0 12px 0 6px;
+  font-size: 120%;
+}
+
+.notification {
+  background-color: #292d3d;
+  padding-right: 10px;
+}
+.notification label {
+  color: #c6c8d1;
+}
+.notification image {
+  background-color: #84a0c6;
+  color: #292d3d;
+  margin: 0 10px 0 0;
+  padding: 0 8px;
+}
+
+.tags {
+  background-color: rgba(41, 45, 61, 0.3);
+  color: rgba(155, 160, 181, 0.4);
+  min-width: 28px;
+  transition: 200ms;
+}
+.tags button:hover {
+  color: #292d3d;
+  background-color: #9ba0b5;
+}
+.tags button:active {
+  color: #292d3d;
+  background-color: #6b7089;
+}
+
+.tags-occupied {
+  background-color: #292d3d;
+  color: #9ba0b5;
+  border-bottom: solid 2px #6b7089;
+  min-width: 28px;
+  transition: 200ms;
+}
+
+.tags-focused {
+  transition: 200ms;
+  color: #9ba0b5;
+  background-color: #292d3d;
+  border-bottom: solid 2px #e27878;
+  min-width: 38px;
+}
+
+.date {
+  background-color: #292d3d;
+  color: #9ba0b5;
+  padding: 0px 6px;
+}
+
+.clock {
+  background-color: #b4be82;
+  color: #292d3d;
+  padding: 0px 6px;
+}
+
+.volume {
+  background-color: #292d3d;
+  padding: 0 8px;
+}
+.volume image {
+  color: #c6c8d1;
+  padding: 0 8px 0 2px;
+}
+.volume scale {
+  min-width: 100px;
+  padding: 0 6px 0 0;
+}
+.volume scale highlight {
+  background-color: #e2a478;
+  min-height: 12px;
+}
+.volume scale trough {
+  background-color: #484b5b;
+}
+
+.battery {
+  background-color: #292d3d;
+  padding: 0 8px;
+}
+.battery image {
+  color: #9ba0b5;
+  padding: 0 8px 0 2px;
+}
+.battery progressbar.horizontal {
+  min-width: 100px;
+  padding: 0 6px 0 0;
+}
+.battery progressbar.horizontal highlight {
+  background-color: #b4be82;
+  min-height: 12px;
+}
+.battery progressbar.horizontal trough {
+  min-height: 12px;
+  background-color: #484b5b;
+}
+
+.systray {
+  background-color: #292d3d;
+}
+.systray button {
+  padding: 0 6px;
+  margin: 2px;
+}
+.systray button:hover {
+  background-color: #484b5b;
+}
+.systray button:active {
+  background-color: #6b7089;
+}
+.systray button image {
+  font-size: 120%;
+}
+
+/*# sourceMappingURL=style.css.map */
