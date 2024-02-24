@@ -162,11 +162,11 @@ menu {
 	scale {
 		min-width: 100px;
 		padding: 0 6px 0 0;
-    & highlight {
-		  background-color: $yellow;
+    highlight {
+		  background-color: $blue;
 		  min-height: 12px;
 	  }
-    & trough {
+    trough {
 		  background-color: $darker;
 	  }
 	}
@@ -175,22 +175,13 @@ menu {
 .battery {
 	background-color: $black;
 	padding: 0 8px;
+  label {
+    color: $white;
+  }
 	image {
 		color: $white;
 		padding: 0 8px 0 2px;
 	}
-	progressbar.horizontal {
-		min-width: 100px;
-		padding: 0 6px 0 0;
-  	& highlight {
-  		background-color: $green;
-  		min-height: 12px;
-  	}
-  	& trough {
-  		min-height: 12px;
-  		background-color: $darker;
-  	}
-  }
 }
 
 

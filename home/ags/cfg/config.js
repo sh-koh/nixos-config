@@ -15,7 +15,7 @@ function reloadCss() {
 	App.applyCss(css);
 }
 
-Utils.monitorFile(scss, reloadCss, 'file');
+Utils.monitorFile(scss, reloadCss);
 
 export default {
 	style: css,

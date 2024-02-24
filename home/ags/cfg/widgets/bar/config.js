@@ -67,13 +67,10 @@ const LaptopBattery = () => Widget.Box({
 				return `battery-level-${Math.floor(p / 10) * 10}-symbolic`;
 			}),
 		}),
-		Widget.ProgressBar({
-			vpack: 'center',
-      hexpand: true,
-      vertical: false,
-			fraction: Battery.bind('percent').transform(p => {
-				return p > 0 ? p / 100 : 0;
-			}),
+		Widget.Label({
+			label: Battery.bind('percent').transform(p => {
+        return `- ${p}%`;
+      }),
 		}),
 	],
 });

@@ -24,7 +24,7 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     EDITOR = "nvim";
-    VISUAL = "codium";
+    #VISUAL = "codium";
     WLR_NO_HARDWARE_CURSORS = "1";
     XDG_CURRENT_DESKTOP = "river";
     XDG_SESSION_DESKTOP = "river";

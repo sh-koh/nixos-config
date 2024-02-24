@@ -13,6 +13,7 @@
       less = "${lib.getExe pkgs.bat} --style=auto --color=always -p";
       find = "${lib.getExe pkgs.fd} -H";
       grep = "${lib.getExe pkgs.ripgrep}";
+      zj = "${lib.getExe pkgs.zellij}";
     };
   };
 }

@@ -26,8 +26,9 @@
 
   virtualisation.podman = {
     enable = true;
-    enableNvidia = true;
   };
+
+  virtualisation.containers.cdi.dynamic.nvidia.enable = true;
 
   programs.virt-manager.enable = true;
 
@@ -35,7 +36,7 @@
 
   virtualisation.libvirtd = {
     enable = true;
-    package = pkgs.master.libvirt;
+    #package = pkgs.master.libvirt;
     onBoot = "ignore";
     onShutdown = "shutdown";
     qemu = { 
