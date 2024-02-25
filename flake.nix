@@ -63,10 +63,10 @@
         specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/rocaille ];
       };
-      #cravite = nixpkgs.lib.nixosSystem {
-      #  specialArgs = { inherit inputs outputs; };
-      #  modules = [ ./hosts/cravite ];
-      #};
+      cravite = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
+        modules = [ ./hosts/cravite ];
+      };
       #lanterne = nixpkgs.lib.nixosSystem {
       #  specialArgs = { inherit inputs outputs; };
       #  modules = [ ./hosts/lanterne ];
