@@ -10,7 +10,6 @@
     enable = true;
     extensions = {
       ui-select.enable = true;
-      frecency.enable = true;
       fzf-native.enable = true;
       file_browser = {
         enable = true;
