@@ -20,13 +20,13 @@
 
         riverctl focus-follows-cursor always
 
-        riverctl map normal Super Return spawn "kitty -1"
+        riverctl map normal Super Return spawn "${lib.getExe pkgs.kitty} -1"
         riverctl map normal Super Space spawn anyrun
 
         riverctl map normal Super+Shift Q exit
         riverctl map normal Super W close
 
-        riverctl map normal Super+Shift S spawn "slurp | grim -g - - | wl-copy"
+        riverctl map normal Super+Shift S spawn '${lib.getExe pkgs.wayshot} -s "$(${lib.getExe pkgs.slurp})" --stdout | ${pkgs.wl-clipboard}/bin/wl-copy'
 
         # Super+J and Super+K to focus the next/previous view in the layout stack
         riverctl map normal Super J focus-view next
@@ -147,7 +147,7 @@
         sleep 2 && swww img ${config.stylix.image} &
         ${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1 &
 
-        exec rivercarro -no-smart-gaps 
+        exec ${pkgs.rivercarro}/bin/rivercarro -no-smart-gaps 
       '';
     };
   };
