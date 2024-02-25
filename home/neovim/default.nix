@@ -5,9 +5,11 @@
 , outputs
 , ...
 }: {
+
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    ./nvim-cmp.nix
+    ./blankline.nix
+    ./cmp.nix
     ./telescope.nix
     ./lsp.nix
     ./keymapping.nix
