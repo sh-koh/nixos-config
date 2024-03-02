@@ -39,13 +39,14 @@
       luasnip.enable = true;
       cmp_luasnip.enable = true;
       neo-tree.enable = true;
+      neocord.enable = true;
       lualine = {
         enable = true;
         globalstatus = true;
 	      iconsEnabled = true;
 	      sectionSeparators = {
-	        left = "";
-	        right = "";
+	        left = "";
+	        right = "";
 	      };
 	      componentSeparators = {
             left = "|";
