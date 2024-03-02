@@ -126,7 +126,7 @@ menu menuitem:hover {
   padding: 0 6px 0 0;
 }
 .volume scale highlight {
-  background-color: #e2a478;
+  background-color: #84a0c6;
   min-height: 12px;
 }
 .volume scale trough {
@@ -137,21 +137,12 @@ menu menuitem:hover {
   background-color: #292d3d;
   padding: 0 8px;
 }
+.battery label {
+  color: #9ba0b5;
+}
 .battery image {
   color: #9ba0b5;
   padding: 0 8px 0 2px;
-}
-.battery progressbar.horizontal {
-  min-width: 100px;
-  padding: 0 6px 0 0;
-}
-.battery progressbar.horizontal highlight {
-  background-color: #b4be82;
-  min-height: 12px;
-}
-.battery progressbar.horizontal trough {
-  min-height: 12px;
-  background-color: #484b5b;
 }
 
 .systray {

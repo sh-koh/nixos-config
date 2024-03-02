@@ -5,8 +5,8 @@ let
     format = "[$symbol ](${color})";
   };
   pad = {
-    left = "";
-    right = "";
+    left = " ";
+    right = " ";
   };
 in
 {
@@ -15,9 +15,10 @@ in
     settings = {
       add_newline = false;
       format = lib.strings.concatStrings [
-	"[┌─](bold blue)"
-	"$hostname"
-	"$localip"
+        ''''${line_break}''
+	      "[┌─](bold blue)"
+	      "$hostname"
+	      "$localip"
         "$nix_shell"
         "$directory"
         "$container"
@@ -29,8 +30,8 @@ in
         "$cmd_duration"
         "$status"
         "$line_break"
-	"[└─](bold blue)"
-	"[ ](bold blue)"
+	      "[└─](bold blue)"
+	      "[ ](bold blue)"
         ''''${custom.space}''
       ];
       custom.space = {
@@ -55,22 +56,22 @@ in
       };
       hostname = {
         ssh_only = false;
-        format = "[${pad.left}](fg:blue)[$hostname](bg:blue fg:black)[${pad.right}](fg:blue) ";
+        format = "[${pad.left}](bg:blue)[$hostname](bg:blue fg:black)[${pad.right}](bg:blue) ";
       };
       localip = {
         disabled = false;
-        format = "[${pad.left}](fg:bright-black)[$localipv4](bg:bright-black fg:black)[${pad.right}](fg:bright-black) ";
+        format = "[${pad.left}](bg:bright-black)[$localipv4](bg:bright-black fg:black)[${pad.right}](bg:bright-black) ";
       };
       nix_shell = {
         disabled = false;
-        format = "[${pad.left}](fg:cyan)[ 󱄅 ](bg:cyan fg:black)[${pad.right}](fg:cyan) ";
+        format = "[${pad.left}](bg:cyan)[ 󱄅 ](bg:cyan fg:black)[${pad.right}](bg:cyan) ";
       };
       container = {
         symbol = " 󰏖";
         format = "[$symbol ](bright-blue dimmed) ";
       };
       directory = {
-        format = "[${pad.left}](fg:green)[$path](bg:green fg:black)[${pad.right}](fg:green) ";
+        format = "[${pad.left}](bg:green)[$path](bg:green fg:black)[${pad.right}](bg:green) ";
         truncation_length = 6;
         truncation_symbol = "~/󰇘/";
       };
@@ -84,7 +85,6 @@ in
       };
       python = lang "" "yellow";
       nodejs = lang " " "yellow";
-      lua = lang "󰢱 " "blue";
       golang = lang "" "blue";
     };
   };

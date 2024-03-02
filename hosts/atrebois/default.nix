@@ -31,30 +31,9 @@
     };
   };
 
-  programs.ssh = {
-    startAgent = true;
-    knownHosts = {
-      atrebois = {
-        hostNames = [ "atrebois" "192.168.1.201" ];
-        publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrGo/qyLiL0EbwmnMUEAzSR69T9y7JxTNLz+ix9YsHnzqomu3aCGfBDF46i+I0sYy0Ckd6DzlBBlJHTSk4vzzt2udrUwc9WPuJEP+t2O2kwPCGZudd1p/aOJwQy9vQG7F9x5FbyTkJehdNB/6fVHpy+w3feEjgHfPCJiRlCjUTGe0beppbZxa4ucDwdE7b7WaJG4cc3vBcxRs2JrAMiZhR6IgAT2ABhnARlEDsijL+rTEoPcAHiW+WO0p0EyKe9mCh9c9jHuh7nBUvcvQnnNIyo29w5X+P5CVTd2zHYoBQK8O5lKRUnNIxBUjZZugHgE2Sm1N97+sjgzT+41LwDppbY5xIlbE5SIllPDk1T6/1yjbVIqZlvNCM26mxaESt9/pWtSFWfrYQwpyu9btvrFlIFchaxtrucb4vV+ilb7bFBj7CY1gWER7yAv6bFGeNbRtqZCrRmXvsEMA7CxUvwsfjI1IUjG+A7BsAibP5Yt39N6r30MQPUTyvS9aQ1uSQ2Kmt4Wzdr4S7l4b5CT00lI0wyzJFFfy9rZtg6mnN41SoYs6OkuGCtQTI8jGSdrMP2A9iQ7Jox9qG8UDFdWHp0a288ucLW/pGbXL4XRjbeSGVXqzaXJ4gR+wgdgOziXVj/BcuhJRkRH01lPOjlyFQp+VfIUfWERywvMMjDEb//qlQDw==";
-      };
-      rocaille = {
-        hostNames = [ "rocaille" "192.168.1.202" ];
-        publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCr9lU9rF8AMdKSca0gM9lKoRpHmrWnSa2+XdyTYekKDNPMn43s5j1qPs7f59UtOTJLd5+XB9ipWK+jYy7JsRQw1YuL62PIiUf9PUNkLcWz23E0E6fTBmKOyOjkI0RV/SYf5/V4zMq8OIO0TEhCRJg6C3eZHmDhNdue6cbZdd35Nv6qUK1ANc/ZM5UhdGCpyPnQBix84iBS6zNTFEezyKO8Bpzl7GZKzw0z+Qf9ET0nqcl/zzNUvsNvm5CIrWVv0bjE5iHRm5ik7EJa3SAvPI2fxx/jO+NbYH/cE7OR1YZ2Soy6o4OTEPLAm3hMJi9uK9Kq5KDa0u/SrGiOwfXl7ZMwDznsEu/3g/b4kN4AoFXdSKP4cHUtDRXf2XJYO1AKa3nHlqmKgJmzdQ7OEPenTCi8tyPpRoT6ZG1WrmOQgFzwu+nIyWlwPwgFKmz9uBxEAxXrqCNc22YpgPE30/j7Q6Ql8PY1BLtIln9VS3N5nSrXiMqDqtI9Fh5rEbWSKzzuhZd8vRrfj7AAfGlpiz2TajbekY2aiwNKAFSHvqLV6GVk8v/iHHM+3bJgxtC3ycIa0aPgmJWCH+U5nATqqe9r3Nx8/ieRCuCb0ac0XHarVvSE+t5Ygm8XFMcl/GyD2+9nZLHbJ4KAhB4VG7V2PcAzygkjgEvvM7QCtKWxpTBEeZkECQ==";
-      };
-    };
-  };
-  programs.ssh.extraConfig = ''
-    Host atrebois
-      HostName 192.168.1.201
-      Port 72
-
-    Host rocaille
-      HostName 192.168.1.202
-      Port 72
-  '';
   services.openssh = {
     enable = true;
+    startWhenNeeded = true;
     ports = [ 72 ];
     settings = {
       AllowUsers = [ "shakoh" ];
@@ -140,6 +119,9 @@
   users.users.shakoh = {
     isNormalUser = true;
     #passwordFile = config.age.secrets.shakoh-pwd.path; # Set password with agenix
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDcsKJPBMqyHS2TmYBFFyP+jGGFnOXnNY7/JWUwD1mWS3p6gMxtXTHZAAXLq/g2SG3gHUSpCWcytC9x5IFmYpf/9BCVZHwuUf8gSSQSAycTDoGWeY0AQ1KEOIUAQ1wWlG3iLFlaI48ugBR3m+gv2YlpY9FU47uj3bgIn6KF1fZCPFetQtIPE1TaKOYgd6M27deOo2pNxGQiGkvAkogfb7tqRjQQ5aWmtk4Uc32N8Frhce5QUWuI8AOqf4MfPXVOq6EyK0TLYPE+WEBSbf6kumme+BCwZ2SFN++yFJzVqGJQReRJJFXEf5vSRXN/60Rue0eF/GCbR838TiF+nDjge7W9jhABvUc0wNwlwHtSYoOVqxNuhwukaEcYhCnoiaerbwulPg4DJnD9eaBuH39b9+pEDp9b2AIB6jUaAU+zQ6GyGDVbJrcf+jVAMEn2ZqXRfLyRjNiof+0mivMgJ/vR1MxtcBD0NRV3n49CkvQNG4jrB6M738OzsudP0nkkwfyVHI4ZcAgwOqvY2KUEDnLyHvVOnr45zKvbbiKwfkAFRQevFgjClUJYJutfyo8bfZNxOyrVp0hCstgJ2lBqzAP2G65sO/VkLCqVLU/rV5ZoXt2sRCEnq5m2WtflL3nMcwDSUyl+HLqsd/T1AooOFJHLOd9bBaLOrsucogrj/Y+UkKIlYw== shakoh@rocaille"
+    ];
     extraGroups = [
       "wheel"
       "video"

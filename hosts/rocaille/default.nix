@@ -21,6 +21,9 @@
     dbus.implementation = "broker";
     fstrim.enable = true;
     upower.enable = true;
+    tlp = {
+      enable = true;
+    };
     auto-cpufreq = {
       enable = true;
       settings = {
@@ -44,29 +47,6 @@
     };
   };
 
-  # Configuration OpenSSH
-  programs.ssh = {
-    startAgent = true;
-    knownHosts = {
-      atrebois = {
-        hostNames = [ "atrebois" "192.168.1.113" ];
-        publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrGo/qyLiL0EbwmnMUEAzSR69T9y7JxTNLz+ix9YsHnzqomu3aCGfBDF46i+I0sYy0Ckd6DzlBBlJHTSk4vzzt2udrUwc9WPuJEP+t2O2kwPCGZudd1p/aOJwQy9vQG7F9x5FbyTkJehdNB/6fVHpy+w3feEjgHfPCJiRlCjUTGe0beppbZxa4ucDwdE7b7WaJG4cc3vBcxRs2JrAMiZhR6IgAT2ABhnARlEDsijL+rTEoPcAHiW+WO0p0EyKe9mCh9c9jHuh7nBUvcvQnnNIyo29w5X+P5CVTd2zHYoBQK8O5lKRUnNIxBUjZZugHgE2Sm1N97+sjgzT+41LwDppbY5xIlbE5SIllPDk1T6/1yjbVIqZlvNCM26mxaESt9/pWtSFWfrYQwpyu9btvrFlIFchaxtrucb4vV+ilb7bFBj7CY1gWER7yAv6bFGeNbRtqZCrRmXvsEMA7CxUvwsfjI1IUjG+A7BsAibP5Yt39N6r30MQPUTyvS9aQ1uSQ2Kmt4Wzdr4S7l4b5CT00lI0wyzJFFfy9rZtg6mnN41SoYs6OkuGCtQTI8jGSdrMP2A9iQ7Jox9qG8UDFdWHp0a288ucLW/pGbXL4XRjbeSGVXqzaXJ4gR+wgdgOziXVj/BcuhJRkRH01lPOjlyFQp+VfIUfWERywvMMjDEb//qlQDw==";
-      };
-      rocaille = {
-        hostNames = [ "rocaille" "192.168.1.111" ];
-        publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCr9lU9rF8AMdKSca0gM9lKoRpHmrWnSa2+XdyTYekKDNPMn43s5j1qPs7f59UtOTJLd5+XB9ipWK+jYy7JsRQw1YuL62PIiUf9PUNkLcWz23E0E6fTBmKOyOjkI0RV/SYf5/V4zMq8OIO0TEhCRJg6C3eZHmDhNdue6cbZdd35Nv6qUK1ANc/ZM5UhdGCpyPnQBix84iBS6zNTFEezyKO8Bpzl7GZKzw0z+Qf9ET0nqcl/zzNUvsNvm5CIrWVv0bjE5iHRm5ik7EJa3SAvPI2fxx/jO+NbYH/cE7OR1YZ2Soy6o4OTEPLAm3hMJi9uK9Kq5KDa0u/SrGiOwfXl7ZMwDznsEu/3g/b4kN4AoFXdSKP4cHUtDRXf2XJYO1AKa3nHlqmKgJmzdQ7OEPenTCi8tyPpRoT6ZG1WrmOQgFzwu+nIyWlwPwgFKmz9uBxEAxXrqCNc22YpgPE30/j7Q6Ql8PY1BLtIln9VS3N5nSrXiMqDqtI9Fh5rEbWSKzzuhZd8vRrfj7AAfGlpiz2TajbekY2aiwNKAFSHvqLV6GVk8v/iHHM+3bJgxtC3ycIa0aPgmJWCH+U5nATqqe9r3Nx8/ieRCuCb0ac0XHarVvSE+t5Ygm8XFMcl/GyD2+9nZLHbJ4KAhB4VG7V2PcAzygkjgEvvM7QCtKWxpTBEeZkECQ==";
-      };
-    };
-  };
-  programs.ssh.extraConfig = ''
-    Host atrebois
-      HostName 192.168.1.201
-      Port 72
-
-    Host rocaille
-      HostName 192.168.1.202
-      Port 72
-  '';
   services.openssh = {
     enable = true;
     ports = [ 72 ];
@@ -124,9 +104,11 @@
   ];
 
   # Utilisateur(s) et groupe(s).
- users.users.shakoh = {
+  users.users.shakoh = {
     isNormalUser = true;
-    description = "Shakoh";
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCKyCKwY3T5CgTqKNBdcy2DfSjq4WA6A42HyQsJ5LJgqxtJxPMI1ub7jM3Y8/8k/dQ7O0NG1h3YILBUp4a5ZM66JRHzDkd6kx3pTedDG6zE3+LmfjmONC1CgLa6uzlHw8H09PDQvlVvFxN2rTW65uQWcR8SnJPhFgmp0/gCGvUA2Rf0/38Pp6OMVsMnsmJDt9P2Ii4S8H6RBlmAX0OSXra4kN4k8gG5ylwMLsBdorDBJ1zPuLyBnwWksVGh3bGs7rFWkZ5nyOj7yt1/VWpGaUEL6Qz+U027EaCkfoZcdiYihlJ5ZgFXEk9SqNbmAHKt79Jbh0k48Kl6hdvWBdgGZ2hr5jlgSJT2i7YpbUPAmN0sIEY4nq7EFS+38JxmzGTaO1T71K0xfCutf2GLMvpSTjN1P3LHWlmVraVKVgMCCZ7jnYwy/VSJyVwE09Aji4ukP8JE+LRNjzGmIz7YE7Ul3zUAvFJK8Lr7f4ArBf/TPzGsrdhM5OfDADVBl27CPs7kkgZNn//z9tUAHhU8B5qNUS2QOV06y8ncCZnIdvuMXD4Lh4WlPrFdHYzuq3CgDwfPSKnZCtQZPnJwJl97kM+upZHnxBcV7/w4cBmmloB8/vgliP8umVv2bvZ9xRHsY5X063+wHIHsBQFrZ0CSixIt7rdr8A+z6AmQ+2ZiqWu3CkqWRQ== shakoh@atrebois"
+    ];
     extraGroups = [
       "wheel"
       "video"

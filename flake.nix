@@ -20,6 +20,9 @@
       url = "git+ssh://git@github.com/sh-koh/nix-secrets.git?shallow=1";
       flake = false;
     };
+
+    # For RPi 5 
+    nix-rpi5.url = "gitlab:vriska/nix-rpi5";
   };
 
   nixConfig = {
@@ -63,6 +66,7 @@
         specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/rocaille ];
       };
+      # Raspberry pi 5 
       cravite = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/cravite ];
