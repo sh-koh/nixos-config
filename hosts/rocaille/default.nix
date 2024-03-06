@@ -76,8 +76,6 @@
       lf
       mate.mate-polkit
       mpv
-      ristate
-      rivercarro
       slurp
       swww
       wl-clipboard
@@ -89,7 +87,6 @@
     ffmpeg-full
     git
     git-crypt
-    nixd
   ];
 
   # Paquets installés sur le système et accessible par tout les utilisateurs.

@@ -115,8 +115,7 @@
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
-    style.name = "gtk2";
+    platformTheme = "kde";
   };
 
   # Reload system units when changing configs

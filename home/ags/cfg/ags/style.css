@@ -4,16 +4,21 @@
 /*               - ICEBERG -               */
 /*       Github: cocopon/iceberg.vim       */
 /*=========================================*/
-/*===========- GLOBAL SETTINGS -===========*/
+/*===============- MIX INS -===============*/
 /*=========================================*/
 /*=========================================*/
 /*===========- GLOBAL SETTINGS -===========*/
 /*=========================================*/
 * {
   all: unset;
-  font-family: JetBrainsMono;
+  font-family: Lexend;
   font-size: 100%;
-  border-radius: 2px;
+  border-radius: 3px;
+}
+
+tooltip {
+  background-color: rgba(41, 45, 61, 0.9);
+  color: #9ba0b5;
 }
 
 menu {
@@ -50,8 +55,8 @@ menu menuitem:hover {
 }
 
 .powermenu {
-  transition: 100ms;
-  background-color: #292d3d;
+  transition: 120ms;
+  background-color: rgba(132, 160, 198, 0.2);
   border-bottom: solid #84a0c6 1px;
   color: #84a0c6;
   padding: 0 12px 0 6px;
@@ -61,21 +66,6 @@ menu menuitem:hover {
   border-bottom: solid #84a0c6 2px;
 }
 .powermenu:active {
-  border-bottom: solid #84a0c6 0px;
-}
-
-.settingsmenu {
-  transition: 100ms;
-  background-color: #292d3d;
-  border-bottom: solid #84a0c6 1px;
-  color: #84a0c6;
-  padding: 0 10px 0 8px;
-  font-size: 145%;
-}
-.settingsmenu:hover {
-  border-bottom: solid #84a0c6 2px;
-}
-.settingsmenu:active {
   border-bottom: solid #84a0c6 0px;
 }
 
@@ -97,10 +87,10 @@ menu menuitem:hover {
   background-color: rgba(41, 45, 61, 0.3);
   color: rgba(155, 160, 181, 0.4);
   min-width: 28px;
-  transition: 100ms;
+  transition: 120ms;
 }
 .tags:hover {
-  border-bottom: solid 1px #484b5b;
+  border-bottom: solid 2px #484b5b;
 }
 .tags:active {
   border-bottom: solid 0px #484b5b;
@@ -111,7 +101,7 @@ menu menuitem:hover {
   color: #9ba0b5;
   border-bottom: solid 1px #6b7089;
   min-width: 28px;
-  transition: 100ms;
+  transition: 120ms;
 }
 .tags-occupied:hover {
   border-bottom: solid 2px #6b7089;
@@ -121,65 +111,97 @@ menu menuitem:hover {
 }
 
 .tags-focused {
-  transition: 100ms;
-  background-color: rgba(160, 147, 199, 0.2);
-  color: #a093c7;
-  border-bottom: solid 1px #a093c7;
-  min-width: 38px;
+  background-color: rgba(180, 190, 130, 0.2);
+  color: #b4be82;
+  border-bottom: solid 1px #b4be82;
+  transition: 120ms;
+  min-width: 46px;
 }
 .tags-focused:hover {
-  background-color: rgba(160, 147, 199, 0.2);
-  color: #a093c7;
-  border-bottom: solid 2px #a093c7;
+  background-color: rgba(180, 190, 130, 0.2);
+  color: #b4be82;
+  border-bottom: solid 2px #b4be82;
 }
 .tags-focused:active {
-  background-color: rgba(160, 147, 199, 0.2);
-  color: #a093c7;
-  border-bottom: solid 0px #a093c7;
+  background-color: rgba(180, 190, 130, 0.2);
+  color: #b4be82;
+  border-bottom: solid 0px #b4be82;
 }
 
 .date {
-  background-color: rgba(180, 190, 130, 0.2);
-  color: #b4be82;
-  padding: 0px 6px;
+  transition: 120ms;
+  background-color: rgba(132, 160, 198, 0.2);
+  border-bottom: solid #84a0c6 1px;
+  color: #84a0c6;
+  padding: 0 12px 0 8px;
+}
+.date:hover {
+  border-bottom: solid #84a0c6 2px;
+}
+.date:active {
+  border-bottom: solid #84a0c6 0px;
 }
 
 .clock {
-  background-color: rgba(180, 190, 130, 0.2);
-  color: #b4be82;
-  padding: 0px 6px;
+  transition: 120ms;
+  background-color: rgba(137, 184, 194, 0.2);
+  border-bottom: solid #89b8c2 1px;
+  color: #89b8c2;
+  padding: 0 10px 0 8px;
+}
+.clock:hover {
+  border-bottom: solid #89b8c2 2px;
+}
+.clock:active {
+  border-bottom: solid #89b8c2 0px;
 }
 
 .audio-speaker {
-  background-color: rgba(226, 164, 120, 0.2);
-  padding: 0 8px;
+  transition: 120ms;
+  background-color: rgba(180, 190, 130, 0.2);
+  border-bottom: solid #b4be82 1px;
+  color: #b4be82;
+}
+.audio-speaker:hover {
+  border-bottom: solid #b4be82 2px;
+}
+.audio-speaker:active {
+  border-bottom: solid #b4be82 0px;
 }
 .audio-speaker image {
-  color: #e2a478;
-  padding: 0 2px 0 2px;
+  color: #b4be82;
+  padding: 0 10px;
 }
 .audio-speaker scale {
   min-width: 75px;
-  margin: 0 6px;
+  margin-left: 10px;
 }
 .audio-speaker scale highlight {
-  background-color: #e2a478;
+  background-color: #b4be82;
   min-height: 10px;
 }
 .audio-speaker scale trough {
-  background-color: rgba(226, 164, 120, 0.3);
+  background-color: rgba(180, 190, 130, 0.3);
 }
 .audio-microphone {
+  transition: 120ms;
   background-color: rgba(226, 120, 120, 0.2);
-  padding: 0 8px;
+  border-bottom: solid #e27878 1px;
+  color: #e27878;
+}
+.audio-microphone:hover {
+  border-bottom: solid #e27878 2px;
+}
+.audio-microphone:active {
+  border-bottom: solid #e27878 0px;
 }
 .audio-microphone image {
   color: #e27878;
-  padding: 0 2px 0 2px;
+  padding: 0 10px;
 }
 .audio-microphone scale {
   min-width: 75px;
-  margin: 0 6px;
+  margin-left: 10px;
 }
 .audio-microphone scale highlight {
   background-color: #e27878;
