@@ -27,7 +27,7 @@ $lighter: #e3e4e8;
 
 
 /*=========================================*/
-/*===========- GLOBAL SETTINGS -===========*/
+/*===============- MIX INS -===============*/
 /*=========================================*/
 
 @mixin tag-width {
@@ -35,8 +35,22 @@ $lighter: #e3e4e8;
 }
 
 @mixin animate {
-  transition: 100ms
+  transition: 120ms
 }
+
+@mixin stylish-btn($clr){
+  @include animate;
+  background-color: rgba($clr, 0.2);
+  border-bottom: solid $clr 1px;
+  color: $clr;
+  &:hover {
+    border-bottom: solid $clr 2px;
+  }
+  &:active {
+    border-bottom: solid $clr 0px;
+  }
+}
+
 
 /*=========================================*/
 /*===========- GLOBAL SETTINGS -===========*/
@@ -44,9 +58,15 @@ $lighter: #e3e4e8;
 
 * {
 	all: unset;
-	font-family: JetBrainsMono;
+	//font-family: JetBrainsMono;
+	font-family: Lexend;
 	font-size: 100%;
-	border-radius: 2px;
+	border-radius: 3px;
+}
+
+tooltip {
+  background-color: rgba($black, 0.9);
+  color: $white;
 }
 
 menu {
@@ -89,33 +109,9 @@ menu {
 }
 
 .powermenu {
-  @include animate;
-  background-color: $black;
-  border-bottom: solid $blue 1px;
-  color: $blue;
+  @include stylish-btn($blue);
   padding: 0 12px 0 6px;
   font-size: 120%;
-  &:hover {
-    border-bottom: solid $blue 2px;
-  }
-  &:active {
-    border-bottom: solid $blue 0px;
-  }
-}
-
-.settingsmenu {
-  @include animate;
-  background-color: $black;
-  border-bottom: solid $blue 1px;
-  color: $blue;
-  padding: 0 10px 0 8px;
-  font-size: 145%;
-  &:hover {
-    border-bottom: solid $blue 2px;
-  }
-  &:active {
-    border-bottom: solid $blue 0px;
-  }
 }
 
 .notification {
@@ -138,7 +134,7 @@ menu {
   @include tag-width;
   @include animate;
 	&:hover {
-    border-bottom: solid 1px $darker;
+    border-bottom: solid 2px $darker;
 	}
 	&:active {
     border-bottom: solid 0px $darker;
@@ -160,65 +156,61 @@ menu {
 }
 
 .tags-focused {
+  background-color: rgba($green, 0.2);
+  color: $green;
+  border-bottom: solid 1px $green;
   @include animate;
-  background-color: rgba($magenta, 0.2);
-  color: $magenta;
-  border-bottom: solid 1px $magenta;
-  min-width: 38px;
+  min-width: 46px;
   &:hover {
-    background-color: rgba($magenta, 0.2);
-    color: $magenta;
-    border-bottom: solid 2px $magenta;
+    background-color: rgba($green, 0.2);
+    color: $green;
+    border-bottom: solid 2px $green;
   }
   &:active {
-    background-color: rgba($magenta, 0.2);
-    color: $magenta;
-    border-bottom: solid 0px $magenta;
+    background-color: rgba($green, 0.2);
+    color: $green;
+    border-bottom: solid 0px $green;
   }
 }
 
 .date {
-	background-color: rgba($green, 0.2);
-	color: $green;
-	padding: 0px 6px;
+  @include stylish-btn($blue);
+	padding: 0 12px 0 8px;
 }
 
 .clock {
-	background-color: rgba($green, 0.2);
-	color: $green;
-	padding: 0px 6px;
+  @include stylish-btn($cyan);
+	padding: 0 10px 0 8px;
 }
 
 .audio- {
   &speaker {
-  	background-color: rgba($yellow, 0.2);
-  	padding: 0 8px;
+    @include stylish-btn($green);
   	image {
-  		color: $yellow;
-  		padding: 0 2px 0 2px;
+  		color: $green;
+  		padding: 0 10px;
   	}
   	scale {
   		min-width: 75px;
-      margin: 0 6px;
+      margin-left: 10px;
       highlight {
-  		  background-color: $yellow;
+  		  background-color: $green;
   		  min-height: 10px;
   	  }
       trough {
-  		  background-color: rgba($yellow, 0.3);
+  		  background-color: rgba($green, 0.3);
   	  }
   	}
   }
   &microphone {
-  	background-color: rgba($red, 0.2);
-  	padding: 0 8px;
+    @include stylish-btn($red);
   	image {
   		color: $red;
-  		padding: 0 2px 0 2px;
+  		padding: 0 10px;
   	}
   	scale {
   		min-width: 75px;
-      margin: 0 6px;
+      margin-left: 10px;
       highlight {
   		  background-color: $red;
   		  min-height: 10px;
