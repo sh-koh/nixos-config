@@ -65,7 +65,6 @@
       mate.mate-polkit
       mpv
       river-bedload
-      rivercarro
       slurp
       swww
       wl-clipboard

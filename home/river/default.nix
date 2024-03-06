@@ -48,13 +48,13 @@
         # Super+Return to bump the focused view to the top of the layout stack
         riverctl map normal Super+Shift Return zoom
 
-        # Super+H and Super+L to decrease/increase the main ratio of rivercarro(1)
-        riverctl map normal Super H send-layout-cmd rivercarro "main-ratio -0.05"
-        riverctl map normal Super L send-layout-cmd rivercarro "main-ratio +0.05"
+        # Super+H and Super+L to decrease/increase the main ratio of rivertile(1)
+        riverctl map normal Super H send-layout-cmd rivertile "main-ratio -0.05"
+        riverctl map normal Super L send-layout-cmd rivertile "main-ratio +0.05"
 
-        # Super+Shift+H and Super+Shift+L to increment/decrement the main count of rivercarro(1)
-        riverctl map normal Super+Shift H send-layout-cmd rivercarro "main-count +1"
-        riverctl map normal Super+Shift L send-layout-cmd rivercarro "main-count -1"
+        # Super+Shift+H and Super+Shift+L to increment/decrement the main count of rivertile(1)
+        riverctl map normal Super+Shift H send-layout-cmd rivertile "main-count +1"
+        riverctl map normal Super+Shift L send-layout-cmd rivertile "main-count -1"
   
         # Super+Alt+{H,J,K,L} to move views
         riverctl map normal Super+Alt H move left 100
@@ -105,10 +105,10 @@
         riverctl map normal Super B toggle-fullscreen
 
         # Super+{Up,Right,Down,Left} to change layout orientation
-        riverctl map normal Super Up    send-layout-cmd rivercarro "main-location top"
-        riverctl map normal Super Right send-layout-cmd rivercarro "main-location right"
-        riverctl map normal Super Down  send-layout-cmd rivercarro "main-location bottom"
-        riverctl map normal Super Left  send-layout-cmd rivercarro "main-location left"
+        riverctl map normal Super Up    send-layout-cmd rivertile "main-location top"
+        riverctl map normal Super Right send-layout-cmd rivertile "main-location right"
+        riverctl map normal Super Down  send-layout-cmd rivertile "main-location bottom"
+        riverctl map normal Super Left  send-layout-cmd rivertile "main-location left"
 
         # Set background and border color
         riverctl background-color 0x000000
@@ -125,9 +125,9 @@
 	      # Warp cusor on the focused view/output
 	      riverctl set-cursor-warp on-focus-change
         
-        # Set the default layout generator to be rivercarro and start it.
+        # Set the default layout generator to be rivertile and start it.
         # River will send the process group of the init executable SIGTERM on exit.
-        riverctl default-layout rivercarro
+        riverctl default-layout rivertile
 
         # Host specific config
         case $HOSTNAME in
@@ -147,7 +147,7 @@
         sleep 2 && swww img ${config.stylix.image} &
         ${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1 &
 
-        exec ${pkgs.rivercarro}/bin/rivercarro -no-smart-gaps 
+        rivertile -view-padding 4 -outer-padding 4 &
       '';
     };
   };

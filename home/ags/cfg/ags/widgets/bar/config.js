@@ -7,15 +7,16 @@ import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 const Date = () => Widget.Label({
   class_name: 'date',
   setup: self => self.poll(1000, () => {
-    Utils.execAsync('date "+%A %d %B"').then(date => self.label = date.replace(/^./, str => str.toUpperCase()));
-  })
+    Utils.execAsync('date "+%D"').then(date => self.label = date + " ")
+    Utils.execAsync('date "+%A %d %B"').then(date => self.tooltip_text = date.replace(/^./, str => str.toUpperCase()));
+  }),
 });
 
 const Clock = () => Widget.Label({
   class_name: 'clock',
-	setup: self => self.poll(1000, () => {
-		Utils.execAsync('date "+%H:%M"').then(time => self.label = time);
-	})
+  setup: self => self.poll(1000, () => {
+    Utils.execAsync('date "+%H:%M"').then(time => self.label = time + " ");
+  }),
 });
 
 const openDrawer = () => Widget.Button({
@@ -24,33 +25,24 @@ const openDrawer = () => Widget.Button({
   on_primary_click: () => print('hello :D'),
 });
 
-const openSettings = () => Widget.Button({
-  class_name: 'settingsmenu',
-  label: '󰇘',
-  on_primary_click: () => print('hello :D but from settings button'),
-});
-
 const Microphone = () => Widget.EventBox({
+	class_name: 'audio-microphone',
   on_primary_click: () => Audio.microphone.volume === 0 ? Audio.microphone.volume = 1 : Audio.microphone.volume = 0,
-  on_hover: self => {
+  on_secondary_click: self => {
     let child = self.child["children"][0]; 
-    child.reveal_child = true;
-  },
-  on_hover_lost: self => {
-    let child = self.child["children"][0]; 
-    child.reveal_child = false;
+    child.reveal_child = !child.reveal_child;
   },
   on_scroll_up: () => {
-    if (Audio.microphone.volume <= 0.95) {
-      Audio.microphone.volume = Audio.microphone.volume + 0.05 || 1;
-    }
+    if (Audio.microphone.volume + 0.05 > 1) {
+      Audio.microphone.volume = 1;
+    } else {
+      Audio.microphone.volume = Audio.microphone.volume + 0.05;
+    } 
   },
   on_scroll_down: () => {
-    Audio.microphone.volume = Audio.microphone.volume - 0.05 || 0;
+    Audio.microphone.volume = Audio.microphone.volume - 0.05;
   },
   child: Widget.Box({
-	  class_name: 'audio-microphone',
-    hexpand: true,
 	  children: [
       Widget.Revealer({
         revealChild: false,
@@ -76,25 +68,23 @@ const Microphone = () => Widget.EventBox({
 });
 
 const Speakers = () => Widget.EventBox({
+	class_name: 'audio-speaker',
   on_primary_click: () => Audio.speaker.volume === 0 ? Audio.speaker.volume = 1 : Audio.speaker.volume = 0,
-  on_hover: self => {
+  on_secondary_click: self => {
     let child = self.child["children"][0]; 
-    child.reveal_child = true;
-  },
-  on_hover_lost: self => {
-    let child = self.child["children"][0]; 
-    child.reveal_child = false;
+    child.reveal_child = !child.reveal_child;
   },
   on_scroll_up: () => {
-    if (Audio.speaker.volume <= 0.95) {
-      Audio.speaker.volume = Audio.speaker.volume + 0.05 || 1;
+    if (Audio.speaker.volume + 0.05 > 1) {
+      Audio.speaker.volume = 1;
+    } else {
+      Audio.speaker.volume = Audio.speaker.volume + 0.05;
     }
   },
   on_scroll_down: () => {
-    Audio.speaker.volume = Audio.speaker.volume - 0.05 || 0;
+    Audio.speaker.volume = Audio.speaker.volume - 0.05;
   },
   child: Widget.Box({
-	  class_name: 'audio-speaker',
 	  children: [
       Widget.Revealer({
         revealChild: false,
@@ -148,7 +138,6 @@ const Left = () => Widget.Box({
 	spacing: 4,
 	children: [
     openDrawer(),
-    Date(),
 	],
 });
 
@@ -167,7 +156,7 @@ const Right = () => Widget.Box({
     Microphone(),
 		LaptopBattery(),
 		Clock(),
-    openSettings(),
+    Date(),
 	],
 });
 
