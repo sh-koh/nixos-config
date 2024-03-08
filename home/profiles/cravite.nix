@@ -8,6 +8,7 @@
   imports = [
     ../neovim
     ../shell
+    ../theme
   ];
   home.packages = with pkgs; [
   ];
