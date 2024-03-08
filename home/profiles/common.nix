@@ -39,6 +39,7 @@
   services.ssh-agent.enable = true;
   programs.ssh = {
     enable = true;
+    addKeysToAgent = "yes";
     compression = true;
     matchBlocks = {
       "atrebois" = {
@@ -46,7 +47,6 @@
         host = "atrebois";
         port = 72;
         user = "shakoh";
-        identitiesOnly = true;
         identityFile = "~/.ssh/id_atrebois";
       };
       "rocaille" = {
@@ -54,7 +54,6 @@
         host = "rocaille";
         port = 72;
         user = "shakoh";
-        identitiesOnly = true;
         identityFile = "~/.ssh/id_rocaille";
       };
       "cravite" = {
@@ -62,7 +61,6 @@
         host = "cravite";
         port = 72;
         user = "shakoh";
-        identitiesOnly = true;
         identityFile = "~/.ssh/id_cravite";
       };
     };
