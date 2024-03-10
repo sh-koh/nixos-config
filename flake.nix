@@ -14,7 +14,7 @@
     nixvim.url = "github:nix-community/nixvim";
     anyrun.url = "github:kirottu/anyrun";
     ags.url = "github:aylur/ags";
-
+    
     agenix.url = "github:ryantm/agenix";
     nix-secrets = {
       url = "git+ssh://git@github.com/sh-koh/nix-secrets.git?shallow=1";
