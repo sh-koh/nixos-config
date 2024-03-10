@@ -8,6 +8,7 @@
 
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ./virt.nix
     ./hardware-configuration.nix
   ];
 

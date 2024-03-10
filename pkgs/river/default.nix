@@ -18,7 +18,7 @@
 , withManpages ? true
 , xwaylandSupport ? true
 }:
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation {
   pname = "river";
   version = "git";
 
@@ -27,9 +27,11 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "riverwm";
     repo = "river";
-    rev = "50ccd4c5b3cd700bed09d26eb75552f08f9af262";
+    rev = "ac655593f3113ca1d94d27c5845f0406bf495c9a";
+    sha256 = "sha256-hVt7FRJ04Z04406wnsvLhH8fRxzLa2RVFhzOM5pQSQo=";
+    #rev = "50ccd4c5b3cd700bed09d26eb75552f08f9af262";
+    #sha256 = "sha256-tacwctOL2TFiC8VP6ymoJ5QjQUFrG5H70J3HeOW/7/g=";
     fetchSubmodules = true;
-    sha256 = "sha256-tacwctOL2TFiC8VP6ymoJ5QjQUFrG5H70J3HeOW/7/g=";
   };
 
   nativeBuildInputs = [
@@ -59,4 +61,4 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru.providedSessions = [ "river" ];
-})
+}
