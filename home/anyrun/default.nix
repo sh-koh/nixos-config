@@ -47,11 +47,6 @@
         padding: 10px;
       }
       
-      #match.box {
-        color: #${base01};
-        border-bottom: 1px solid #${base04};
-      }
-
       #match:selected {
         color: #${base0A};
         background-color: rgba(226,164,120,0.2); /*base0A*/
