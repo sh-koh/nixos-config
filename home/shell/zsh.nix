@@ -9,11 +9,11 @@
       ls = "${lib.getExe pkgs.eza} --color=auto --icons=always --git --smart-group";
       l = "${lib.getExe pkgs.eza} --color=auto --icons=always --git --smart-group -la";
       cd = "z";
-      cat = "${lib.getExe pkgs.bat} --style=auto --color=always -P --plain";
-      less = "${lib.getExe pkgs.bat} --style=auto --color=always -p";
+      cat = "${lib.getExe pkgs.bat} --style=auto --color=auto -P";
+      less = "${lib.getExe pkgs.bat} --style=auto --color=auto";
       find = "${lib.getExe pkgs.fd} -H";
       grep = "${lib.getExe pkgs.ripgrep}";
-      zj = "${lib.getExe pkgs.zellij}";
+      zj = "${lib.getExe pkgs.zellij} $@ options --no-pane-frames --simplified-ui=true";
     };
   };
 }

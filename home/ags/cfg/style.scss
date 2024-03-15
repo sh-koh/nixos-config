@@ -156,20 +156,20 @@ menu {
 }
 
 .tags-focused {
-  background-color: rgba($green, 0.2);
-  color: $green;
-  border-bottom: solid 1px $green;
+  background-color: rgba($yellow, 0.2);
+  color: $yellow;
+  border-bottom: solid 1px $yellow;
   @include animate;
   min-width: 46px;
   &:hover {
-    background-color: rgba($green, 0.2);
-    color: $green;
-    border-bottom: solid 2px $green;
+    background-color: rgba($yellow, 0.2);
+    color: $yellow;
+    border-bottom: solid 2px $yellow;
   }
   &:active {
-    background-color: rgba($green, 0.2);
-    color: $green;
-    border-bottom: solid 0px $green;
+    background-color: rgba($yellow, 0.2);
+    color: $yellow;
+    border-bottom: solid 0px $yellow;
   }
 }
 
