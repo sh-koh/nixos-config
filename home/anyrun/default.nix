@@ -30,49 +30,44 @@
       ];
     };
     extraCss = with config.lib.stylix.colors; ''
-        #window,
-        #match,
-        #entry,
-        #plugin,
-        #main {
-          background: transparent;
-        }
+      * {
+        all: unset;
+        font-family: Lexend;
+        font-size: 100%;
+        padding: 4px;
+        border-radius: 3px;
+      }
+      
+      #window {
+        background-color: transparent;
+      }
+      
+      #main {
+        background-color: #${base00};
+        padding: 10px;
+      }
+      
+      #match.box {
+        color: #${base01};
+        border-bottom: 1px solid #${base04};
+      }
 
-        * {
-          all: unset;
-          font-family: JetBrainsMono;
-          font-size: 100%;
-          padding: 4px;
-          border-radius: 3px;
-        }
-
-        #window {
-          background-color: ${base02};
-          padding: 8px;
-        }
-
-        #plugin, #main {
-          background-color: ${base0A};
-        }
-
-        #match:selected {
-          background-color: ${base0A};
-        }
-
-        #match {
-          color: ${base0B};
-        }
-
-        #entry {
-          border-radius: 3px;
-          margin: 20px;
-        }
-
-        box {
-          background-color: ${base02};
-          border: 1px solid ${base03};
-          padding: 8px;
-        }
+      #match:selected {
+        color: #${base0A};
+        background-color: rgba(226,164,120,0.2); /*base0A*/
+        border-bottom: 2px solid #${base0A};
+      }
+      
+      #entry {
+        margin: 10px;
+        padding: 4px;
+        background-color: #${base01};
+      }
+      
+      box {
+        background-color: transparent;
+        padding: 8px;
+      }
     '';
   };
 }
