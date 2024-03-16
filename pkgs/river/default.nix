@@ -15,22 +15,18 @@
 , wlroots-nvidia
 , xwayland
 , zig_0_11
-, withManpages ? true
-, xwaylandSupport ? true
 }:
 stdenv.mkDerivation {
   pname = "river";
   version = "git";
 
-  outputs = [ "out" ] ++ lib.optionals withManpages [ "man" ];
+  outputs = [ "out" "man" ];
 
   src = fetchFromGitHub {
     owner = "riverwm";
     repo = "river";
-    rev = "ac655593f3113ca1d94d27c5845f0406bf495c9a";
-    sha256 = "sha256-hVt7FRJ04Z04406wnsvLhH8fRxzLa2RVFhzOM5pQSQo=";
-    #rev = "50ccd4c5b3cd700bed09d26eb75552f08f9af262";
-    #sha256 = "sha256-tacwctOL2TFiC8VP6ymoJ5QjQUFrG5H70J3HeOW/7/g=";
+    rev = "ff8365d35002761adae58fb3fb8e430a5e72b1e3";
+    sha256 = "sha256-Ux3dhMuQrICUAsyJeHXcS7yamOJIhXEV8+JaOj8k3mQ=";
     fetchSubmodules = true;
   };
 
@@ -39,7 +35,8 @@ stdenv.mkDerivation {
     wayland
     xwayland
     zig_0_11.hook
-  ] ++ lib.optional withManpages scdoc;
+    scdoc
+  ];
 
   buildInputs = [
     libGL
@@ -50,11 +47,12 @@ stdenv.mkDerivation {
     udev
     wayland-protocols
     wlroots-nvidia
-  ] ++ lib.optional xwaylandSupport libX11;
+    libX11
+  ];
 
   dontConfigure = true;
 
-  zigBuildFlags = lib.optional withManpages "-Dman-pages" ++ lib.optional xwaylandSupport "-Dxwayland";
+  zigBuildFlags = "-Dman-pages -Dxwayland";
 
   postInstall = ''
     install contrib/river.desktop -Dt $out/share/wayland-sessions
