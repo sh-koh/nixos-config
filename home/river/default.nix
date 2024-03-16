@@ -162,10 +162,15 @@
     };
   };
 
-  systemd.user.targets.tray = {
-    Unit = {
-      Description = "Home Manager System Tray";
-      Requires = [ "graphical-session-pre.target" ];
-    };
-  };
+  home.packages = with pkgs; [
+    btop
+    imv
+    mate.mate-polkit
+    mpv
+    river-bedload
+    slurp
+    swww
+    wl-clipboard
+    wlr-randr
+  ];
 }
