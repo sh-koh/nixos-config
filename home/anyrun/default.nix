@@ -39,6 +39,7 @@
       }
       
       #window {
+        color: #${base04};
         background-color: transparent;
       }
       
@@ -54,8 +55,8 @@
       }
       
       #entry {
-        margin: 10px;
-        padding: 4px;
+        margin: 4px;
+        padding: 10px;
         background-color: #${base01};
       }
       
