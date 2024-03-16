@@ -10,7 +10,8 @@
   programs.ags = {
     enable = true;
     #package = ;
-    configDir = ./cfg;
+    #configDir = ./cfg;
+    configDir = config.lib.file.mkOutOfStoreSymlink "/home/shakoh/Documents/Git/nixos-config/home/ags/cfg";
     extraPackages = with pkgs; [
       bash
       dart-sass
