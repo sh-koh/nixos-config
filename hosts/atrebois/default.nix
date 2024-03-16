@@ -15,7 +15,6 @@
     ./hardware-configuration.nix
   ];
  
-  # Services et démons
   services = {
     dbus.enable = true;
     dbus.implementation = "broker";
@@ -54,23 +53,7 @@
     adb.enable = true;
   };
 
-  programs.river = {
-    enable = true;
-    extraPackages = with pkgs; [
-      btop
-      grim
-      imv
-      jq
-      lf
-      mate.mate-polkit
-      mpv
-      river-bedload
-      slurp
-      swww
-      wl-clipboard
-      wlr-randr
-    ];
-  };
+  programs.river.enable = true;
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
@@ -96,12 +79,6 @@
       end = "${pkgs.dunst}/bin/dunstify 'Gamemode désactivé.'";
     };
   };
-
-  environment.defaultPackages = with pkgs; [
-    ffmpeg-full
-    git
-    git-crypt
-  ];
 
   environment.systemPackages = with pkgs; [
     coreutils
@@ -160,8 +137,8 @@
   gtk.iconCache.enable = true;
   fonts.packages = with pkgs; [ jetbrains-mono lexend nerdfonts ];
 
-  time.timeZone = "Europe/Paris"; # Heure de Paris.
-  console.keyMap = "us-acentos"; # Clavier US-International dans le TTY.
+  time.timeZone = "Europe/Paris";
+  console.keyMap = "us-acentos";
 
   nixpkgs = {
     config.allowUnfree = true;
@@ -173,8 +150,8 @@
   };
 
   nix = {
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs; # Ajoute chaque inputs de la flake système dans les registres nix.
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry; # Permet l'utilisation des commandes 'legacy' avec les flakes d'actives.
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     settings = {
       trusted-users = [ "root" "@wheel" ];
       use-xdg-base-directories = true;

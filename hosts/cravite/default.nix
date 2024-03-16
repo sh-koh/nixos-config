@@ -41,7 +41,6 @@
     zsh.enable = lib.mkDefault true;
   };
 
-  # Paquets installés sur le système et accessible par tout les utilisateurs.
   environment.systemPackages = with pkgs; [
     coreutils
     curl
@@ -53,7 +52,6 @@
     wget
   ];
 
-  # Utilisateur(s) et groupe(s).
   users.users.shakoh = {
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
@@ -83,10 +81,9 @@
 
   fonts.packages = with pkgs; [ jetbrains-mono lexend nerdfonts ];
 
-  time.timeZone = "Europe/Paris"; # Heure de Paris.
-  console.keyMap = "us-acentos"; # Clavier US-International dans le TTY.
+  time.timeZone = "Europe/Paris";
+  console.keyMap = "us-acentos";
 
-  # Paramètres de nix et overlays
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [
@@ -97,8 +94,8 @@
   };
   
   nix = {
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs; # Ajoute chaque inputs de la flake système dans les registres nix.
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry; # Permet l'utilisation des commandes 'legacy' avec les flakes d'actives.
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     settings = {
       trusted-users = [ "root" "@wheel" ];
       auto-allocate-uids = true;
