@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, fetchFromGitHub
+, fetchgit
 , libGL
 , libX11
 , libevdev
@@ -22,11 +22,10 @@ stdenv.mkDerivation {
 
   outputs = [ "out" "man" ];
 
-  src = fetchFromGitHub {
-    owner = "riverwm";
-    repo = "river";
-    rev = "ff8365d35002761adae58fb3fb8e430a5e72b1e3";
-    sha256 = "sha256-Ux3dhMuQrICUAsyJeHXcS7yamOJIhXEV8+JaOj8k3mQ=";
+  src = fetchgit {
+    url = "https://codeberg.org/river/river.git";
+    rev = "ed99d7bc14d1f77e3e49bb84ddbc7459c5b4182e";
+    sha256 = "sha256-ItGssc7roTFBuVj1dpNtwkmy0KSMoPdD6iuDaexlpRc=";
     fetchSubmodules = true;
   };
 
