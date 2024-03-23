@@ -3,9 +3,8 @@
 
   modifications = final: prev: {
     nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-    glfw = prev.glfw.override { waylandSupport = true; };
     wlroots-nvidia = prev.wlroots_0_17.overrideAttrs (oldAttrs: { patches = ./patches/wlroots-nvidia.patch; });
-    ags = prev.ags.override { extraPackages = [ inputs.nixpkgs.legacyPackages.${final.system}.sassc ]; };
+    prismlauncher = prev.prismlauncher.override { withWaylandGLFW = true; };
   };
 
   master-packages = final: _prev: {
