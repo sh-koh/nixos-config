@@ -112,7 +112,6 @@
 
   qt = {
     enable = true;
-    platformTheme = "kde";
   };
 
   # Reload system units when changing configs
