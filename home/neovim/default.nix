@@ -31,14 +31,18 @@
       termguicolors = true;
       signcolumn = "yes";
       expandtab = true;
+      cursorline = true;
     };
+
+    highlight.NormalNC.fg = "#${config.lib.stylix.colors.base04}";
     
     plugins = {
       nix.enable = true;
       which-key.enable = true;
+      bufferline.enable = true;
       luasnip.enable = true;
       cmp_luasnip.enable = true;
-      neo-tree.enable = true;
+      nvim-tree.enable = true;
       neocord.enable = true;
       lualine = {
         enable = true;

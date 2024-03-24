@@ -8,11 +8,12 @@
 
   programs.nixvim.keymaps = [
     {
-      action = "<cmd>Neotree toggle<CR>";
+      action = "<cmd>NvimTreeToggle<CR>";
       key = "<C-b>";
       mode = "n";
       options = {
-        desc = "Toggle Neotree View.";
+        silent = true;
+        desc = "Toggle Tree.";
       };
     }
   ];
