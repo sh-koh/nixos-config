@@ -4,26 +4,20 @@
 /*               - ICEBERG -               */
 /*       Github: cocopon/iceberg.vim       */
 
-$blacker: #161821;
-$black: #292d3d;
-$darker: #484b5b;
-$dark: #6b7089;
-$red: #e27878;
-$red1: #e98989;
-$green: #b4be82;
-$green1: #c0ca8e;
-$yellow: #e2a478;
-$yellow1: #e9b189;
-$blue: #84a0c6;
-$blue1: #91acd1;
-$magenta: #a093c7;
-$magenta1: #ada0d3;
-$cyan: #89b8c2;
-$cyan1: #95c4ce;
+$blacker: #070912;
+$black: #0C0E17;
+$darker: #161821;
+$dark: #23252E;
 $white: #9ba0b5;
 $whiter: #c6c8d1;
 $light: #d2d4de;
 $lighter: #e3e4e8;
+$red: #e27878;
+$yellow: #e2a478;
+$green: #b4be82;
+$cyan: #89b8c2;
+$blue: #84a0c6;
+$magenta: #a093c7;
 
 
 /*=========================================*/
@@ -40,7 +34,7 @@ $lighter: #e3e4e8;
 
 @mixin stylish-btn($clr){
   @include animate;
-  background-color: rgba($clr, 0.2);
+  background-color: rgba($clr, 0.1);
   border-bottom: solid $clr 1px;
   color: $clr;
   &:hover {
@@ -58,19 +52,18 @@ $lighter: #e3e4e8;
 
 * {
 	all: unset;
-	//font-family: JetBrainsMono;
 	font-family: Lexend;
 	font-size: 100%;
 	border-radius: 3px;
 }
 
 tooltip {
-  background-color: rgba($black, 0.9);
-  color: $white;
+  background-color: $blue;
+  color: $darker;
 }
 
 menu {
-	background-color: $blacker;
+	background-color: $black;
 	border-style: solid;
 	border-width: 1px;
 	border-color: $black;
@@ -85,7 +78,7 @@ menu {
 		margin: 2px;
 
 		&:hover {
-			background-color: $darker;
+			background-color: $dark;
 		}
 	}
 }
@@ -97,7 +90,7 @@ menu {
 /*=========================================*/
 
 .bar {
-	background-color: rgba($blacker, 0.99);
+	background-color: rgba($black, 0.99);
 	border-radius: 0px;
 	border-bottom-width: 1px;
 	border-style: solid;
@@ -134,15 +127,15 @@ menu {
   @include tag-width;
   @include animate;
 	&:hover {
-    border-bottom: solid 2px $darker;
+    border-bottom: solid 2px $dark;
 	}
 	&:active {
-    border-bottom: solid 0px $darker;
+    border-bottom: solid 0px $dark;
 	}
 }
 
 .tags-occupied {
-  background-color: $black;
+  background-color: $darker;
   color: $white;
   border-bottom: solid 1px $dark;
   @include tag-width;
@@ -156,18 +149,18 @@ menu {
 }
 
 .tags-focused {
-  background-color: rgba($yellow, 0.2);
+  background-color: rgba($yellow, 0.1);
   color: $yellow;
   border-bottom: solid 1px $yellow;
   @include animate;
   min-width: 46px;
   &:hover {
-    background-color: rgba($yellow, 0.2);
+    background-color: rgba($yellow, 0.1);
     color: $yellow;
     border-bottom: solid 2px $yellow;
   }
   &:active {
-    background-color: rgba($yellow, 0.2);
+    background-color: rgba($yellow, 0.1);
     color: $yellow;
     border-bottom: solid 0px $yellow;
   }

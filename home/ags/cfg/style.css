@@ -17,18 +17,18 @@
 }
 
 tooltip {
-  background-color: rgba(41, 45, 61, 0.9);
-  color: #9ba0b5;
+  background-color: #84a0c6;
+  color: #161821;
 }
 
 menu {
-  background-color: #161821;
+  background-color: #0C0E17;
   border-style: solid;
   border-width: 1px;
-  border-color: #292d3d;
+  border-color: #0C0E17;
 }
 menu separator {
-  background-color: #292d3d;
+  background-color: #0C0E17;
 }
 menu menuitem {
   background-color: rgba(0, 0, 0, 0);
@@ -36,18 +36,18 @@ menu menuitem {
   margin: 2px;
 }
 menu menuitem:hover {
-  background-color: #484b5b;
+  background-color: #23252E;
 }
 
 /*=========================================*/
 /*================- BAR -==================*/
 /*=========================================*/
 .bar {
-  background-color: rgba(22, 24, 33, 0.99);
+  background-color: rgba(12, 14, 23, 0.99);
   border-radius: 0px;
   border-bottom-width: 1px;
   border-style: solid;
-  border-color: #292d3d;
+  border-color: #0C0E17;
 }
 .bar > box {
   min-height: 28px;
@@ -56,7 +56,7 @@ menu menuitem:hover {
 
 .powermenu {
   transition: 120ms;
-  background-color: rgba(132, 160, 198, 0.2);
+  background-color: rgba(132, 160, 198, 0.1);
   border-bottom: solid #84a0c6 1px;
   color: #84a0c6;
   padding: 0 12px 0 6px;
@@ -70,7 +70,7 @@ menu menuitem:hover {
 }
 
 .notification {
-  background-color: #292d3d;
+  background-color: #0C0E17;
   padding-right: 10px;
 }
 .notification label {
@@ -78,59 +78,59 @@ menu menuitem:hover {
 }
 .notification image {
   background-color: #84a0c6;
-  color: #292d3d;
+  color: #0C0E17;
   margin: 0 10px 0 0;
   padding: 0 8px;
 }
 
 .tags {
-  background-color: rgba(41, 45, 61, 0.3);
+  background-color: rgba(12, 14, 23, 0.3);
   color: rgba(155, 160, 181, 0.4);
   min-width: 28px;
   transition: 120ms;
 }
 .tags:hover {
-  border-bottom: solid 2px #484b5b;
+  border-bottom: solid 2px #23252E;
 }
 .tags:active {
-  border-bottom: solid 0px #484b5b;
+  border-bottom: solid 0px #23252E;
 }
 
 .tags-occupied {
-  background-color: #292d3d;
+  background-color: #161821;
   color: #9ba0b5;
-  border-bottom: solid 1px #6b7089;
+  border-bottom: solid 1px #23252E;
   min-width: 28px;
   transition: 120ms;
 }
 .tags-occupied:hover {
-  border-bottom: solid 2px #6b7089;
+  border-bottom: solid 2px #23252E;
 }
 .tags-occupied:active {
-  border-bottom: solid 0px #6b7089;
+  border-bottom: solid 0px #23252E;
 }
 
 .tags-focused {
-  background-color: rgba(226, 164, 120, 0.2);
+  background-color: rgba(226, 164, 120, 0.1);
   color: #e2a478;
   border-bottom: solid 1px #e2a478;
   transition: 120ms;
   min-width: 46px;
 }
 .tags-focused:hover {
-  background-color: rgba(226, 164, 120, 0.2);
+  background-color: rgba(226, 164, 120, 0.1);
   color: #e2a478;
   border-bottom: solid 2px #e2a478;
 }
 .tags-focused:active {
-  background-color: rgba(226, 164, 120, 0.2);
+  background-color: rgba(226, 164, 120, 0.1);
   color: #e2a478;
   border-bottom: solid 0px #e2a478;
 }
 
 .date {
   transition: 120ms;
-  background-color: rgba(132, 160, 198, 0.2);
+  background-color: rgba(132, 160, 198, 0.1);
   border-bottom: solid #84a0c6 1px;
   color: #84a0c6;
   padding: 0 12px 0 8px;
@@ -144,7 +144,7 @@ menu menuitem:hover {
 
 .clock {
   transition: 120ms;
-  background-color: rgba(137, 184, 194, 0.2);
+  background-color: rgba(137, 184, 194, 0.1);
   border-bottom: solid #89b8c2 1px;
   color: #89b8c2;
   padding: 0 10px 0 8px;
@@ -158,7 +158,7 @@ menu menuitem:hover {
 
 .audio-speaker {
   transition: 120ms;
-  background-color: rgba(180, 190, 130, 0.2);
+  background-color: rgba(180, 190, 130, 0.1);
   border-bottom: solid #b4be82 1px;
   color: #b4be82;
 }
@@ -185,7 +185,7 @@ menu menuitem:hover {
 }
 .audio-microphone {
   transition: 120ms;
-  background-color: rgba(226, 120, 120, 0.2);
+  background-color: rgba(226, 120, 120, 0.1);
   border-bottom: solid #e27878 1px;
   color: #e27878;
 }
@@ -212,7 +212,7 @@ menu menuitem:hover {
 }
 
 .battery {
-  background-color: #292d3d;
+  background-color: #0C0E17;
   padding: 0 8px;
 }
 .battery label {
