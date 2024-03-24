@@ -44,7 +44,7 @@
       }
       
       #main {
-        background-color: #${base00};
+        background-color: #${base01};
         padding: 10px;
       }
       
@@ -57,7 +57,7 @@
       #entry {
         margin: 4px;
         padding: 10px;
-        background-color: #${base01};
+        background-color: #${base02};
       }
       
       box {
