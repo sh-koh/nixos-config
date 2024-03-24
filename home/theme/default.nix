@@ -7,7 +7,7 @@
       applications = 1.0;
       desktop = 1.0;
       popups = 1.0;
-      terminal = 0.96;
+      terminal = 0.99;
     };
     cursor = {
       name = "phinger-cursors-light";
@@ -15,8 +15,11 @@
       size = 32;
     };
     fonts = {
-      serif = config.stylix.fonts.monospace;
-      sansSerif = config.stylix.fonts.monospace;
+      serif = {
+        package = pkgs.lexend;
+        name = "Lexend";
+      };
+      sansSerif = config.stylix.fonts.serif;
       monospace = {
         package = pkgs.jetbrains-mono;
         name = "JetBrains Mono";
@@ -39,44 +42,37 @@
     };
     
     base16Scheme = let 
-      blacker = "#161821";
-      black = "#292d3d";
-      darker = "#484b5b";
-      dark = "#6b7089";
-      red = "#e27878";
-      red1 = "#e98989";
-      green = "#b4be82";
-      green1 = "#c0ca8e";
-      yellow = "#e2a478";
-      yellow1 = "#e9b189";
-      blue = "#84a0c6";
-      blue1 = "#91acd1";
-      magenta = "#a093c7";
-      magenta1 = "#ada0d3";
-      cyan = "#89b8c2";
-      cyan1 = "#95c4ce";
+      blacker = "#070912";
+      black = "#0C0E17";
+      darker = "#161821";
+      dark = "#23252E";
       white = "#9ba0b5";
       whiter = "#c6c8d1";
       light = "#d2d4de";
       lighter = "#e3e4e8";
-    in
-    {
-      base00 = blacker; # Noir le plus noir
-      base01 = black; # ---
-      base02 = darker; # --
-      base03 = dark; # -
-      base04 = white;# +
-      base05 = whiter; # ++
-      base06 = light; # +++
-      base07 = lighter; # Blanc le plus blanc
-      base08 = red; # Rouge
-      base09 = yellow1; # Orange
-      base0A = yellow; # Jaune
-      base0B = green; # Vert
-      base0C = cyan; # Cyan
-      base0D = blue; # Bleu
-      base0E = magenta; # Violet
-      base0F = magenta1; # Rose
+      red = "#e27878";
+      yellow = "#e2a478";
+      green = "#b4be82";
+      cyan = "#89b8c2";
+      blue = "#84a0c6";
+      magenta = "#a093c7";
+    in {
+      base00 = blacker; # ----
+      base01 = black;   # ---
+      base02 = darker;  # --
+      base03 = dark;    # -
+      base04 = white;   # +
+      base05 = whiter;  # ++
+      base06 = light;   # +++
+      base07 = lighter; # ++++
+      base08 = red;     # Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+      base09 = yellow;  # Integers, Boolean, Constants, XML Attributes, Markup Link Url
+      base0A = yellow;  # Classes, Markup Bold, Search Text Background
+      base0B = green;   # Strings, Inherited Class, Markup Code, Diff Inserted
+      base0C = cyan;    # Support, Regular Expressions, Escape Characters, Markup Quotes
+      base0D = blue;    # Functions, Methods, Attribute IDs, Headings
+      base0E = magenta; # Keywords, Storage, Selector, Markup Italic, Diff Changed
+      base0F = yellow;  # Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
     }; 
   };
 }
