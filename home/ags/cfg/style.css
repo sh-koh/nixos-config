@@ -212,14 +212,23 @@ menu menuitem:hover {
 }
 
 .battery {
-  background-color: #0C0E17;
-  padding: 0 8px;
+  transition: 120ms;
+  background-color: rgba(160, 147, 199, 0.1);
+  border-bottom: solid #a093c7 1px;
+  color: #a093c7;
+  padding: 0 0 0 10px;
+}
+.battery:hover {
+  border-bottom: solid #a093c7 2px;
+}
+.battery:active {
+  border-bottom: solid #a093c7 0px;
 }
 .battery label {
-  color: #9ba0b5;
+  color: #a093c7;
 }
 .battery image {
-  color: #9ba0b5;
+  color: #a093c7;
   padding: 0 8px 0 2px;
 }
 

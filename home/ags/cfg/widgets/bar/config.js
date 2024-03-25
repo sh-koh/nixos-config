@@ -121,15 +121,15 @@ const LaptopBattery = () => Widget.Box({
 	class_name: 'battery',
 	visible: Battery.bind('available'),
 	children: [
+		Widget.Label({
+			label: Battery.bind('percent').transform(p => {
+        return `${p}%`;
+      }),
+		}),
 		Widget.Icon({
 			icon: Battery.bind('percent').transform(p => {
 				return `battery-level-${Math.floor(p / 10) * 10}-symbolic`;
 			}),
-		}),
-		Widget.Label({
-			label: Battery.bind('percent').transform(p => {
-        return `- ${p}%`;
-      }),
 		}),
 	],
 });

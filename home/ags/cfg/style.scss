@@ -216,13 +216,13 @@ menu {
 }
 
 .battery {
-	background-color: $black;
-	padding: 0 8px;
+  @include stylish-btn($magenta);
+	padding: 0 0 0 10px;
   label {
-    color: $white;
+    color: $magenta;
   }
 	image {
-		color: $white;
+		color: $magenta;
 		padding: 0 8px 0 2px;
 	}
 }
