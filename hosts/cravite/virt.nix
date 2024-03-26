@@ -6,7 +6,8 @@
 , ...
 }: {
 
-  virtualisation.podman = {
+  virtualisation.docker = {
     enable = true;
+    enableOnBoot = false;
   };
 }

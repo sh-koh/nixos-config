@@ -113,8 +113,8 @@
         # Set background and border color
         riverctl background-color 0x000000
         riverctl border-width 1
-        riverctl border-color-focused 0x${lib.removePrefix "#" base03}
-        riverctl border-color-unfocused 0x${lib.removePrefix "#" base01}
+        riverctl border-color-focused 0x${lib.removePrefix "#" base04}
+        riverctl border-color-unfocused 0x${lib.removePrefix "#" base03}
 	
 	      # Server-side decoration
 	      riverctl rule-add -app-id "firefox" ssd
