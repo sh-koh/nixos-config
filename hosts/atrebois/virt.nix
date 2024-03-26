@@ -24,8 +24,10 @@
     win-virtio
   ];
 
-  virtualisation.podman = {
+  virtualisation.docker = {
     enable = true;
+    enableNvidia = true;
+    enableOnBoot = false;
   };
 
   virtualisation.containers.cdi.dynamic.nvidia.enable = true;

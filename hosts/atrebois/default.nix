@@ -106,7 +106,7 @@
       "kvm"
       "libvirtd"
       "qemu-libvirtd"
-      "podman"
+      "docker"
       "adbusers"
       "networkmanager"
       "wireshark"
