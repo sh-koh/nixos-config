@@ -22,7 +22,7 @@
     vimAlias = true;
     clipboard.providers.wl-copy.enable = true;
     clipboard.register = "unnamedplus";
-    options = {
+    opts = {
       number = true;
       relativenumber = true;
       shiftwidth = 2;
