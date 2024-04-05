@@ -15,6 +15,10 @@
         # Cursor theme
         riverctl xcursor-theme ${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}
 
+        # Audio bindings
+        riverctl map normal None XF86AudioRaiseVolume spawn "wpctl set-volume @DEFAULT_SINK@ 2%+"
+        riverctl map normal None XF86AudioLowerVolume spawn "wpctl set-volume @DEFAULT_SINK@ 2%-"
+
         # International keyboard layout
         riverctl keyboard-layout -variant intl us
 
@@ -126,13 +130,14 @@
 	      riverctl set-cursor-warp on-focus-change
         
         # Set the default layout generator to be rivertile and start it.
-        # River will send the process group of the init executable SIGTERM on exit.
         riverctl default-layout rivertile
 
         # Host specific config
         case $HOSTNAME in
             (atrebois)
-                riverctl map normal Super+Shift A spawn "killall -SIGUSR1 gpu-screen-recorder && dunstify 'Clip sauvegardé.'" # GPU-screen-recorder replay saving
+                # GPU-screen-recorder replay saving
+                riverctl map normal Super+Shift A spawn "killall -SIGUSR1 gpu-screen-recorder && dunstify 'Clip sauvegardé.'"
+
                 wlr-randr --output DP-1 --mode 1920x1080@239.964005Hz --adaptive-sync enabled
                 ${lib.getExe pkgs.xorg.xrandr} --output DP-1 --primary
             ;;
