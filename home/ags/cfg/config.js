@@ -1,6 +1,6 @@
 import { forMonitors } from './utils.js';
 import Bar from './widgets/bar/config.js';
-import { notificationPopup } from './widgets/notifications/config.js';
+import { NotificationPopups } from './widgets/notifications/popups.js';
 import App from 'resource:///com/github/Aylur/ags/app.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 
@@ -20,7 +20,7 @@ Utils.monitorFile(scss, reloadCss);
 export default {
 	style: css,
 	windows: [
-    notificationPopup,
+    forMonitors(NotificationPopups),
     forMonitors(Bar),
 	],
 };
