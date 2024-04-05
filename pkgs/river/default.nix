@@ -12,7 +12,7 @@
 , udev
 , wayland
 , wayland-protocols
-, wlroots-nvidia
+, wlroots
 , xwayland
 , zig_0_11
 }:
@@ -24,8 +24,8 @@ stdenv.mkDerivation {
 
   src = fetchgit {
     url = "https://codeberg.org/river/river.git";
-    rev = "ed99d7bc14d1f77e3e49bb84ddbc7459c5b4182e";
-    sha256 = "sha256-ItGssc7roTFBuVj1dpNtwkmy0KSMoPdD6iuDaexlpRc=";
+    rev = "36d8e90a5423c4da037ca6fb2dd02c70cf6a4f3b";
+    sha256 = "sha256-JTto0za9zIw8W3KN3eIPGfpsQU3VH+M3i8Gk6KUNHMQ=";
     fetchSubmodules = true;
   };
 
@@ -45,7 +45,7 @@ stdenv.mkDerivation {
     pixman
     udev
     wayland-protocols
-    wlroots-nvidia
+    wlroots
     libX11
   ];
 

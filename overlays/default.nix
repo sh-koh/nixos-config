@@ -3,7 +3,7 @@
 
   modifications = final: prev: {
     nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-    wlroots-nvidia = prev.wlroots_0_17.overrideAttrs (oldAttrs: { patches = ./patches/wlroots-nvidia.patch; });
+    wlroots = prev.wlroots_0_17.overrideAttrs (oldAttrs: { patches = ./patches/wlroots-nvidia.patch; });
     prismlauncher = prev.prismlauncher.override { withWaylandGLFW = true; };
   };
 
