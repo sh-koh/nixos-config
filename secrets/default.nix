@@ -33,10 +33,5 @@
       mode = "0400";
       owner = "root";
     };
-    notre-zerotier = {
-      file = "${inputs.nix-secrets}/notre-zerotier.age";
-      mode = "0400";
-      owner = "root";
-    };
   };
 }
