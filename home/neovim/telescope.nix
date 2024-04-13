@@ -11,11 +11,13 @@
     extensions = {
       ui-select.enable = true;
       fzf-native.enable = true;
-      file_browser = {
+      file-browser = {
         enable = true;
-        hidden = true;
-        depth = 9999999999;
-        autoDepth = true;
+        settings = {
+          hidden = true;
+          depth = 9999999999;
+          autoDepth = true;
+        };
       };
     };
     keymaps = {
