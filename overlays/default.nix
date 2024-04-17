@@ -9,8 +9,8 @@
       src = final.fetchFromGitHub {
         owner = "kaitlynkittyy";
         repo = "Vesktop";
-        rev = "d0ff6192cbf81f1a0b497e16dff9ac7c23616436";
-        hash = "sha256-/qd++djD5LQaDzxslAA55A6jZHCT6NLQ+RYofqn1x28=";
+        rev = "11f9970f0ce22798b6c53f88565de8bb044798c8";
+        hash = "sha256-+jxJQNwqYmgjUXGSW3CqP+XIdYlgXBKAyrevQSttFvc=";
       };
     });
   };
