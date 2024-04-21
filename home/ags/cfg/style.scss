@@ -121,7 +121,7 @@ menu {
   }
 }
 
-.tags {
+.workspaces button {
 	background-color: rgba($dark, 0.15);
 	color: rgba($white, 0.4);
   @include tag-width;
@@ -134,7 +134,7 @@ menu {
 	}
 }
 
-.tags-occupied {
+.workspaces button.occupied {
   background-color: $darker;
   color: rgba($yellow, 0.5);
   border-bottom: solid 1px rgba($yellow, 0.5);
@@ -148,7 +148,7 @@ menu {
 	}
 }
 
-.tags-focused {
+.workspaces button.focused {
   background-color: rgba($yellow, 0.1);
   color: $yellow;
   border-bottom: solid 1px $yellow;

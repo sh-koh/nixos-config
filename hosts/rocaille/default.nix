@@ -65,7 +65,10 @@
     adb.enable = true;
   };
 
-  programs.river.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  };
 
   # Paquets installés sur le système et accessible par tout les utilisateurs.
   environment.systemPackages = with pkgs; [
@@ -110,13 +113,6 @@
     sudo.execWheelOnly = true;
     rtkit.enable = true;
     polkit.enable = true;
-  };
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    configPackages = [ pkgs.river ];
-    wlr.enable = true;
   };
 
   programs.dconf.enable = true;

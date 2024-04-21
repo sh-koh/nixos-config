@@ -1,7 +1,7 @@
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Battery from 'resource:///com/github/Aylur/ags/service/battery.js';
-import Tag from './tags.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
+import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 
 const Date = () => Widget.Label({
@@ -19,7 +19,7 @@ const Clock = () => Widget.Label({
   }),
 });
 
-const openDrawer = () => Widget.Button({
+const OpenDrawer = () => Widget.Button({
   class_name: 'powermenu',
   label: '',
   on_primary_click: () => print('hello :D'),
@@ -134,17 +134,38 @@ const LaptopBattery = () => Widget.Box({
 	],
 });
 
+const Workspaces = (mon) => Widget.EventBox({
+  onScrollUp: () => dispatch('+1'),
+  onScrollDown: () => dispatch('-1'),
+  child: Widget.Box({
+    class_name: 'workspaces',
+    children: Array.from({ length: 9 }, (_, i) => i + 1 + mon * 10).map(i => Widget.Button({
+      attribute: i,
+      label: `${i-mon*10}`,
+      setup: self => self.hook(Hyprland, () => {
+        if (i === Hyprland.active.workspace.id) {
+          self.class_name = 'focused'
+        } else if (Hyprland.workspaces.some(ws => ws.id === i)) {
+          self.class_name = 'occupied'
+        } else {
+          self.class_name = ''
+        }
+      }),
+    })),
+  }),
+})
+
 const Left = () => Widget.Box({
 	spacing: 4,
 	children: [
-    openDrawer(),
+    OpenDrawer(),
 	],
 });
 
-const Center = (monitor) => Widget.Box({
+const Center = (mon) => Widget.Box({
 	spacing: 4,
 	children: [
-    Tag(monitor),
+    Workspaces(mon),
 	],
 });
 
@@ -160,9 +181,9 @@ const Right = () => Widget.Box({
 	],
 });
 
-const Layout = (monitor) => Widget.CenterBox({
+const Layout = (mon) => Widget.CenterBox({
 	start_widget: Left(),
-	center_widget: Center(monitor),
+	center_widget: Center(mon),
 	end_widget: Right(),
 })
 

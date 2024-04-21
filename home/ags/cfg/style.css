@@ -83,46 +83,46 @@ menu menuitem:hover {
   padding: 0 8px;
 }
 
-.tags {
+.workspaces button {
   background-color: rgba(35, 37, 46, 0.15);
   color: rgba(155, 160, 181, 0.4);
   min-width: 28px;
   transition: 120ms;
 }
-.tags:hover {
+.workspaces button:hover {
   border-bottom: solid 2px #23252E;
 }
-.tags:active {
+.workspaces button:active {
   border-bottom: solid 0px #23252E;
 }
 
-.tags-occupied {
+.workspaces button.occupied {
   background-color: #161821;
   color: rgba(226, 164, 120, 0.5);
   border-bottom: solid 1px rgba(226, 164, 120, 0.5);
   min-width: 28px;
   transition: 120ms;
 }
-.tags-occupied:hover {
+.workspaces button.occupied:hover {
   border-bottom: solid 2px rgba(226, 164, 120, 0.5);
 }
-.tags-occupied:active {
+.workspaces button.occupied:active {
   border-bottom: solid 0px rgba(226, 164, 120, 0.5);
 }
 
-.tags-focused {
+.workspaces button.focused {
   background-color: rgba(226, 164, 120, 0.1);
   color: #e2a478;
   border-bottom: solid 1px #e2a478;
   transition: 120ms;
   min-width: 46px;
 }
-.tags-focused:hover {
+.workspaces button.focused:hover {
   background-color: rgba(226, 164, 120, 0.1);
   color: #e2a478;
   border-bottom: solid 2px #e2a478;
 }
-.tags-focused:active {
+.workspaces button.focused:active {
   background-color: rgba(226, 164, 120, 0.1);
   color: #e2a478;
   border-bottom: solid 0px #e2a478;

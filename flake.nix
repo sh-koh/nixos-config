@@ -10,6 +10,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland.url = "github:hyprwm/Hyprland/fe7b748eb668136dd0558b7c8279bfcd7ab4d759";
+    smw = {
+      url = "github:Duckonaut/split-monitor-workspaces/b0ee3953eaeba70f3fba7c4368987d727779826a";
+      inputs.hyprland.follows = "hyprland";
+    };
     stylix.url = "github:danth/stylix"; 
     nixvim.url = "github:nix-community/nixvim";
     anyrun.url = "github:kirottu/anyrun";

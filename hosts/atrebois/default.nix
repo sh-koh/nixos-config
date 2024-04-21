@@ -53,7 +53,10 @@
     adb.enable = true;
   };
 
-  programs.river.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  };
 
   programs.steam.enable = true;
   programs.wireshark.enable = true;
@@ -124,13 +127,6 @@
     sudo.execWheelOnly = true;
     rtkit.enable = true;
     polkit.enable = true;
-  };
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    configPackages = [ pkgs.river ];
-    wlr.enable = true;
   };
 
   programs.dconf.enable = true;
