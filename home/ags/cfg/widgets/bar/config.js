@@ -134,25 +134,24 @@ const LaptopBattery = () => Widget.Box({
 	],
 });
 
-const Workspaces = (mon) => Widget.EventBox({
-  onScrollUp: () => dispatch('+1'),
-  onScrollDown: () => dispatch('-1'),
-  child: Widget.Box({
-    class_name: 'workspaces',
-    children: Array.from({ length: 9 }, (_, i) => i + 1 + mon * 10).map(i => Widget.Button({
-      attribute: i,
-      label: `${i-mon*10}`,
-      setup: self => self.hook(Hyprland, () => {
-        if (i === Hyprland.active.workspace.id) {
-          self.class_name = 'focused'
-        } else if (Hyprland.workspaces.some(ws => ws.id === i)) {
-          self.class_name = 'occupied'
-        } else {
-          self.class_name = ''
-        }
-      }),
-    })),
-  }),
+const Workspaces = (mon) => Widget.Box({
+  spacing: 2,
+  class_name: 'workspaces',
+  children: Array.from({ length: 9 }, (_, i) => i + 1 + mon * 10).map(i => Widget.Button({
+    attribute: i,
+    label: `${i-mon*10}`,
+    on_primary_click: () => Hyprland.messageAsync(`dispatch split-workspace ${i}`),
+    on_secondary_click: () => Hyprland.messageAsync(`dispatch split-movetoworkspace ${i}`),
+    setup: self => self.hook(Hyprland, () => {
+      if (i === Hyprland.active.workspace.id) {
+        self.class_name = 'focused'
+      } else if (Hyprland.workspaces.some(ws => ws.id === i)) {
+        self.class_name = 'occupied'
+      } else {
+        self.class_name = ''
+      }
+    }),
+  })),
 })
 
 const Left = () => Widget.Box({
