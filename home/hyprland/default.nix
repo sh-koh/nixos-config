@@ -23,8 +23,8 @@
       ];
 
       exec-once = [
-        "swww init"
-        "sleep 2 && swww img ${config.stylix.image}"
+        "${pkgs.swww}/bin/swww init"
+        "sleep 2 && ${pkgs.swww}/bin/swww img ${config.stylix.image}"
         "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1 &"
       ];
 
