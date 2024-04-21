@@ -173,6 +173,8 @@
         "$mainMod SHIFT, Comma, split-changemonitorsilent, prev"
         "$mainMod, Period, focusmonitor, +1"
         "$mainMod, Comma, focusmonitor, -1"
+
+        "$mainMod SHIFT, S, exec, ${lib.getExe pkgs.wayshot} -s \"$(${pkgs.slurp}/bin/slurp)\" --stdout | ${pkgs.wl-clipboard}/bin/wl-copy"
       ] ++ 
       ( # workspaces
         builtins.concatLists (builtins.genList (

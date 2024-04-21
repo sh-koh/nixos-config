@@ -1,4 +1,11 @@
-{ pkgs, config, lib, inputs, outputs, theme, ... }: {
+{ pkgs
+, config
+, lib
+, inputs
+, outputs
+, theme
+, ...
+}: {
   
   imports = [ inputs.stylix.homeManagerModules.stylix ];
 
@@ -41,38 +48,23 @@
       sha256 = "1GUCUtxFqgqlr3e36OSP8bP0hihwdlUzTbfPDElUZG8=";
     };
     
-    base16Scheme = let 
-      blacker = "#070912";
-      black = "#0C0E17";
-      darker = "#161821";
-      dark = "#23252E";
-      white = "#9ba0b5";
-      whiter = "#c6c8d1";
-      light = "#d2d4de";
-      lighter = "#e3e4e8";
-      red = "#e27878";
-      yellow = "#e2a478";
-      green = "#b4be82";
-      cyan = "#89b8c2";
-      blue = "#84a0c6";
-      magenta = "#a093c7";
-    in {
-      base00 = blacker; # ----
-      base01 = black;   # ---
-      base02 = darker;  # --
-      base03 = dark;    # -
-      base04 = white;   # +
-      base05 = whiter;  # ++
-      base06 = light;   # +++
-      base07 = lighter; # ++++
-      base08 = red;     # Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-      base09 = yellow;  # Integers, Boolean, Constants, XML Attributes, Markup Link Url
-      base0A = yellow;  # Classes, Markup Bold, Search Text Background
-      base0B = green;   # Strings, Inherited Class, Markup Code, Diff Inserted
-      base0C = cyan;    # Support, Regular Expressions, Escape Characters, Markup Quotes
-      base0D = blue;    # Functions, Methods, Attribute IDs, Headings
-      base0E = magenta; # Keywords, Storage, Selector, Markup Italic, Diff Changed
-      base0F = yellow;  # Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
-    }; 
+    base16Scheme = {
+      base00 = "0F1419"; # ----
+      base01 = "131721"; # ---
+      base02 = "272D38"; # --
+      base03 = "3E4B59"; # -
+      base04 = "BFBDB6"; # +
+      base05 = "E6E1CF"; # ++
+      base06 = "E6E1CF"; # +++
+      base07 = "F3F4F5"; # ++++
+      base08 = "AC4142"; # Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+      base09 = "D28445"; # Integers, Boolean, Constants, XML Attributes, Markup Link Url
+      base0A = "F4BF75"; # Classes, Markup Bold, Search Text Background
+      base0B = "90A959"; # Strings, Inherited Class, Markup Code, Diff Inserted
+      base0C = "75B5AA"; # Support, Regular Expressions, Escape Characters, Markup Quotes
+      base0D = "6A9FB5"; # Functions, Methods, Attribute IDs, Headings
+      base0E = "AA759F"; # Keywords, Storage, Selector, Markup Italic, Diff Changed
+      base0F = "8F5536"; # Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
+    };          
   };
 }

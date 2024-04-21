@@ -15,28 +15,28 @@ in
     settings = {
       add_newline = false;
       format = lib.strings.concatStrings [
-        ''''${line_break}''
-	      "[┌─](bold blue)"
 	      "$hostname"
-	      "$localip"
         "$nix_shell"
         "$directory"
-        "$container"
-        "$git_branch $git_status"
+        "$cmd_duration"
+        "$status"
+        "$line_break"
+        "$time"
+        "[󰥭](bold yellow)"
+        ''''${custom.space}''
+      ];
+      right_format = lib.strings.concatStrings [
         "$python"
         "$nodejs"
         "$lua"
         "$golang"
-        "$cmd_duration"
-        "$status"
-        "$line_break"
-	      "[└─](bold blue)"
-	      "[ ](bold blue)"
-        ''''${custom.space}''
+        "$git_branch $git_status"
+        "$container"
+	      "$localip"
       ];
       custom.space = {
         when = ''! test $env'';
-        format = "";
+        format = " ";
       };
       line_break = { disabled = false; };
       status = {
@@ -46,32 +46,37 @@ in
         sigint_symbol = "󰂭 ";
         signal_symbol = "󱑽 ";
         success_symbol = "";
-        format = "[$symbol](fg:red)";
+        format = "[$symbol](fg:red) ";
         map_symbol = true;
         disabled = false;
       };
       cmd_duration = {
         min_time = 1000;
-        format = "[$duration ](fg:yellow)";
+        format = "[$duration](fg:yellow)";
+      };
+      time = {
+        disabled = false;
+        time_format = "%R";
+        format = "[${pad.left}](fg:purple)[$time](fg:purple bg:black)[${pad.right}](fg:purple)";
       };
       hostname = {
-        ssh_only = false;
-        format = "[${pad.left}](bg:blue)[$hostname](bg:blue fg:black)[${pad.right}](bg:blue) ";
+        ssh_only = true;
+        format = "[${pad.left}](fg:blue)[$hostname](fg:blue bg:black)[${pad.right}](fg:blue)";
       };
       localip = {
         disabled = false;
-        format = "[${pad.left}](bg:bright-black)[$localipv4](bg:bright-black fg:black)[${pad.right}](bg:bright-black) ";
+        format = "[${pad.left}](fg:yellow)[$localipv4](fg:yellow bg:black)[${pad.right}](fg:bright-black)";
       };
       nix_shell = {
-        disabled = false;
-        format = "[${pad.left}](bg:cyan)[ 󱄅 ](bg:cyan fg:black)[${pad.right}](bg:cyan) ";
+        disabled = false; 
+        format = "[${pad.left}](fg:cyan)[ ](fg:cyan bg:black)[${pad.right}](fg:cyan)";
       };
       container = {
         symbol = " 󰏖";
-        format = "[$symbol ](bright-blue dimmed) ";
+        format = "[$symbol ](bright-blue dimmed)";
       };
       directory = {
-        format = "[${pad.left}](bg:green)[$path](bg:green fg:black)[${pad.right}](bg:green) ";
+        format = "[${pad.left}](fg:blue)[$path](fg:blue bg:black)[${pad.right}](fg:blue)";
         truncation_length = 6;
         truncation_symbol = "~/󰇘/";
       };

@@ -35,7 +35,7 @@
         font-family: Lexend;
         font-size: 100%;
         padding: 4px;
-        border-radius: 3px;
+        border-radius: 2px;
       }
       
       #window {
@@ -44,20 +44,27 @@
       }
       
       #main {
-        background-color: #${base01};
+        background-color: #${base00};
         padding: 10px;
+      }
+
+      box#main { 
+        border: solid 2px #${base01};
       }
       
       #match:selected {
-        color: #${base0A};
-        background-color: rgba(226,164,120,0.2); /*base0A*/
-        border-bottom: 2px solid #${base0A};
+        font-weight: bold;
+        color: #${base05};
+        background-color: #${base02}; /*base0A*/
       }
       
       #entry {
+        font-weight: bold;
         margin: 4px;
         padding: 10px;
-        background-color: #${base02};
+        color: #${base09};
+        background-color: rgba(244,191,117 ,0.1);
+        border-bottom: 2px solid #${base09};
       }
       
       box {

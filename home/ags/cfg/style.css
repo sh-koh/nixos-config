@@ -1,8 +1,6 @@
 /*=========================================*/
 /*==============- VARIABLES -==============*/
 /*=========================================*/
-/*               - ICEBERG -               */
-/*       Github: cocopon/iceberg.vim       */
 /*=========================================*/
 /*===============- MIX INS -===============*/
 /*=========================================*/
@@ -13,22 +11,22 @@
   all: unset;
   font-family: Lexend;
   font-size: 100%;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 tooltip {
-  background-color: #84a0c6;
-  color: #161821;
+  background-color: #75B5AA;
+  color: #272D38;
 }
 
 menu {
-  background-color: #0C0E17;
+  background-color: #131721;
   border-style: solid;
   border-width: 1px;
-  border-color: #0C0E17;
+  border-color: #131721;
 }
 menu separator {
-  background-color: #0C0E17;
+  background-color: #131721;
 }
 menu menuitem {
   background-color: rgba(0, 0, 0, 0);
@@ -36,18 +34,18 @@ menu menuitem {
   margin: 2px;
 }
 menu menuitem:hover {
-  background-color: #23252E;
+  background-color: #3E4B59;
 }
 
 /*=========================================*/
 /*================- BAR -==================*/
 /*=========================================*/
 .bar {
-  background-color: rgba(12, 14, 23, 0.99);
+  background-color: rgba(19, 23, 33, 0.99);
   border-radius: 0px;
   border-bottom-width: 1px;
   border-style: solid;
-  border-color: #0C0E17;
+  border-color: #131721;
 }
 .bar > box {
   min-height: 28px;
@@ -55,121 +53,142 @@ menu menuitem:hover {
 }
 
 .powermenu {
-  transition: 120ms;
-  background-color: rgba(132, 160, 198, 0.1);
-  border-bottom: solid #84a0c6 1px;
-  color: #84a0c6;
+  transition: 125ms;
+  background-color: rgba(117, 181, 170, 0.1);
+  color: #75B5AA;
   padding: 0 12px 0 6px;
   font-size: 120%;
 }
 .powermenu:hover {
-  border-bottom: solid #84a0c6 2px;
+  font-weight: bold;
+  border-bottom: solid #75B5AA 1px;
 }
 .powermenu:active {
-  border-bottom: solid #84a0c6 0px;
+  border-bottom: solid #75B5AA 0px;
 }
 
 .notification {
-  background-color: #0C0E17;
+  background-color: #131721;
   padding-right: 10px;
 }
 .notification label {
-  color: #c6c8d1;
+  color: #E6E1CF;
 }
 .notification image {
-  background-color: #84a0c6;
-  color: #0C0E17;
+  background-color: #75B5AA;
+  color: #131721;
   margin: 0 10px 0 0;
   padding: 0 8px;
 }
 
 .workspaces button {
-  background-color: rgba(35, 37, 46, 0.15);
-  color: rgba(155, 160, 181, 0.4);
   min-width: 28px;
-  transition: 120ms;
+  transition: 125ms;
+  min-width: 28px;
+  transition: 125ms;
+  background-color: rgba(39, 45, 56, 0.05);
+  color: rgba(62, 75, 89, 0.5);
 }
 .workspaces button:hover {
-  border-bottom: solid 2px #23252E;
+  font-weight: bold;
+  background-color: rgba(39, 45, 56, 0.1);
+  color: #3E4B59;
+  border-bottom: solid 1px #3E4B59;
 }
 .workspaces button:active {
-  border-bottom: solid 0px #23252E;
+  font-weight: bold;
+  background-color: rgba(39, 45, 56, 0.15);
+  color: #3E4B59;
+  border-bottom: solid 0px #3E4B59;
 }
 
 .workspaces button.occupied {
-  background-color: #161821;
-  color: rgba(226, 164, 120, 0.5);
-  border-bottom: solid 1px rgba(226, 164, 120, 0.5);
   min-width: 28px;
-  transition: 120ms;
+  transition: 125ms;
+  min-width: 28px;
+  transition: 125ms;
+  background-color: rgba(210, 132, 69, 0.05);
+  color: rgba(210, 132, 69, 0.5);
 }
 .workspaces button.occupied:hover {
-  border-bottom: solid 2px rgba(226, 164, 120, 0.5);
+  font-weight: bold;
+  background-color: rgba(210, 132, 69, 0.1);
+  color: #D28445;
+  border-bottom: solid 1px #D28445;
 }
 .workspaces button.occupied:active {
-  border-bottom: solid 0px rgba(226, 164, 120, 0.5);
+  font-weight: bold;
+  background-color: rgba(210, 132, 69, 0.15);
+  color: #D28445;
+  border-bottom: solid 0px #D28445;
 }
 
 .workspaces button.focused {
-  background-color: rgba(226, 164, 120, 0.1);
-  color: #e2a478;
-  border-bottom: solid 1px #e2a478;
-  transition: 120ms;
-  min-width: 46px;
+  transition: 125ms;
+  min-width: 28px;
+  transition: 125ms;
+  background-color: rgba(210, 132, 69, 0.05);
+  color: rgba(210, 132, 69, 0.5);
+  font-weight: bold;
+  background-color: rgba(210, 132, 69, 0.1);
+  color: #D28445;
+  min-width: 42px;
 }
 .workspaces button.focused:hover {
-  background-color: rgba(226, 164, 120, 0.1);
-  color: #e2a478;
-  border-bottom: solid 2px #e2a478;
+  font-weight: bold;
+  background-color: rgba(210, 132, 69, 0.1);
+  color: #D28445;
+  border-bottom: solid 1px #D28445;
 }
 .workspaces button.focused:active {
-  background-color: rgba(226, 164, 120, 0.1);
-  color: #e2a478;
-  border-bottom: solid 0px #e2a478;
+  font-weight: bold;
+  background-color: rgba(210, 132, 69, 0.15);
+  color: #D28445;
+  border-bottom: solid 0px #D28445;
 }
 
 .date {
-  transition: 120ms;
-  background-color: rgba(132, 160, 198, 0.1);
-  border-bottom: solid #84a0c6 1px;
-  color: #84a0c6;
+  transition: 125ms;
+  background-color: rgba(117, 181, 170, 0.1);
+  color: #75B5AA;
   padding: 0 12px 0 8px;
 }
 .date:hover {
-  border-bottom: solid #84a0c6 2px;
+  font-weight: bold;
+  border-bottom: solid #75B5AA 1px;
 }
 .date:active {
-  border-bottom: solid #84a0c6 0px;
+  border-bottom: solid #75B5AA 0px;
 }
 
 .clock {
-  transition: 120ms;
-  background-color: rgba(137, 184, 194, 0.1);
-  border-bottom: solid #89b8c2 1px;
-  color: #89b8c2;
+  transition: 125ms;
+  background-color: rgba(144, 169, 89, 0.1);
+  color: #90A959;
   padding: 0 10px 0 8px;
 }
 .clock:hover {
-  border-bottom: solid #89b8c2 2px;
+  font-weight: bold;
+  border-bottom: solid #90A959 1px;
 }
 .clock:active {
-  border-bottom: solid #89b8c2 0px;
+  border-bottom: solid #90A959 0px;
 }
 
 .audio-speaker {
-  transition: 120ms;
-  background-color: rgba(180, 190, 130, 0.1);
-  border-bottom: solid #b4be82 1px;
-  color: #b4be82;
+  transition: 125ms;
+  background-color: rgba(244, 191, 117, 0.1);
+  color: #F4BF75;
 }
 .audio-speaker:hover {
-  border-bottom: solid #b4be82 2px;
+  font-weight: bold;
+  border-bottom: solid #F4BF75 1px;
 }
 .audio-speaker:active {
-  border-bottom: solid #b4be82 0px;
+  border-bottom: solid #F4BF75 0px;
 }
 .audio-speaker image {
-  color: #b4be82;
+  color: #F4BF75;
   padding: 0 10px;
 }
 .audio-speaker scale {
@@ -177,26 +196,26 @@ menu menuitem:hover {
   margin-left: 10px;
 }
 .audio-speaker scale highlight {
-  background-color: #b4be82;
+  background-color: #F4BF75;
   min-height: 10px;
 }
 .audio-speaker scale trough {
-  background-color: rgba(180, 190, 130, 0.3);
+  background-color: rgba(244, 191, 117, 0.3);
 }
 .audio-microphone {
-  transition: 120ms;
-  background-color: rgba(226, 120, 120, 0.1);
-  border-bottom: solid #e27878 1px;
-  color: #e27878;
+  transition: 125ms;
+  background-color: rgba(172, 65, 66, 0.1);
+  color: #AC4142;
 }
 .audio-microphone:hover {
-  border-bottom: solid #e27878 2px;
+  font-weight: bold;
+  border-bottom: solid #AC4142 1px;
 }
 .audio-microphone:active {
-  border-bottom: solid #e27878 0px;
+  border-bottom: solid #AC4142 0px;
 }
 .audio-microphone image {
-  color: #e27878;
+  color: #AC4142;
   padding: 0 10px;
 }
 .audio-microphone scale {
@@ -204,31 +223,31 @@ menu menuitem:hover {
   margin-left: 10px;
 }
 .audio-microphone scale highlight {
-  background-color: #e27878;
+  background-color: #AC4142;
   min-height: 10px;
 }
 .audio-microphone scale trough {
-  background-color: rgba(226, 120, 120, 0.3);
+  background-color: rgba(172, 65, 66, 0.3);
 }
 
 .battery {
-  transition: 120ms;
-  background-color: rgba(160, 147, 199, 0.1);
-  border-bottom: solid #a093c7 1px;
-  color: #a093c7;
+  transition: 125ms;
+  background-color: rgba(106, 159, 181, 0.1);
+  color: #6A9FB5;
   padding: 0 0 0 10px;
 }
 .battery:hover {
-  border-bottom: solid #a093c7 2px;
+  font-weight: bold;
+  border-bottom: solid #6A9FB5 1px;
 }
 .battery:active {
-  border-bottom: solid #a093c7 0px;
+  border-bottom: solid #6A9FB5 0px;
 }
 .battery label {
-  color: #a093c7;
+  color: #6A9FB5;
 }
 .battery image {
-  color: #a093c7;
+  color: #6A9FB5;
   padding: 0 8px 0 2px;
 }
 
