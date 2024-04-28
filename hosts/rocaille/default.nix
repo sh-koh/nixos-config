@@ -70,6 +70,14 @@
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    config = {
+      hyprland.default = [ "hypland" "gtk" ];
+    };
+  };
+
   # Paquets installés sur le système et accessible par tout les utilisateurs.
   environment.systemPackages = with pkgs; [
     coreutils
@@ -130,7 +138,6 @@
       outputs.overlays.master
     ];
   };
-
   
   nix = {
     registry = lib.mapAttrs (_: value: {flake = value;}) inputs;

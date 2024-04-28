@@ -58,7 +58,21 @@
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
-  programs.steam.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    config = {
+      hyprland.default = [ "hypland" "gtk" ];
+    };
+  };
+
+  programs.steam = {
+    enable = true;
+    extest.enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
   programs.wireshark.enable = true;
 
   programs.gamescope = {
