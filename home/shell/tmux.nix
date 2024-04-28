@@ -1,7 +1,5 @@
 { pkgs, config, lib, ... }: {
 
-  imports = [ ];
-
   programs.tmux = {
     enable = true;
     aggressiveResize = true;
@@ -9,5 +7,7 @@
     keyMode = "vi";
     mouse = true;
     plugins = with pkgs.tmuxPlugins; [{ plugin = vim-tmux-navigator; }];
+    disableConfirmationPrompt = true;
+    shortcut = "s";
   };
 }
