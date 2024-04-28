@@ -1,4 +1,3 @@
 { pkgs, ... }: {
-  river-bedload = pkgs.callPackage ./river-bedload { };
-  river = pkgs.callPackage ./river { };
+  #example = pkgs.callPackage ./example { };
 }
