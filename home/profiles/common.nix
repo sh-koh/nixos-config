@@ -24,6 +24,7 @@
   home.packages = with pkgs; [
     vesktop
     firefox
+    grex
     gimp
     gnome.nautilus
     libreoffice

@@ -24,16 +24,16 @@
   };
 
   home.packages = with pkgs; [
-    #cemu
-    #citra-canary # RIP :(
+    cemu
     dolphin-emu
     gpu-screen-recorder
+    inputs.umu.packages.${pkgs.system}.umu
     lutris
     osu-lazer-bin
     prismlauncher
+    ryujinx
     tetrio-desktop
     xivlauncher
-    #yuzu-early-access # RIP :(
     (pkgs.writeShellScriptBin "replay-buffer" ''
       SCREEN=DP-1
       FPS=60
@@ -65,30 +65,4 @@
       fi
     '')
   ];
-  
-  xdg.dataFile = {
-    proton-ge =
-      let
-        name = "GE-Proton9-1";
-      in {
-      recursive = false;
-      target = "Steam/compatibilitytools.d/${name}";
-      source = builtins.fetchTarball {
-        url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${name}/${name}.tar.gz";
-        sha256 = "1zc1c1scqnpxsfxj6micpgvn317k7gd48aya8m3c5v6nbi377nm1";
-      };
-    };
-    #ulwgl = # WIP
-    #  let
-    #    name = "ULWGL-launcher";
-    #    version = "0.1-RC3";
-    #  in {
-    #  recursive = false;
-    #  target = "lutris/runners/wine/${name}-${version}";
-    #  source = builtins.fetchTarball { # Cannot fetchTarball because of an unexpected number of top-level files. https://github.com/NixOS/nix/pull/9053
-    #    url = "https://github.com/Open-Wine-Components/${name}/releases/download/${version}/${name}.tar.gz";
-    #    sha256 = "0llri404f5q6acwyhvhlkzaf0nnapmdkrkrlqp4ff13dcg84sp72";
-    #  };
-    #};
-  };
 }
