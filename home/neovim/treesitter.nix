@@ -1,7 +1,9 @@
-{ pkgs, config, lib, ... }: {
-  
+{ pkgs
+, config
+, lib
+, ...
+}: {
   programs.nixvim.plugins = {
-    cmp-treesitter.enable = true;
     treesitter = {
       enable = true;
       nixvimInjections = true;

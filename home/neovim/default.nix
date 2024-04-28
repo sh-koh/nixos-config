@@ -5,14 +5,13 @@
 , outputs
 , ...
 }: {
-
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    ./blankline.nix
-    ./cmp.nix
-    ./telescope.nix
-    ./lsp.nix
+    ./coq.nix
     ./keymapping.nix
+    ./lsp.nix
+    ./lualine.nix
+    ./telescope.nix
     ./treesitter.nix
   ];
 
@@ -22,6 +21,7 @@
     vimAlias = true;
     clipboard.providers.wl-copy.enable = true;
     clipboard.register = "unnamedplus";
+    highlight.NormalNC.fg = "#${config.lib.stylix.colors.base04}";
     opts = {
       number = true;
       relativenumber = true;
@@ -33,30 +33,19 @@
       expandtab = true;
       cursorline = true;
     };
-
-    highlight.NormalNC.fg = "#${config.lib.stylix.colors.base04}";
-    
     plugins = {
       nix.enable = true;
       which-key.enable = true;
-      bufferline.enable = true;
+      direnv.enable = true;
+      tmux-navigator.enable = true;
       luasnip.enable = true;
-      cmp_luasnip.enable = true;
-      nvim-tree.enable = true;
+      lint.enable = true;
+      commentary.enable = true;
+      ccc.enable = true;
+      chadtree.enable = true;
       neocord.enable = true;
-      lualine = {
-        enable = true;
-        globalstatus = true;
-	      iconsEnabled = true;
-	      sectionSeparators = {
-	        left = "";
-	        right = "";
-	      };
-	      componentSeparators = {
-            left = "|";
-            right = "|";
-        };
-      };
+      bufferline.enable = true;
+      indent-blankline.enable = true;
     };
   };
 }
