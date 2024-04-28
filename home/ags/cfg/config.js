@@ -19,7 +19,8 @@ Utils.monitorFile(scss, reloadCss);
 export default {
 	style: css,
 	windows: [
-    NotificationPopups(),
+    NotificationPopups(0),
+    NotificationPopups(1),
     Bar(0),
     Bar(1),
 	],

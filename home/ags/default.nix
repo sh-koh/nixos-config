@@ -16,8 +16,6 @@
       bash
       dart-sass
       coreutils
-      river-bedload
-      river
     ];
   };
 

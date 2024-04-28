@@ -11,12 +11,13 @@
   all: unset;
   font-family: Lexend;
   font-size: 100%;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 tooltip {
-  background-color: #75B5AA;
-  color: #272D38;
+  background-color: rgba(19, 23, 33, 0.8);
+  border: 1px solid #3E4B59;
+  color: #BFBDB6;
 }
 
 menu {
@@ -54,17 +55,18 @@ menu menuitem:hover {
 
 .powermenu {
   transition: 125ms;
-  background-color: rgba(117, 181, 170, 0.1);
-  color: #75B5AA;
+  color: #90A959;
+  background-color: rgba(144, 169, 89, 0.1);
+  border: solid 1px rgba(144, 169, 89, 0.1);
   padding: 0 12px 0 6px;
   font-size: 120%;
 }
 .powermenu:hover {
-  font-weight: bold;
-  border-bottom: solid #75B5AA 1px;
+  background-color: rgba(144, 169, 89, 0.15);
+  border: solid 1px rgba(144, 169, 89, 0.2);
 }
 .powermenu:active {
-  border-bottom: solid #75B5AA 0px;
+  background-color: rgba(144, 169, 89, 0.4);
 }
 
 .notification {
@@ -75,179 +77,161 @@ menu menuitem:hover {
   color: #E6E1CF;
 }
 .notification image {
-  background-color: #75B5AA;
+  background-color: #6A9FB5;
   color: #131721;
   margin: 0 10px 0 0;
   padding: 0 8px;
 }
 
+.workspaces {
+  transition: 125ms;
+  background-color: transparent;
+  color: transparent;
+  padding: 0px 5px;
+  font-size: 95%;
+}
 .workspaces button {
-  min-width: 28px;
   transition: 125ms;
-  min-width: 28px;
-  transition: 125ms;
-  background-color: rgba(39, 45, 56, 0.05);
-  color: rgba(62, 75, 89, 0.5);
+  background-color: rgba(62, 75, 89, 0.2);
+  border: solid 1px rgba(62, 75, 89, 0.3);
+  margin: 4px 0px;
+  padding: 0px 0px;
+  min-width: 10px;
 }
 .workspaces button:hover {
-  font-weight: bold;
-  background-color: rgba(39, 45, 56, 0.1);
-  color: #3E4B59;
-  border-bottom: solid 1px #3E4B59;
+  color: #ac4142;
+  padding: 0 4px;
 }
-.workspaces button:active {
-  font-weight: bold;
-  background-color: rgba(39, 45, 56, 0.15);
-  color: #3E4B59;
-  border-bottom: solid 0px #3E4B59;
-}
-
 .workspaces button.occupied {
-  min-width: 28px;
   transition: 125ms;
-  min-width: 28px;
-  transition: 125ms;
-  background-color: rgba(210, 132, 69, 0.05);
-  color: rgba(210, 132, 69, 0.5);
+  background-color: rgba(172, 65, 66, 0.3);
+  border: solid 1px rgba(172, 65, 66, 0.4);
+  min-width: 10px;
 }
 .workspaces button.occupied:hover {
-  font-weight: bold;
-  background-color: rgba(210, 132, 69, 0.1);
-  color: #D28445;
-  border-bottom: solid 1px #D28445;
+  color: #ac4142;
+  padding: 0 4px;
 }
-.workspaces button.occupied:active {
-  font-weight: bold;
-  background-color: rgba(210, 132, 69, 0.15);
-  color: #D28445;
-  border-bottom: solid 0px #D28445;
-}
-
 .workspaces button.focused {
   transition: 125ms;
-  min-width: 28px;
-  transition: 125ms;
-  background-color: rgba(210, 132, 69, 0.05);
-  color: rgba(210, 132, 69, 0.5);
-  font-weight: bold;
-  background-color: rgba(210, 132, 69, 0.1);
-  color: #D28445;
-  min-width: 42px;
+  background-color: #ac4142;
+  color: #272d38;
+  border: solid 1px rgba(172, 65, 66, 0.4);
+  min-width: 20px;
 }
 .workspaces button.focused:hover {
-  font-weight: bold;
-  background-color: rgba(210, 132, 69, 0.1);
-  color: #D28445;
-  border-bottom: solid 1px #D28445;
-}
-.workspaces button.focused:active {
-  font-weight: bold;
-  background-color: rgba(210, 132, 69, 0.15);
-  color: #D28445;
-  border-bottom: solid 0px #D28445;
+  background-color: #ac4142;
+  color: #272d38;
+  padding: 0 4px;
 }
 
 .date {
   transition: 125ms;
-  background-color: rgba(117, 181, 170, 0.1);
-  color: #75B5AA;
-  padding: 0 12px 0 8px;
+  color: #90A959;
+  background-color: rgba(144, 169, 89, 0.1);
+  border: solid 1px rgba(144, 169, 89, 0.1);
+  padding: 0 9px 0 6px;
 }
 .date:hover {
-  font-weight: bold;
-  border-bottom: solid #75B5AA 1px;
+  background-color: rgba(144, 169, 89, 0.15);
+  border: solid 1px rgba(144, 169, 89, 0.2);
 }
 .date:active {
-  border-bottom: solid #75B5AA 0px;
+  background-color: rgba(144, 169, 89, 0.4);
 }
 
 .clock {
   transition: 125ms;
-  background-color: rgba(144, 169, 89, 0.1);
-  color: #90A959;
-  padding: 0 10px 0 8px;
+  color: #75B5AA;
+  background-color: rgba(117, 181, 170, 0.1);
+  border: solid 1px rgba(117, 181, 170, 0.1);
+  padding: 0 9px 0 6px;
 }
 .clock:hover {
-  font-weight: bold;
-  border-bottom: solid #90A959 1px;
+  background-color: rgba(117, 181, 170, 0.15);
+  border: solid 1px rgba(117, 181, 170, 0.2);
 }
 .clock:active {
-  border-bottom: solid #90A959 0px;
+  background-color: rgba(117, 181, 170, 0.4);
 }
 
 .audio-speaker {
   transition: 125ms;
-  background-color: rgba(244, 191, 117, 0.1);
-  color: #F4BF75;
+  color: #6A9FB5;
+  background-color: rgba(106, 159, 181, 0.1);
+  border: solid 1px rgba(106, 159, 181, 0.1);
 }
 .audio-speaker:hover {
-  font-weight: bold;
-  border-bottom: solid #F4BF75 1px;
+  background-color: rgba(106, 159, 181, 0.15);
+  border: solid 1px rgba(106, 159, 181, 0.2);
 }
 .audio-speaker:active {
-  border-bottom: solid #F4BF75 0px;
+  background-color: rgba(106, 159, 181, 0.4);
 }
-.audio-speaker image {
-  color: #F4BF75;
-  padding: 0 10px;
+.audio-speaker label {
+  color: #6A9FB5;
+  font-size: 140%;
+  padding: 0 9px;
 }
 .audio-speaker scale {
-  min-width: 75px;
-  margin-left: 10px;
+  min-height: 16px;
 }
 .audio-speaker scale highlight {
-  background-color: #F4BF75;
-  min-height: 10px;
+  background-color: #6A9FB5;
+  min-width: 2px;
 }
 .audio-speaker scale trough {
-  background-color: rgba(244, 191, 117, 0.3);
+  background-color: rgba(106, 159, 181, 0.3);
 }
 .audio-microphone {
   transition: 125ms;
-  background-color: rgba(172, 65, 66, 0.1);
-  color: #AC4142;
+  color: #6A9FB5;
+  background-color: rgba(106, 159, 181, 0.1);
+  border: solid 1px rgba(106, 159, 181, 0.1);
 }
 .audio-microphone:hover {
-  font-weight: bold;
-  border-bottom: solid #AC4142 1px;
+  background-color: rgba(106, 159, 181, 0.15);
+  border: solid 1px rgba(106, 159, 181, 0.2);
 }
 .audio-microphone:active {
-  border-bottom: solid #AC4142 0px;
+  background-color: rgba(106, 159, 181, 0.4);
 }
-.audio-microphone image {
-  color: #AC4142;
-  padding: 0 10px;
+.audio-microphone label {
+  color: #6A9FB5;
+  font-size: 130%;
+  margin: 0 2px 0 0;
+  padding: 0 9px;
 }
 .audio-microphone scale {
-  min-width: 75px;
-  margin-left: 10px;
+  min-height: 16px;
 }
 .audio-microphone scale highlight {
-  background-color: #AC4142;
-  min-height: 10px;
+  background-color: #6A9FB5;
+  min-width: 2px;
 }
 .audio-microphone scale trough {
-  background-color: rgba(172, 65, 66, 0.3);
+  background-color: rgba(106, 159, 181, 0.3);
 }
 
 .battery {
   transition: 125ms;
-  background-color: rgba(106, 159, 181, 0.1);
-  color: #6A9FB5;
+  color: #D28445;
+  background-color: rgba(210, 132, 69, 0.1);
+  border: solid 1px rgba(210, 132, 69, 0.1);
   padding: 0 0 0 10px;
 }
 .battery:hover {
-  font-weight: bold;
-  border-bottom: solid #6A9FB5 1px;
+  background-color: rgba(210, 132, 69, 0.15);
+  border: solid 1px rgba(210, 132, 69, 0.2);
 }
 .battery:active {
-  border-bottom: solid #6A9FB5 0px;
+  background-color: rgba(210, 132, 69, 0.4);
 }
 .battery label {
-  color: #6A9FB5;
+  color: #D28445;
 }
 .battery image {
-  color: #6A9FB5;
+  color: #D28445;
   padding: 0 8px 0 2px;
 }
 

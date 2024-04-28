@@ -1,64 +1,45 @@
 /*=========================================*/
 /*==============- VARIABLES -==============*/
 /*=========================================*/
-$blacker: #0F1419; 
-$black:   #131721; 
-$darker:  #272D38; 
-$dark:    #3E4B59; 
-$white:   #BFBDB6; 
-$whiter:  #E6E1CF; 
-$light:   #E6E1CF; 
-$lighter: #F3F4F5; 
-$red:     #AC4142; 
-$yellow:  #D28445; 
-$green:   #F4BF75; 
-$cyan:    #90A959; 
-$blue:    #75B5AA; 
-$magenta: #6A9FB5; 
+$blacker: #0F1419;
+$black: #131721;
+$darker: #272D38;
+$dark: #3E4B59;
+$white: #BFBDB6;
+$whiter: #E6E1CF;
+$light: #E6E1CF;
+$lighter: #F3F4F5;
+$red: #AC4142;
+$yellow: #F4BF75;
+$orange: #D28445;
+$green: #90A959;
+$cyan: #75B5AA;
+$blue: #6A9FB5;
+$magenta: #9080b7;
 
 
 /*=========================================*/
 /*===============- MIX INS -===============*/
 /*=========================================*/
 
-@mixin tag-width {
-  min-width: 28px;
-}
-
 @mixin animate {
   transition: 125ms
 }
 
-@mixin stylish-btn($clr){
+@mixin btn($clr) {
   @include animate;
-  background-color: rgba($clr, 0.1);
   color: $clr;
-  &:hover {
-    font-weight: bold;
-    border-bottom: solid $clr 1px;
-  }
-  &:active {
-    border-bottom: solid $clr 0px;
-  }
-}
+  background-color: rgba($clr, 0.1);
+  border: solid 1px rgba($clr, 0.1);
 
-@mixin workspaces-btn($bg, $fg){
-  @include tag-width;
-  @include animate;
-	background-color: rgba($bg, 0.05);
-	color: rgba($fg, 0.5);
-	&:hover {
-    font-weight: bold;
-	  background-color: rgba($bg, 0.1);
-    color: $fg;
-    border-bottom: solid 1px $fg;
-	}
-	&:active {
-    font-weight: bold;
-	  background-color: rgba($bg, 0.15);
-    color: $fg;
-    border-bottom: solid 0px $fg;
-	}
+  &:hover {
+    background-color: rgba($clr, 0.15);
+    border: solid 1px rgba($clr, 0.2);
+  }
+
+  &:active {
+    background-color: rgba($clr, 0.4);
+  }
 }
 
 /*=========================================*/
@@ -66,36 +47,37 @@ $magenta: #6A9FB5;
 /*=========================================*/
 
 * {
-	all: unset;
-	font-family: Lexend;
-	font-size: 100%;
-	border-radius: 2px;
+  all: unset;
+  font-family: Lexend;
+  font-size: 100%;
+  border-radius: 3px;
 }
 
 tooltip {
-  background-color: $blue;
-  color: $darker;
+  background-color: rgba($black, 0.8);
+  border: 1px solid $dark;
+  color: $white;
 }
 
 menu {
-	background-color: $black;
-	border-style: solid;
-	border-width: 1px;
-	border-color: $black;
+  background-color: $black;
+  border-style: solid;
+  border-width: 1px;
+  border-color: $black;
 
-	separator {
-		background-color: $black;
-	}
+  separator {
+    background-color: $black;
+  }
 
-	menuitem {
-		background-color: rgba(0, 0, 0, 0);
-		padding: 4px;
-		margin: 2px;
+  menuitem {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 4px;
+    margin: 2px;
 
-		&:hover {
-			background-color: $dark;
-		}
-	}
+    &:hover {
+      background-color: $dark;
+    }
+  }
 }
 
 
@@ -105,19 +87,20 @@ menu {
 /*=========================================*/
 
 .bar {
-	background-color: rgba($black, 0.99);
-	border-radius: 0px;
-	border-bottom-width: 1px;
-	border-style: solid;
-	border-color: $black;
-	>box {
-		min-height: 28px;
-		padding: 3px;
-	}
+  background-color: rgba($black, 0.99);
+  border-radius: 0px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: $black;
+
+  >box {
+    min-height: 28px;
+    padding: 3px;
+  }
 }
 
 .powermenu {
-  @include stylish-btn($blue);
+  @include btn($green);
   padding: 0 12px 0 6px;
   font-size: 120%;
 }
@@ -125,95 +108,136 @@ menu {
 .notification {
   background-color: $black;
   padding-right: 10px;
+
   label {
     color: $whiter;
   }
-	image {
+
+  image {
     background-color: $blue;
-		color: $black;
-		margin: 0 10px 0 0;
+    color: $black;
+    margin: 0 10px 0 0;
     padding: 0 8px;
   }
 }
 
-.workspaces button {
-  @include tag-width;
+.workspaces {
   @include animate;
-  @include workspaces-btn($darker,$dark);
-}
+  background-color: transparent;
+  color: transparent;
+  padding: 0px 5px;
+  font-size: 95%;
 
-.workspaces button.occupied {
-  @include tag-width;
-  @include animate;
-  @include workspaces-btn($yellow,$yellow);
-}
+  & button {
+    @include animate;
+    background-color: rgba($dark, 0.2);
+    border: solid 1px rgba($dark, 0.3);
+    margin: 4px 0px;
+    padding: 0px 0px;
+    min-width: 10px;
 
-.workspaces button.focused {
-  @include animate;
-  @include workspaces-btn($yellow,$yellow);
-  font-weight: bold;
-  background-color: rgba($yellow, 0.1);
-  color: $yellow;
-  min-width: 42px;
+    &:hover {
+      color: rgba($red, 1);
+      padding: 0 4px;
+    }
+  }
+
+  & button.occupied {
+    @include animate;
+    background-color: rgba($red, 0.3);
+    border: solid 1px rgba($red, 0.4);
+    min-width: 10px;
+
+    &:hover {
+      color: rgba($red, 1);
+      padding: 0 4px;
+    }
+  }
+
+  & button.focused {
+    @include animate;
+    background-color: rgba($red, 1);
+    color: rgba($darker, 1);
+    border: solid 1px rgba($red, 0.4);
+    min-width: 20px;
+
+    &:hover {
+      background-color: rgba($red, 1);
+      color: rgba($darker, 1);
+      padding: 0 4px;
+    }
+  }
 }
 
 .date {
-  @include stylish-btn($blue);
-	padding: 0 12px 0 8px;
+  @include btn($green);
+  padding: 0 9px 0 6px;
 }
 
 .clock {
-  @include stylish-btn($cyan);
-	padding: 0 10px 0 8px;
+  @include btn($cyan);
+  padding: 0 9px 0 6px;
 }
 
 .audio- {
   &speaker {
-    @include stylish-btn($green);
-  	image {
-  		color: $green;
-  		padding: 0 10px;
-  	}
-  	scale {
-  		min-width: 75px;
-      margin-left: 10px;
+    @include btn($blue);
+
+    label {
+      color: $blue;
+      font-size: 140%;
+      padding: 0 9px;
+    }
+
+    scale {
+      min-height: 16px;
+
       highlight {
-  		  background-color: $green;
-  		  min-height: 10px;
-  	  }
+        background-color: $blue;
+        min-width: 2px;
+      }
+
       trough {
-  		  background-color: rgba($green, 0.3);
-  	  }
-  	}
+        background-color: rgba($blue, 0.3);
+      }
+    }
   }
+
   &microphone {
-    @include stylish-btn($red);
-  	image {
-  		color: $red;
-  		padding: 0 10px;
-  	}
-  	scale {
-  		min-width: 75px;
-      margin-left: 10px;
+    @include btn($blue);
+
+    label {
+      color: $blue;
+      font-size: 130%;
+      margin: 0 2px 0 0;
+      padding: 0 9px;
+    }
+
+    scale {
+      min-height: 16px;
+
       highlight {
-  		  background-color: $red;
-  		  min-height: 10px;
-  	  }
+        background-color: $blue;
+        min-width: 2px;
+      }
+
       trough {
-  		  background-color: rgba($red, 0.3);
-  	  }
-  	}
+        background-color: rgba($blue, 0.3);
+      }
+    }
   }
 }
 
 .battery {
-  @include stylish-btn($magenta);
-	padding: 0 0 0 10px;
+  @include btn($orange);
+  padding: 0 0 0 10px;
+
   label {
-    color: $magenta;
+    color: $orange;
   }
-	image {
-		color: $magenta;
-		padding: 0 8px 0 2px;
-	}
+
+  image {
+    color: $orange;
+    padding: 0 8px 0 2px;
+  }
 }
