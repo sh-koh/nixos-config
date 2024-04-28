@@ -8,12 +8,17 @@
   imports = [
     inputs.hyprland.homeManagerModules.default
   ];
+
+  home.packages = with pkgs; [
+    btop
+    imv
+    mpv
+    wl-clipboard
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    plugins = [
-      inputs.smw.packages.${pkgs.system}.default
-    ];
     settings = {
       monitor = [ 
         ",highrr,auto,auto"
@@ -22,15 +27,21 @@
         "eDP-1,1620x1080@60,0x0,1"
       ];
 
-      exec-once = [
-        "${pkgs.swww}/bin/swww init"
-        "sleep 2 && ${pkgs.swww}/bin/swww img ${config.stylix.image}"
-        "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1 &"
+      workspace = [
+        "11, monitor:DP-1, default:true"
+        "1, monitor:eDP-1, default:true"
+        "1, monitor:HDMI-A-1, default:true"
       ];
 
-      "$terminal" = "kitty -1";
-      "$fileManager" = "nautilus";
-      "$menu" = "anyrun";
+      windowrulev2 = [
+        "immediate, class:^(osu\!)$"
+      ];
+
+      exec-once = [
+        "${pkgs.swww}/bin/swww-daemon &"
+        "${pkgs.swww}/bin/swww img ${config.stylix.image}"
+        "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1 &"
+      ];
       
       input = {
         kb_layout = "us";
@@ -39,16 +50,15 @@
         repeat_rate = 50;
         repeat_delay = 300;
         follow_mouse = 1;
+        sensitivity = 0;
+        accel_profile = "flat";
         touchpad = {
           clickfinger_behavior = true;
           tap-to-click = true;
           natural_scroll = true;
           disable_while_typing = false;
           drag_lock = true;
-
         };
-        sensitivity = 0;
-        accel_profile = "flat";
       };
       
       general = {
@@ -56,19 +66,19 @@
         gaps_out = 10;
         border_size = 2;
         layout = "master";
-        allow_tearing = false;
+        allow_tearing = true;
       };
       
       decoration = {
         rounding = 3;
+        drop_shadow = true;
+        shadow_range = 4;
+        shadow_render_power = 3;
         blur = {
           enabled = true;
           size = 3;
           passes = 1;
         };
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
       };
       
       animations = {
@@ -76,7 +86,7 @@
         bezier = [
           "myBezier, 0, 0.8, 0, 1.0"
         ];
-      
+        
         animation = [
           "windows, 1, 3, myBezier"
           "windowsOut, 1, 3, default, popin 80%"
@@ -85,6 +95,21 @@
           "fade, 1, 3, default"
           "workspaces, 1, 3, default"
         ];
+      };
+
+      group = {
+        #"col.border_active" = ;
+        #"col.border_inactive" = ;
+        #"col.border_locked_active" = ;
+        #"col.border_locked_inactive" = ;
+        groupbar = {
+          font_family = "Lexend";
+          font_size = 10;
+          #"col.active" = ;
+          #"col.inactive" = ;
+          #"col.locked_active" = ;
+          #"col.locked_inactive" = ;
+        };
       };
       
       dwindle = {
@@ -102,18 +127,22 @@
       
       gestures = {
         workspace_swipe = true;
+        workspace_swipe_fingers = 3;
+        workspace_swipe_create_new = true;
+        workspace_swipe_use_r = true;
       };
       
       misc = {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
+        disable_autoreload = true;
         force_default_wallpaper = 0;
-
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
-
+        no_direct_scanout = false;
         vrr = 1;
         vfr = true;
+        #initial_workspace_tracking = 2;
       };
       
       device = {
@@ -132,6 +161,10 @@
       ];
 
       "$mainMod" = "SUPER";
+      "$terminal" = "kitty -1";
+      "$fileManager" = "nautilus";
+      "$menu" = "anyrun";
+
       bind = [
         "$mainMod, Return, exec, $terminal"
         "$mainMod, Space, exec, $menu"
@@ -142,6 +175,9 @@
         "$mainMod, B, fullscreen"
         "$mainMod, F, togglefloating,"
         "$mainMod, mouse:274, togglefloating"
+        "$mainMod SHIFT, G, togglegroup"
+        "$mainMod CTRL, H, changegroupactive, b"
+        "$mainMod CTRL, L, changegroupactive, f"
 
         "$mainMod, I, exec, hyprctl keyword general:layout master"
         "$mainMod SHIFT, I, exec, hyprctl keyword general:layout dwindle"
@@ -176,20 +212,24 @@
 
         "$mainMod SHIFT, S, exec, ${lib.getExe pkgs.wayshot} -s \"$(${pkgs.slurp}/bin/slurp)\" --stdout | ${pkgs.wl-clipboard}/bin/wl-copy"
       ] ++ 
-      ( # workspaces
-        builtins.concatLists (builtins.genList (
-          x: let
-            ws = let
-              c = (x + 1) / 10;
-            in
-              builtins.toString (x + 1 - (c * 10));
-          in [
-            "$mainMod, ${ws}, split-workspace, ${toString (x + 1)}"
-            "$mainMod CTRL, ${ws}, split-movetoworkspace, ${toString (x + 1)}"
-            "$mainMod SHIFT, ${ws}, split-movetoworkspacesilent, ${toString (x + 1)}"
-          ]
-        ) 9)
-      );
+      (builtins.concatLists (builtins.genList (
+        x: let
+          ws = let
+            c = (x + 1) / 10;
+          in
+            builtins.toString (x + 1 - (c * 10));
+        in [
+          "$mainMod, ${ws}, split-workspace, ${toString (x + 1)}"
+          "$mainMod CTRL, ${ws}, split-movetoworkspace, ${toString (x + 1)}"
+          "$mainMod SHIFT, ${ws}, split-movetoworkspacesilent, ${toString (x + 1)}"
+        ]
+      ) 9));
     };
+    plugins = [
+      inputs.smw.packages.${pkgs.system}.default
+    ];
+    extraConfig = ''
+      exec-once = ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --primary
+    '';
   };
 }
