@@ -10,20 +10,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix.url = "github:danth/stylix"; 
+    nixvim.url = "github:nix-community/nixvim";
+    anyrun.url = "github:kirottu/anyrun";
+    ags.url = "github:aylur/ags";
     hyprland.url = "github:hyprwm/Hyprland/fe7b748eb668136dd0558b7c8279bfcd7ab4d759";
     smw = {
       url = "github:Duckonaut/split-monitor-workspaces/b0ee3953eaeba70f3fba7c4368987d727779826a";
       inputs.hyprland.follows = "hyprland";
     };
-    stylix.url = "github:danth/stylix"; 
-    nixvim.url = "github:nix-community/nixvim";
-    anyrun.url = "github:kirottu/anyrun";
-    ags.url = "github:aylur/ags";
     
     agenix.url = "github:ryantm/agenix";
     nix-secrets = {
       url = "git+ssh://git@github.com/sh-koh/nix-secrets.git?shallow=1";
       flake = false;
+    };
+
+    umu = {
+      url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # For RPi 5 

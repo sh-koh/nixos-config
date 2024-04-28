@@ -908,7 +908,8 @@
         "nixpkgs-master": "nixpkgs-master",
         "nixvim": "nixvim",
         "smw": "smw",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "umu": "umu"
       }
     },
     "smw": {
@@ -1021,6 +1022,30 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
+      }
+    },
+    "umu": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "packaging/nix",
+        "lastModified": 1714087206,
+        "narHash": "sha256-103mlIR20rPgr18aRtv7d3s6AL1zb3ZEtWdlcrwpOOU=",
+        "ref": "refs/heads/main",
+        "rev": "487f47e12ae2b0778a8996d1eed98be0e33a2e82",
+        "revCount": 472,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging/nix"
+      },
+      "original": {
+        "dir": "packaging/nix",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging/nix"
       }
     },
     "wlroots": {
