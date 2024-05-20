@@ -2,11 +2,11 @@
 let
   lang = icon: color: {
     symbol = icon;
-    format = "[$symbol ](${color})";
+    format = "[${pad.left}$symbol${pad.right} ](${color})";
   };
   pad = {
-    left = " ";
-    right = " ";
+    left = "\\[";
+    right = "\\]";
   };
 in
 {
@@ -15,82 +15,83 @@ in
     settings = {
       add_newline = false;
       format = lib.strings.concatStrings [
-	      "$hostname"
-        "$nix_shell"
         "$directory"
-        "$cmd_duration"
-        "$status"
+	      "$hostname"
+	      "$localip"
         "$line_break"
         "$time"
-        "[󰥭](bold yellow)"
-        ''''${custom.space}''
+        "$cmd_duration"
+        "$status"
       ];
       right_format = lib.strings.concatStrings [
         "$python"
         "$nodejs"
-        "$lua"
+        "$zig"
         "$golang"
-        "$git_branch $git_status"
+        "$terraform"
+        "$direnv"
         "$container"
-	      "$localip"
+        "$git_branch $git_status"
       ];
       custom.space = {
         when = ''! test $env'';
         format = " ";
       };
-      line_break = { disabled = false; };
+      line_break.disabled = false;
       status = {
         symbol = "✗";
-        not_found_symbol = "󰍉 Not Found";
-        not_executable_symbol = " Can't Execute E";
-        sigint_symbol = "󰂭 ";
-        signal_symbol = "󱑽 ";
-        success_symbol = "";
-        format = "[$symbol](fg:red) ";
+        not_found_symbol = "󰍉";
+        not_executable_symbol = "";
+        sigint_symbol = "󰂭";
+        signal_symbol = "󱑽";
+        success_symbol = ">";
+        format = "[$symbol](fg:yellow) ";
         map_symbol = true;
         disabled = false;
       };
       cmd_duration = {
         min_time = 1000;
-        format = "[$duration](fg:yellow)";
+        format = "[${pad.left}$duration${pad.right}](fg:green)";
       };
       time = {
         disabled = false;
         time_format = "%R";
-        format = "[${pad.left}](fg:purple)[$time](fg:purple bg:black)[${pad.right}](fg:purple)";
+        format = "[${pad.left}$time${pad.right}](fg:purple)";
       };
       hostname = {
         ssh_only = true;
-        format = "[${pad.left}](fg:blue)[$hostname](fg:blue bg:black)[${pad.right}](fg:blue)";
+        format = "[${pad.left}$hostname${pad.right}](fg:blue)";
       };
       localip = {
         disabled = false;
-        format = "[${pad.left}](fg:yellow)[$localipv4](fg:yellow bg:black)[${pad.right}](fg:bright-black)";
+        format = "[${pad.left}$localipv4${pad.right}](fg:yellow)";
       };
-      nix_shell = {
+      direnv = {
         disabled = false; 
-        format = "[${pad.left}](fg:cyan)[ ](fg:cyan bg:black)[${pad.right}](fg:cyan)";
+        format = "[${pad.left}direnv${pad.right}](fg:cyan)";
       };
       container = {
-        symbol = " 󰏖";
-        format = "[$symbol ](bright-blue dimmed)";
+        symbol = "box";
+        format = "[${pad.left}$symbol${pad.right}](blue)";
       };
       directory = {
-        format = "[${pad.left}](fg:blue)[$path](fg:blue bg:black)[${pad.right}](fg:blue)";
+        format = "[${pad.left}$path${pad.right}](fg:blue)";
         truncation_length = 6;
         truncation_symbol = "~/󰇘/";
       };
       git_branch = {
         symbol = "";
         style = "";
-        format = "[$symbol $branch](fg:purple)(:$remote_branch)";
+        format = "[ $branch $symbol](fg:purple)(:$remote_branch)";
       };
-      git_status = {
-        
-      };
-      python = lang "" "yellow";
-      nodejs = lang " " "yellow";
-      golang = lang "" "blue";
+      python = lang "py" "green";
+      nodejs = lang "js" "yellow";
+      golang = lang "go" "cyan";
+      zig = lang "zig" "yellow";
+      terraform = lang "tf" "purple";
+      rust = lang "rust" "red";
+      kubernetes = lang "k8s" "blue";
+      c = lang "c" "blue";
     };
   };
 }

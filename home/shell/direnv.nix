@@ -6,7 +6,7 @@
     config = {
       global = {
         strict_env = true;
-	#bash_path = "${lib.getExe pkgs.zsh}";
+        hide_env_diff = true;
       };
     };
   };
