@@ -29,11 +29,13 @@
     gnome.nautilus
     libreoffice
     molotov
+    overskride
     parsec-bin
     qbittorrent
     remmina
     teams-for-linux
     thunderbird
+    tldr
   ];
 
   services.ssh-agent.enable = true;
