@@ -6,22 +6,20 @@
 , ...
 }: {
   boot = {
+    kernelModules = [ "kvm-amd" "kvm" "vfio" "vfio_pci" "vfio_iommu_type1" ];
     kernelParams = [
       "amd_iommu=on"
-      "vfio_iommu_type1.allow_unsafe_interrupts=1"
+      "iommu=pt"
       "kvm.ignore_msrs=1"
       "kvm.allow_unsafe_assigned_interrupts=1"
+      "vfio_iommu_type1.allow_unsafe_interrupts=1"
     ];
-    kernelModules = [
-      "kvm-amd"
-      "kvm"
-    ];
-    extraModprobeConfig = "options vfio-pci ids=10de:1f02,10de:10f9,10de:1ada,10de:1adb";
   };
 
   environment.systemPackages = with pkgs; [
     win-spice
     win-virtio
+    dmidecode
   ];
 
   virtualisation.docker = {
@@ -30,55 +28,72 @@
     enableOnBoot = false;
   };
 
-  virtualisation.containers.cdi.dynamic.nvidia.enable = true;
-
   programs.virt-manager.enable = true;
-
   virtualisation.spiceUSBRedirection.enable = true;
 
   virtualisation.libvirtd = {
     enable = true;
-    #package = pkgs.master.libvirt;
     onBoot = "ignore";
     onShutdown = "shutdown";
     qemu = { 
       package = pkgs.qemu_kvm;
+      runAsRoot = true;
       swtpm.enable = true;
-      ovmf.packages = [ pkgs.OVMFFull.fd ];
+      ovmf.enable = true;
+      verbatimConfig = ''
+        user = "shakoh"
+        group = "users"
+        namespaces = []
+      '';
+    };
+
+    hooks.qemu = {
+      "Windows11" = lib.getExe (
+        pkgs.writeShellApplication {
+          name = "Windows11";
+          runtimeInputs = [
+            pkgs.libvirt
+            pkgs.systemd
+            pkgs.kmod
+          ];
+          text = ''
+            GUEST_NAME=$1
+            OPERATION=$2
+            FOR_HOST="0-3,8-11"
+            #FOR_HOST="4-7,12-15"
+
+            if [[ "$GUEST_NAME" != "Windows11" ]]; then
+              exit 0
+            fi
+
+            case "$OPERATION" in
+              "prepare")
+                modprobe -i -r nvidia_uvm nvidia_drm nvidia nvidia_modeset
+                for i in {0..3}; do
+                  echo "vfio-pci" > /sys/bus/pci/devices/0000:26:00."$i"/driver_override
+                  virsh nodedev-detach pci_0000_26_00_"$i"
+                done
+                modprobe -i vfio-pci
+                systemctl set-property --runtime -- system.slice AllowedCPUs=$FOR_HOST
+                systemctl set-property --runtime -- user.slice AllowedCPUs=$FOR_HOST
+                systemctl set-property --runtime -- init.scope AllowedCPUs=$FOR_HOST
+              ;;
+
+              "release")
+                systemctl set-property --runtime -- system.slice AllowedCPUs=0-15
+                systemctl set-property --runtime -- user.slice AllowedCPUs=0-15
+                systemctl set-property --runtime -- init.scope AllowedCPUs=0-15
+                #modprobe -i -r vfio vfio-pci vfio_iommu_type1
+                for i in {0..3}; do
+                  virsh nodedev-reattach pci_0000_26_00_"$i"
+                  echo "(null)" > /sys/bus/pci/devices/0000:26:00."$i"/driver_override
+                done
+                modprobe -i nvidia_uvm nvidia_drm nvidia nvidia_modeset
+              ;;
+            esac
+          '';
+        }
+      );
     };
   };
-
-  virtualisation.libvirtd.hooks.qemu.Windows11 = pkgs.writeShellScript "Windows11" ''
-    GUEST_NAME="$1"
-    OPERATION="$2"
-    SUB_OPERATION="$3"
-    GPU="26:00"
-
-    if [ "$GUEST_NAME" == "Windows11" ]; then
-      if [ "$OPERATION" == "prepare" ]; then
-        modprobe -r -a nvidia_uvm nvidia_drm nvidia_modeset nvidia i2c_nvidia_gpu 
-        modprobe -a vfio vfio_virqfd vfio_iommu_type1 vfio_pci
-        sleep 2
-        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_0
-        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_1
-        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_2
-        ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_26_00_3
-        systemctl set-property --runtime -- system.slice AllowedCPUs=4-7,12-15
-        systemctl set-property --runtime -- user.slice AllowedCPUs=4-7,12-15
-        systemctl set-property --runtime -- init.scope AllowedCPUs=4-7,12-15
-
-      elif [ "$OPERATION" == "release" ]; then
-        systemctl set-property --runtime -- system.slice AllowedCPUs=0-15
-        systemctl set-property --runtime -- user.slice AllowedCPUs=0-15
-        systemctl set-property --runtime -- init.scope AllowedCPUs=0-15
-        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_3
-        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_2
-        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_1
-        ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_26_00_0
-        sleep 2
-        modprobe -a nvidia_uvm nvidia_drm nvidia_modeset nvidia i2c_nvidia_gpu 
-        modprobe -r -a vfio vfio_virqfd vfio_iommu_type1 vfio_pci
-      fi
-    fi
-  '';
 }

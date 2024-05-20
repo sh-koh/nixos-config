@@ -60,14 +60,17 @@
 
   xdg.portal = {
     enable = true;
+    xdgOpenUsePortal = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     config = {
+      common.default = [ "gtk" ];
       hyprland.default = [ "hypland" "gtk" ];
     };
   };
 
   programs.steam = {
     enable = true;
+    gamescopeSession.enable = true;
     extest.enable = true;
     extraCompatPackages = with pkgs; [
       proton-ge-bin

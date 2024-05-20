@@ -24,13 +24,12 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     EDITOR = "nvim";
-    WLR_DRM_NO_ATOMIC = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_DESKTOP = "Hyprland";
     XDG_SESSION_TYPE = "wayland";
     QT_QPA_PLATFORM = "wayland;xcb";
-    SDL_VIDEODRIVER = "wayland,x11";
+    #SDL_VIDEODRIVER = "wayland,x11";
     CLUTTER_BACKEND = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
     MOZ_WEBRENDER = "1";
