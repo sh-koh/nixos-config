@@ -62,9 +62,9 @@
         font-weight: bold;
         margin: 4px;
         padding: 10px;
-        color: #${base09};
-        background-color: rgba(244,191,117 ,0.1);
-        border-bottom: 2px solid #${base09};
+        color: #${base08};
+        background-color: rgba(172, 65, 66 ,0.1);
+        border-bottom: 2px solid #${base08};
       }
       
       box {
