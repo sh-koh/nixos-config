@@ -9,10 +9,7 @@
   programs.nixvim.plugins.lsp = {
     enable = true;
     servers = {
-      nixd = {
-	      enable = true;
-	      settings.formatting.command = "alejandra";
-      };
+      nixd.enable = true;
       nil_ls.enable = true;
       gopls.enable = true;
       ruff-lsp.enable = true;
