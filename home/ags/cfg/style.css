@@ -94,8 +94,6 @@ menu menuitem:hover {
   transition: 125ms;
   background-color: rgba(62, 75, 89, 0.2);
   border: solid 1px rgba(62, 75, 89, 0.3);
-  margin: 4px 0px;
-  padding: 0px 0px;
   min-width: 10px;
 }
 .workspaces button:hover {
@@ -105,23 +103,20 @@ menu menuitem:hover {
 .workspaces button.occupied {
   transition: 125ms;
   background-color: rgba(172, 65, 66, 0.3);
-  border: solid 1px rgba(172, 65, 66, 0.4);
-  min-width: 10px;
-}
-.workspaces button.occupied:hover {
   color: #ac4142;
   padding: 0 4px;
+  border: solid 1px rgba(172, 65, 66, 0.4);
+}
+.workspaces button.occupied:hover {
+  background-color: #ac4142;
+  color: #272d38;
 }
 .workspaces button.focused {
   transition: 125ms;
   background-color: #ac4142;
   color: #272d38;
   border: solid 1px rgba(172, 65, 66, 0.4);
-  min-width: 20px;
-}
-.workspaces button.focused:hover {
-  background-color: #ac4142;
-  color: #272d38;
+  min-width: 24px;
   padding: 0 4px;
 }
 

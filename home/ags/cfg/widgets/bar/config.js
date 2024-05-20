@@ -154,8 +154,8 @@ const Workspaces = (mon) => Widget.Box({
   class_name: 'workspaces',
   children: Array.from({ length: 9 }, (_, i) => i + 1 + mon * 10).map(i => Widget.Button({
     label: `${i - mon * 10}`,
-    on_primary_click_release: () => Hyprland.messageAsync(`dispatch split-workspace ${i}`),
-    on_secondary_click_release: () => Hyprland.messageAsync(`dispatch split-movetoworkspacesilent ${i}`),
+    on_primary_click_release: () => Hyprland.messageAsync(`dispatch split:workspace ${i}`),
+    on_secondary_click_release: () => Hyprland.messageAsync(`dispatch split:movetoworkspacesilent ${i}`),
     setup: self => self.hook(Hyprland, () => {
       if (i === Hyprland.active.workspace.id) {
         self.class_name = 'focused'
