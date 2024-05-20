@@ -14,9 +14,9 @@
     nixvim.url = "github:nix-community/nixvim";
     anyrun.url = "github:kirottu/anyrun";
     ags.url = "github:aylur/ags";
-    hyprland.url = "github:hyprwm/Hyprland/fe7b748eb668136dd0558b7c8279bfcd7ab4d759";
-    smw = {
-      url = "github:Duckonaut/split-monitor-workspaces/b0ee3953eaeba70f3fba7c4368987d727779826a";
+    hyprland.url = "github:hyprwm/Hyprland/cba1ade848feac44b2eda677503900639581c3f4";
+    hyprsplit = {
+      url = "github:shezdy/hyprsplit/ed317e19a8a4e46b339b2d28d1380b5ad1c24eaf";
       inputs.hyprland.follows = "hyprland";
     };
     
