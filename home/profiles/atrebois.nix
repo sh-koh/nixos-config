@@ -25,9 +25,9 @@
 
   home.packages = with pkgs; [
     cemu
-    dolphin-emu
+    #dolphin-emu
     gpu-screen-recorder
-    inputs.umu.packages.${pkgs.system}.umu
+    #inputs.umu.packages.${pkgs.system}.umu
     lutris
     osu-lazer-bin
     prismlauncher

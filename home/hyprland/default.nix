@@ -21,9 +21,8 @@
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
       monitor = [ 
-        ",highrr,auto,auto"
-        "DP-1,highrr,0x0,auto"
-        "HDMI-A-1,preferred,-2560x0,auto"
+        "HDMI-A-1,preferred,0x0,auto"
+        "DP-1,highrr,2560x0,auto"
         "eDP-1,1620x1080@60,0x0,1"
       ];
 
@@ -31,16 +30,30 @@
         "11, monitor:DP-1, default:true"
         "1, monitor:eDP-1, default:true"
         "1, monitor:HDMI-A-1, default:true"
+        (if builtins.getEnv "HOST" == "atrebois" then
+          "r[1-9], layoutopt:orientation:right"
+          "r[11-19], layoutopt:orientation:left"
+        else
+          "")
       ];
 
       windowrulev2 = [
-        "immediate, class:^(osu\!)$"
+        "noborder, class:^(Xdg-desktop-portal-gtk)$"
+        "noshadow, class:^(Xdg-desktop-portal-gtk)$"
+        "noblur, class:^(Xdg-desktop-portal-gtk)$"
+        "dimaround, class:^(Xdg-desktop-portal-gtk)$"
+
+        "noshadow, class:^(polkit-gnome-authentication-agent-1)$"
+        "noblur, class:^(polkit-gnome-authentication-agent-1)$"
+        "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
+        "stayfocused, class:^(polkit-gnome-authentication-agent-1)$"
       ];
 
       exec-once = [
+        "${pkgs.systemd}/bin/systemctl --user import-environment PATH"
         "${pkgs.swww}/bin/swww-daemon &"
         "${pkgs.swww}/bin/swww img ${config.stylix.image}"
-        "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1 &"
+        "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
       ];
       
       input = {
@@ -64,9 +77,8 @@
       general = {
         gaps_in = 5;
         gaps_out = 10;
-        border_size = 2;
+        border_size = 1;
         layout = "master";
-        allow_tearing = true;
       };
       
       decoration = {
@@ -121,7 +133,6 @@
         new_is_master = true;
         new_on_top = true;
         mfact = 0.60;
-        no_gaps_when_only = true;
         allow_small_split = true;
       };
       
@@ -140,14 +151,16 @@
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
         no_direct_scanout = false;
+        focus_on_activate = true;
+        initial_workspace_tracking = 1;
         vrr = 1;
         vfr = true;
-        #initial_workspace_tracking = 2;
       };
       
-      device = {
-        name = "epic-mouse-v1";
-        sensitivity = -0.5;
+      plugin = {
+        xwaylandprimary = {
+          display = "DP-1";
+        };
       };
 
       bindm = [
@@ -156,8 +169,8 @@
       ];
 
       bindl = [
-        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2.5%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2.5%-"
       ];
 
       "$mainMod" = "SUPER";
@@ -165,26 +178,67 @@
       "$fileManager" = "nautilus";
       "$menu" = "anyrun";
 
-      bind = [
+      bind = let
+        layoutSwitcher = lib.getExe (pkgs.writeShellApplication {
+          name = "layout-switcher.sh";
+          runtimeInputs = [ inputs.hyprland.packages.${pkgs.system}.hyprland pkgs.jq ];
+          text = ''
+            case $(hyprctl -j getoption general:layout | jq -r '.str') in 
+              "master") hyprctl keyword general:layout dwindle ;;
+              "dwindle") hyprctl keyword general:layout master ;;
+            esac
+          '';
+        });
+        getActiveMonitor = lib.getExe (pkgs.writeShellApplication {
+          name = "get-active-monitor.sh";
+          runtimeInputs = with pkgs; [ satty grim jq inputs.hyprland.packages.${pkgs.system}.hyprland];
+          text = ''
+            grim -o "$(hyprctl -j monitors all | \
+              jq -r '.[] | select(.focused == true) | .name')" - | \
+              satty --filename - \
+                --fullscreen \
+                --early-exit \
+                --copy-command "wl-copy" \
+                --initial-tool "crop"
+          '';
+        });
+
+      in [
         "$mainMod, Return, exec, $terminal"
         "$mainMod, Space, exec, $menu"
         "$mainMod, E, exec, $fileManager"
 
         "$mainMod SHIFT, Q, exit,"
+        "$mainMod, I, exec, ${layoutSwitcher}"
         "$mainMod, W, killactive,"
         "$mainMod, B, fullscreen"
-        "$mainMod, F, togglefloating,"
+        "$mainMod, F, pin, active"
         "$mainMod, mouse:274, togglefloating"
-        "$mainMod SHIFT, G, togglegroup"
-        "$mainMod CTRL, H, changegroupactive, b"
-        "$mainMod CTRL, L, changegroupactive, f"
 
-        "$mainMod, I, exec, hyprctl keyword general:layout master"
-        "$mainMod SHIFT, I, exec, hyprctl keyword general:layout dwindle"
+        "$mainMod, G, togglegroup"
+        "$mainMod, Y, changegroupactive, b"
+        "$mainMod, U, changegroupactive, f"
+        "$mainMod SHIFT, Y, movegroupwindow, b"
+        "$mainMod SHIFT, U, movegroupwindow, f"
+
+        "$mainMod CTRL, Period, movewindow, mon:+1"
+        "$mainMod CTRL, Comma, movewindow, mon:-1"
+        "$mainMod SHIFT, Period, movewindow, mon:+1 silent"
+        "$mainMod SHIFT, Comma, movewindow, mon:-1 silent"
+        "$mainMod, Period, focusmonitor, +1"
+        "$mainMod, Comma, focusmonitor, -1"
 
         # Dwindle
         "$mainMod, P, pseudo,"
         "$mainMod, O, togglesplit,"
+        "$mainMod, left, movefocus, l"
+        "$mainMod, down, movefocus, d"
+        "$mainMod, up, movefocus, u"
+        "$mainMod, right, movefocus, r"
+        "$mainMod SHIFT, left, movewindow, l"
+        "$mainMod SHIFT, down, movewindow, d"
+        "$mainMod SHIFT, up, movewindow, u"
+        "$mainMod SHIFT, right, movewindow, r"
 
         # Master
         "$mainMod SHIFT, Return, layoutmsg, swapwithmaster"
@@ -192,25 +246,16 @@
         "$mainMod, H, layoutmsg, mfact -0.05"
         "$mainMod SHIFT, L, layoutmsg, removemaster"
         "$mainMod SHIFT, H, layoutmsg, addmaster"
-
         "$mainMod, J, layoutmsg, cyclenext"
         "$mainMod, K, layoutmsg, cycleprev"
         "$mainMod SHIFT, J, layoutmsg, swapnext"
         "$mainMod SHIFT, K, layoutmsg, swapprev"
-        
-        "$mainMod, left, layoutmsg, orientationleft"
-        "$mainMod, right, layoutmsg, orientationright"
-        "$mainMod, up, layoutmsg, orientationtop"
-        "$mainMod, down, layoutmsg, orientationbottom"
+        "$mainMod ALT, H, layoutmsg, orientationleft"
+        "$mainMod ALT, L, layoutmsg, orientationright"
+        "$mainMod ALT, K, layoutmsg, orientationtop"
+        "$mainMod ALT, J, layoutmsg, orientationbottom"
 
-        "$mainMod CTRL, Period, split-changemonitor, next"
-        "$mainMod CTRL, Comma, split-changemonitor, prev"
-        "$mainMod SHIFT, Period, split-changemonitorsilent, next"
-        "$mainMod SHIFT, Comma, split-changemonitorsilent, prev"
-        "$mainMod, Period, focusmonitor, +1"
-        "$mainMod, Comma, focusmonitor, -1"
-
-        "$mainMod SHIFT, S, exec, ${lib.getExe pkgs.wayshot} -s \"$(${pkgs.slurp}/bin/slurp)\" --stdout | ${pkgs.wl-clipboard}/bin/wl-copy"
+        "$mainMod SHIFT, S, exec, ${getActiveMonitor}"
       ] ++ 
       (builtins.concatLists (builtins.genList (
         x: let
@@ -219,17 +264,35 @@
           in
             builtins.toString (x + 1 - (c * 10));
         in [
-          "$mainMod, ${ws}, split-workspace, ${toString (x + 1)}"
-          "$mainMod CTRL, ${ws}, split-movetoworkspace, ${toString (x + 1)}"
-          "$mainMod SHIFT, ${ws}, split-movetoworkspacesilent, ${toString (x + 1)}"
+          "$mainMod, ${ws}, split:workspace, ${toString (x + 1)}"
+          "$mainMod CTRL, ${ws}, split:movetoworkspace, ${toString (x + 1)}"
+          "$mainMod SHIFT, ${ws}, split:movetoworkspacesilent, ${toString (x + 1)}"
         ]
       ) 9));
     };
     plugins = [
-      inputs.smw.packages.${pkgs.system}.default
+      inputs.hyprsplit.packages.${pkgs.system}.default
+
+      (pkgs.stdenv.mkDerivation {
+        pname = "hyprxprimary";
+        version = "git";
+        src = pkgs.fetchFromGitHub {
+          owner = "zakk4223";
+          repo = "hyprxprimary";
+          rev = "157a6c21a6e7f32c210a9ee632752da6aa7311a8";
+          hash = "sha256-Oxgu6nd2oSisFhWoe2xbuXk0WA+OOvfApQUDRuQESF4=";
+        };
+        nativeBuildInputs = with pkgs; [ pkg-config ];
+        buildInputs = with pkgs; [
+          inputs.hyprland.packages.${pkgs.system}.hyprland
+          pixman
+          libdrm 
+        ] ++ inputs.hyprland.packages.${pkgs.system}.hyprland.buildInputs;
+        installPhase = ''
+          mkdir -p $out/lib 
+          cp hyprXPrimary.so $out/lib/libhyprxprimary.so
+        '';
+      })
     ];
-    extraConfig = ''
-      exec-once = ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --primary
-    '';
   };
 }

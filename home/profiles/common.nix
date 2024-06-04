@@ -27,8 +27,8 @@
     grex
     gimp
     gnome.nautilus
+    jq
     libreoffice
-    molotov
     overskride
     parsec-bin
     qbittorrent
@@ -75,16 +75,6 @@
         name = "Steam";
         icon = "steam";
         exec = "steam -pipewire-dmabuf";
-      };
-      tetrio-desktop = {
-        name = "Tetr.io";
-        icon = "tetrio-desktop";
-        exec = "gamemoderun tetrio-desktop";
-      };
-      molotov = {
-        name = "Molotov";
-        icon = "molotov";
-        exec = "env GDK_BACKEND=x11 molotov --no-sandbox";
       };
       osu-lazer-bin = {
         name = "osu!";

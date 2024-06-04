@@ -46,11 +46,11 @@
     daemon.enable = true;
   };
 
-  users.defaultUserShell = pkgs.zsh;
   programs = {
     command-not-found.enable = false;
     zsh.enable = lib.mkDefault true;
     adb.enable = true;
+    wireshark.enable = true;
   };
 
   programs.hyprland = {
@@ -58,25 +58,13 @@
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    config = {
-      common.default = [ "gtk" ];
-      hyprland.default = [ "hypland" "gtk" ];
-    };
-  };
-
   programs.steam = {
     enable = true;
-    gamescopeSession.enable = true;
-    extest.enable = true;
+    remotePlay.openFirewall = true;
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];
   };
-  programs.wireshark.enable = true;
 
   programs.gamescope = {
     enable = true;
@@ -95,8 +83,8 @@
       ioprio = 0;
     };
     settings.custom = {
-      start = "${pkgs.dunst}/bin/dunstify 'Gamemode activé !'";
-      end = "${pkgs.dunst}/bin/dunstify 'Gamemode désactivé.'";
+      start = "${pkgs.libnotify}/bin/notify-send 'Gamemode enabled'";
+      end = "${pkgs.libnotify}/bin/notify-send 'Gamemode disabled'";
     };
   };
 
@@ -110,27 +98,37 @@
     wget
   ];
 
-  #users.users.root.hashedPassword = "!"; # Disable root password authentication
-  #users.mutableUsers = false; # Only declared users
-  users.users.shakoh = {
-    isNormalUser = true;
-    #passwordFile = config.age.secrets.shakoh-pwd.path; # Set password with agenix
-    openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDcsKJPBMqyHS2TmYBFFyP+jGGFnOXnNY7/JWUwD1mWS3p6gMxtXTHZAAXLq/g2SG3gHUSpCWcytC9x5IFmYpf/9BCVZHwuUf8gSSQSAycTDoGWeY0AQ1KEOIUAQ1wWlG3iLFlaI48ugBR3m+gv2YlpY9FU47uj3bgIn6KF1fZCPFetQtIPE1TaKOYgd6M27deOo2pNxGQiGkvAkogfb7tqRjQQ5aWmtk4Uc32N8Frhce5QUWuI8AOqf4MfPXVOq6EyK0TLYPE+WEBSbf6kumme+BCwZ2SFN++yFJzVqGJQReRJJFXEf5vSRXN/60Rue0eF/GCbR838TiF+nDjge7W9jhABvUc0wNwlwHtSYoOVqxNuhwukaEcYhCnoiaerbwulPg4DJnD9eaBuH39b9+pEDp9b2AIB6jUaAU+zQ6GyGDVbJrcf+jVAMEn2ZqXRfLyRjNiof+0mivMgJ/vR1MxtcBD0NRV3n49CkvQNG4jrB6M738OzsudP0nkkwfyVHI4ZcAgwOqvY2KUEDnLyHvVOnr45zKvbbiKwfkAFRQevFgjClUJYJutfyo8bfZNxOyrVp0hCstgJ2lBqzAP2G65sO/VkLCqVLU/rV5ZoXt2sRCEnq5m2WtflL3nMcwDSUyl+HLqsd/T1AooOFJHLOd9bBaLOrsucogrj/Y+UkKIlYw== shakoh@rocaille"
-    ];
-    extraGroups = [
-      "wheel"
-      "video"
-      "audio"
-      "input"
-      "kvm"
-      "libvirtd"
-      "qemu-libvirtd"
-      "docker"
-      "adbusers"
-      "networkmanager"
-      "wireshark"
-    ];
+  users = {
+    mutableUsers = false;
+    defaultUserShell = pkgs.zsh;
+    users = {
+      root = {
+        uid = 0;
+        home = "/root";
+        hashedPassword = "!"; # Disable root password authentication
+      };
+      shakoh = {
+        uid = 1000;
+        isNormalUser = true;
+        hashedPasswordFile = config.age.secrets.shakoh-pwd.path;
+        openssh.authorizedKeys.keys = [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDcsKJPBMqyHS2TmYBFFyP+jGGFnOXnNY7/JWUwD1mWS3p6gMxtXTHZAAXLq/g2SG3gHUSpCWcytC9x5IFmYpf/9BCVZHwuUf8gSSQSAycTDoGWeY0AQ1KEOIUAQ1wWlG3iLFlaI48ugBR3m+gv2YlpY9FU47uj3bgIn6KF1fZCPFetQtIPE1TaKOYgd6M27deOo2pNxGQiGkvAkogfb7tqRjQQ5aWmtk4Uc32N8Frhce5QUWuI8AOqf4MfPXVOq6EyK0TLYPE+WEBSbf6kumme+BCwZ2SFN++yFJzVqGJQReRJJFXEf5vSRXN/60Rue0eF/GCbR838TiF+nDjge7W9jhABvUc0wNwlwHtSYoOVqxNuhwukaEcYhCnoiaerbwulPg4DJnD9eaBuH39b9+pEDp9b2AIB6jUaAU+zQ6GyGDVbJrcf+jVAMEn2ZqXRfLyRjNiof+0mivMgJ/vR1MxtcBD0NRV3n49CkvQNG4jrB6M738OzsudP0nkkwfyVHI4ZcAgwOqvY2KUEDnLyHvVOnr45zKvbbiKwfkAFRQevFgjClUJYJutfyo8bfZNxOyrVp0hCstgJ2lBqzAP2G65sO/VkLCqVLU/rV5ZoXt2sRCEnq5m2WtflL3nMcwDSUyl+HLqsd/T1AooOFJHLOd9bBaLOrsucogrj/Y+UkKIlYw== shakoh@rocaille"
+        ];
+        extraGroups = [
+          "wheel"
+          "video"
+          "audio"
+          "input"
+          "kvm"
+          "libvirtd"
+          "qemu-libvirtd"
+          "docker"
+          "adbusers"
+          "networkmanager"
+          "wireshark"
+        ];
+      };
+    };
   };
 
   home-manager = {
@@ -162,25 +160,54 @@
     ];
   };
 
-  nix = {
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+  nix = let 
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  in {
+    package = pkgs.nixVersions.latest;
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     settings = {
-      trusted-users = [ "root" "@wheel" ];
+      flake-registry = "";
+      nix-path = config.nix.nixPath;
+      max-jobs = 8;
+      use-cgroups = true;
       use-xdg-base-directories = true;
       auto-allocate-uids = true;
       auto-optimise-store = true;
       builders-use-substitutes = true;
+      always-allow-substitutes = true;
       experimental-features = [
         "auto-allocate-uids"
         "ca-derivations"
         "cgroups"
+        "configurable-impure-env"
+        "daemon-trust-override"
         "dynamic-derivations"
         "fetch-closure"
+        "fetch-tree"
         "flakes"
+        "git-hashing"
+        "impure-derivations"
+        "local-overlay-store"
+        "mounted-ssh-store"
         "nix-command"
+        "no-url-literals"
+        "parse-toml-timestamps"
+        "read-only-local-store"
         "recursive-nix"
-        "repl-flake"
+        "verified-fetches"
+      ];
+      extra-substituters = [
+        "https://nix-community.cachix.org"
+        "https://hyprland.cachix.org"
+        "https://anyrun.cachix.org"
+        "https://ags.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
+        "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
       ];
     };
   };

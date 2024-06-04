@@ -1,106 +1,121 @@
 {
-  description = "Shakoh's nixos configuration flake";
-
+  description = "Shakoh's NixOS flake";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+    unstable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-unstable";
     };
-
-    stylix.url = "github:danth/stylix"; 
-    nixvim.url = "github:nix-community/nixvim";
-    anyrun.url = "github:kirottu/anyrun";
-    ags.url = "github:aylur/ags";
-    hyprland.url = "github:hyprwm/Hyprland/cba1ade848feac44b2eda677503900639581c3f4";
+    stable = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "nixos-24.05";
+    };
+    master = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "master";
+    };
+    home-manager = {
+      type = "github";
+      owner = "nix-community";
+      repo = "home-manager";
+      ref = "master";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    stylix = {
+      type = "github";
+      owner = "danth";
+      repo = "stylix";
+      ref = "master";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    nixvim = {
+      type = "github";
+      owner = "nix-community";
+      repo = "nixvim";
+      ref = "main";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    anyrun = {
+      type = "github";
+      owner = "kirottu";
+      repo = "anyrun";
+      ref = "master";
+    };
+    ags = {
+      type = "github";
+      owner = "aylur";
+      repo = "ags";
+      ref = "main";
+    };
+    hyprland = {
+      type = "github";
+      owner = "hyprwm";
+      repo = "hyprland";
+      ref = "v0.40.0";
+    };
     hyprsplit = {
-      url = "github:shezdy/hyprsplit/ed317e19a8a4e46b339b2d28d1380b5ad1c24eaf";
+      type = "github";
+      owner = "shezdy";
+      repo = "hyprsplit";
+      ref = "v0.40.0";
       inputs.hyprland.follows = "hyprland";
     };
-    
-    agenix.url = "github:ryantm/agenix";
-    nix-secrets = {
-      url = "git+ssh://git@github.com/sh-koh/nix-secrets.git?shallow=1";
+    umu = {
+      type = "git";
+      url = "https://github.com/Open-Wine-Components/umu-launcher";
+      dir = "packaging/nix";
+      ref = "main";
+      submodules = true;
+      inputs.nixpkgs.follows = "unstable";
+    };
+    rpi5 = {
+      type = "gitlab";
+      owner = "vriska";
+      repo = "nix-rpi5";
+      ref = "main";
+    };
+    agenix = {
+      type = "github";
+      owner = "ryantm";
+      repo = "agenix";
+      ref = "main";
+    };
+    secrets = {
+      type = "git";
+      url = "ssh://git@github.com/sh-koh/nix-secrets.git";
+      ref = "main";
+      shallow = true;
       flake = false;
     };
-
-    umu = {
-      url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # For RPi 5 
-    nix-rpi5.url = "gitlab:vriska/nix-rpi5";
   };
 
-  nixConfig = {
-    builders-use-substitutes = true;
-    extra-substituters = [
-      "https://anyrun.cachix.org"
-      "https://nix-community.cachix.org"
-      "https://ags.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "ags.cachix.org-1:naAvMrz0CuYqeyGNyLgE010iUiuf/qx6kYrUv3NwAJ8="
-    ];
-  };
-
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { 
+    self,
+    unstable,
+    ...
+  }@inputs:
   let
     inherit (self) outputs;
-    systems = [
-      "x86_64-linux"
-      "aarch64-linux"
-      "riscv64-linux"
-      "i686-linux"
-    ];
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+    forAllSystems = unstable.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
+    mkNixos = modules:
+      unstable.lib.nixosSystem {
+        inherit modules;
+        specialArgs = { inherit inputs outputs; };
+      };
   in {
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    overlays = import ./overlays { inherit inputs; };
+    packages = forAllSystems (system: import ./pkgs unstable.legacyPackages.${system});
+    overlays = import ./overlays { inherit inputs outputs; };
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
-
     nixosConfigurations = {
-      # Main machine
-      atrebois = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/atrebois ];
-      };
-      # Laptop
-      rocaille = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/rocaille ];
-      };
-      # Raspberry pi 5 
-      cravite = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/cravite ];
-      };
-      #lanterne = nixpkgs.lib.nixosSystem {
-      #  specialArgs = { inherit inputs outputs; };
-      #  modules = [ ./hosts/lanterne ];
-      #};
-      #sombronces = nixpkgs.lib.nixosSystem {
-      #  specialArgs = { inherit inputs outputs; };
-      #  modules = [ ./hosts/sombronces ];
-      #};
-      #leviathe = nixpkgs.lib.nixosSystem {
-      #  specialArgs = { inherit inputs outputs; };
-      #  modules = [ ./hosts/leviathe ];
-      #};
-      #sabliere-noire = nixpkgs.lib.nixosSystem {
-      #  specialArgs = { inherit inputs outputs; };
-      #  modules = [ ./hosts/sabliere-noire ];
-      #};
-      #sabliere-rouge = nixpkgs.lib.nixosSystem {
-      #  specialArgs = { inherit inputs outputs; };
-      #  modules = [ ./hosts/sabliere-rouge ];
-      #};
+      atrebois = mkNixos [ ./hosts/atrebois ];
+      rocaille = mkNixos [ ./hosts/rocaille ];
+      cravite = mkNixos [ ./hosts/cravite ];
     };
   };
 }

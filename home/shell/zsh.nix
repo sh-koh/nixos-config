@@ -26,12 +26,13 @@
       "...." = "cd ../../../";
       "....." = "cd ../../../../";
 
-      ls = "${lib.getExe pkgs.eza} --color=auto --icons=always --git --smart-group";
-      l = "${lib.getExe pkgs.eza} --color=auto --icons=always --git --smart-group -la";
+      ls = "${lib.getExe pkgs.eza} --color=auto --icons=auto --git --smart-group --modified --git-repos-no-status --mounts";
+      ll = "${lib.getExe pkgs.eza} --color=auto --icons=auto --git --smart-group --modified --git-repos-no-status --mounts --tree --level 1";
+      l = "${lib.getExe pkgs.eza} --color=auto --icons=auto --git --smart-group --modified --header --long --git-repos-no-status --mounts --all";
       cd = "z";
-      cat = "${lib.getExe pkgs.bat} --style=auto --color=auto -P";
+      cat = "${lib.getExe pkgs.bat} --style=auto --color=auto --paging=never";
+      less = "${lib.getExe pkgs.bat} --style=auto --color=auto --paging=always";
       diff = "diff --color=auto";
-      less = "${lib.getExe pkgs.bat} --style=auto --color=auto";
       find = "${lib.getExe pkgs.fd} -H";
       grep = "${lib.getExe pkgs.ripgrep} -SpnH";
       zj = "${lib.getExe pkgs.zellij} $@ options --no-pane-frames --simplified-ui=true";

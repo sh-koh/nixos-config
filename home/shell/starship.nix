@@ -2,7 +2,7 @@
 let
   lang = icon: color: {
     symbol = icon;
-    format = "[${pad.left}$symbol${pad.right} ](${color})";
+    format = "[${pad.left}$symbol${pad.right}](${color})";
   };
   pad = {
     left = "\\[";
@@ -15,29 +15,36 @@ in
     settings = {
       add_newline = false;
       format = lib.strings.concatStrings [
+        "$direnv"
         "$directory"
 	      "$hostname"
 	      "$localip"
-        "$line_break"
-        "$time"
-        "$cmd_duration"
-        "$status"
-      ];
-      right_format = lib.strings.concatStrings [
+
         "$python"
         "$nodejs"
         "$zig"
         "$golang"
         "$terraform"
-        "$direnv"
         "$container"
-        "$git_branch $git_status"
+
+        "$fill"
+
+        "$git_status"
+        "$git_branch"
+
+        "$line_break"
+
+        "$username"
+        "$status"
       ];
       custom.space = {
         when = ''! test $env'';
         format = " ";
       };
       line_break.disabled = false;
+      fill = {
+        symbol = " ";
+      };
       status = {
         symbol = "✗";
         not_found_symbol = "󰍉";
@@ -66,6 +73,10 @@ in
         disabled = false;
         format = "[${pad.left}$localipv4${pad.right}](fg:yellow)";
       };
+      username = {
+        show_always = true;
+        format = "[${pad.left}$user${pad.right}](fg:red)";
+      };
       direnv = {
         disabled = false; 
         format = "[${pad.left}direnv${pad.right}](fg:cyan)";
@@ -79,10 +90,12 @@ in
         truncation_length = 6;
         truncation_symbol = "~/󰇘/";
       };
+      git_status = {
+        format = "([${pad.left}$all_status$ahead_behind${pad.right}](fg:yellow))";
+      };
       git_branch = {
-        symbol = "";
         style = "";
-        format = "[ $branch $symbol](fg:purple)(:$remote_branch)";
+        format = "[${pad.left}$branch${pad.right}](fg:green)(:$remote_branch)";
       };
       python = lang "py" "green";
       nodejs = lang "js" "yellow";
