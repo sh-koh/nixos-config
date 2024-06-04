@@ -10,7 +10,7 @@
     enable = true;
     servers = {
       nixd.enable = true;
-      nil_ls.enable = true;
+      nil-ls.enable = true;
       gopls.enable = true;
       ruff.enable = true;
       ruff-lsp.enable = true;

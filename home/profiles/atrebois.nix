@@ -24,7 +24,7 @@
   };
 
   home.packages = with pkgs; [
-    cemu
+    #cemu
     #dolphin-emu
     gpu-screen-recorder
     #inputs.umu.packages.${pkgs.system}.umu
