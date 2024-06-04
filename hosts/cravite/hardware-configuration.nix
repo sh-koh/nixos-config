@@ -8,7 +8,7 @@
   boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
-  boot.kernelPackages = inputs.nix-rpi5.legacyPackages.aarch64-linux.linuxPackages_rpi5;
+  boot.kernelPackages = inputs.rpi5.legacyPackages.aarch64-linux.linuxPackages_rpi5;
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
