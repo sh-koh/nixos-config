@@ -15,8 +15,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
-  networking.hostName = "cravite";
-  networking.wireless.enable = true;
+  networking = {
+    hostName = "cravite";
+    wireless.enable = false;
+    networkmanager.enable = true;
+  };
 
   # Configuration OpenSSH
   services.openssh = {
