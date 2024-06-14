@@ -5,12 +5,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.kernelPackages = inputs.rpi5.legacyPackages.aarch64-linux.linuxPackages_rpi5;
-  boot.extraModulePackages = [ ];
-
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5727bbfc-f35c-43b8-a461-d0c921b1834e";
     fsType = "btrfs";

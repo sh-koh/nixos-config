@@ -19,6 +19,12 @@
       repo = "nixpkgs";
       ref = "master";
     };
+    hardware = {
+      type = "github";
+      owner = "nixos";
+      repo = "nixos-hardware";
+      ref = "master";
+    };
     home-manager = {
       type = "github";
       owner = "nix-community";
@@ -65,19 +71,13 @@
       ref = "v0.40.0";
       inputs.hyprland.follows = "hyprland";
     };
-    # umu = {
-    #   type = "git";
-    #   url = "https://github.com/Open-Wine-Components/umu-launcher";
-    #   dir = "packaging/nix";
-    #   ref = "main";
-    #   submodules = true;
-    #   inputs.nixpkgs.follows = "unstable";
-    # };
-    rpi5 = {
-      type = "gitlab";
-      owner = "vriska";
-      repo = "nix-rpi5";
-      ref = "main";
+    umu = {
+      type = "git";
+      url = "https://github.com/Open-Wine-Components/umu-launcher";
+      dir = "packaging/nix";
+      ref = "nix";
+      submodules = true;
+      inputs.nixpkgs.follows = "unstable";
     };
     agenix = {
       type = "github";
