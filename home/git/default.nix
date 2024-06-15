@@ -15,8 +15,6 @@
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
       pull.rebase = true;
-
-      # replace https with ssh
       url = {
         "ssh://git@github.com/sh-koh" = {
           insteadOf = "https://github.com/sh-koh";
@@ -24,6 +22,21 @@
         # "ssh://git@gitlab.com/" = {
         #   insteadOf = "https://gitlab.com/";
         # };
+      };
+    };
+  };
+  programs.ssh = {
+    addKeysToAgent = "yes";
+    matchBlocks = {
+      "github" = {
+        host = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_github";
+      };
+      "gitlab" = {
+        host = "gitlab.com";
+        user = "git";
+        identityFile = "~/.ssh/id_gitlab";
       };
     };
   };
