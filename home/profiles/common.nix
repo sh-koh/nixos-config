@@ -89,23 +89,6 @@
     };
   };
 
-  gtk = {
-    enable = true;
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-    cursorTheme = {
-      name = "phinger-cursors-light";
-      package = pkgs.phinger-cursors;
-      size = 32;
-    };
-  };
-
-  qt = {
-    enable = true;
-  };
-
   # Reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 

@@ -9,7 +9,26 @@
   
   imports = [ inputs.stylix.homeManagerModules.stylix ];
 
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+    cursorTheme = {
+      name = "phinger-cursors-dark";
+      package = pkgs.phinger-cursors;
+      size = 16;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "adwaita-dark";
+  };
+
   stylix = {
+    enable = true;
     opacity = {
       applications = 1.0;
       desktop = 1.0;
@@ -17,9 +36,9 @@
       terminal = 0.98;
     };
     cursor = {
-      name = "phinger-cursors-light";
+      name = "phinger-cursors-dark";
       package = pkgs.phinger-cursors;
-      size = 32;
+      size = 16;
     };
     fonts = {
       serif = {
