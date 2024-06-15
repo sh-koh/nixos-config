@@ -809,10 +809,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1717574525,
-        "narHash": "sha256-BK+Om0YWfR3301xi05nZwQ0J7Bm9GsESXyeeEpuLqK0=",
+        "lastModified": 1718470096,
+        "narHash": "sha256-HDnR1LzFtfZ04GJmau/zjDmlwNqdthB7ucuKML1Xyg4=",
         "ref": "main",
-        "rev": "131a0984bf6f4ebab198a57ba7efbf42963bc600",
+        "rev": "c5317d8e5471678e237ca637b0588fac3bdc58b3",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/sh-koh/nix-secrets.git"
