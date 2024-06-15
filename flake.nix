@@ -19,12 +19,6 @@
       repo = "nixpkgs";
       ref = "master";
     };
-    hardware = {
-      type = "github";
-      owner = "nixos";
-      repo = "nixos-hardware";
-      ref = "master";
-    };
     home-manager = {
       type = "github";
       owner = "nix-community";
@@ -51,25 +45,14 @@
       owner = "kirottu";
       repo = "anyrun";
       ref = "master";
+      inputs.nixpkgs.follows = "unstable";
     };
     ags = {
       type = "github";
       owner = "aylur";
       repo = "ags";
       ref = "main";
-    };
-    hyprland = {
-      type = "github";
-      owner = "hyprwm";
-      repo = "hyprland";
-      ref = "v0.40.0";
-    };
-    hyprsplit = {
-      type = "github";
-      owner = "shezdy";
-      repo = "hyprsplit";
-      ref = "v0.40.0";
-      inputs.hyprland.follows = "hyprland";
+      inputs.nixpkgs.follows = "unstable";
     };
     umu = {
       type = "git";
@@ -84,6 +67,7 @@
       owner = "ryantm";
       repo = "agenix";
       ref = "main";
+      inputs.nixpkgs.follows = "stable";
     };
     secrets = {
       type = "git";

@@ -4,10 +4,6 @@
 , inputs
 , ...
 }: {
-  imports = [
-    inputs.hyprland.homeManagerModules.default
-  ];
-
   home.packages = with pkgs; [
     btop
     imv
@@ -17,7 +13,6 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
       monitor = [ 
         "HDMI-A-1,preferred,0x0,auto"
@@ -180,7 +175,7 @@
       bind = let
         layoutSwitcher = lib.getExe (pkgs.writeShellApplication {
           name = "layout-switcher.sh";
-          runtimeInputs = [ inputs.hyprland.packages.${pkgs.system}.hyprland pkgs.jq ];
+          runtimeInputs = with pkgs; [ hyprland jq ];
           text = ''
             case $(hyprctl -j getoption general:layout | jq -r '.str') in 
               "master") hyprctl keyword general:layout dwindle ;;
@@ -190,7 +185,7 @@
         });
         getActiveMonitor = lib.getExe (pkgs.writeShellApplication {
           name = "get-active-monitor.sh";
-          runtimeInputs = with pkgs; [ satty grim jq inputs.hyprland.packages.${pkgs.system}.hyprland];
+          runtimeInputs = with pkgs; [ satty grim jq hyprland];
           text = ''
             grim -o "$(hyprctl -j monitors all | \
               jq -r '.[] | select(.focused == true) | .name')" - | \
@@ -270,28 +265,8 @@
       ) 9));
     };
     plugins = [
-      inputs.hyprsplit.packages.${pkgs.system}.default
-
-      (pkgs.stdenv.mkDerivation {
-        pname = "hyprxprimary";
-        version = "git";
-        src = pkgs.fetchFromGitHub {
-          owner = "zakk4223";
-          repo = "hyprxprimary";
-          rev = "157a6c21a6e7f32c210a9ee632752da6aa7311a8";
-          hash = "sha256-Oxgu6nd2oSisFhWoe2xbuXk0WA+OOvfApQUDRuQESF4=";
-        };
-        nativeBuildInputs = with pkgs; [ pkg-config ];
-        buildInputs = with pkgs; [
-          inputs.hyprland.packages.${pkgs.system}.hyprland
-          pixman
-          libdrm 
-        ] ++ inputs.hyprland.packages.${pkgs.system}.hyprland.buildInputs;
-        installPhase = ''
-          mkdir -p $out/lib 
-          cp hyprXPrimary.so $out/lib/libhyprxprimary.so
-        '';
-      })
+      pkgs.hyprXPrimary
+      pkgs.hyprsplit
     ];
   };
 }

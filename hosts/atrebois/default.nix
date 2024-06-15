@@ -53,10 +53,7 @@
     wireshark.enable = true;
   };
 
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-  };
+  programs.hyprland = { enable = true; };
 
   programs.steam = {
     enable = true;
@@ -156,6 +153,7 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
+      outputs.overlays.stable
       outputs.overlays.master
     ];
   };
