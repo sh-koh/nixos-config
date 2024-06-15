@@ -802,6 +802,7 @@
         "secrets": "secrets",
         "stable": "stable",
         "stylix": "stylix",
+        "umu": "umu",
         "unstable": "unstable"
       }
     },
@@ -949,6 +950,31 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "umu": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "dir": "packaging/nix",
+        "lastModified": 1713384191,
+        "narHash": "sha256-duYcdFZ7QohK6Z4fDi/+cTqTsBieE7k4bJejEW8KO1U=",
+        "ref": "0.1-RC4",
+        "rev": "a55ee4b507d44b89b42513b29888fd3ab0a6a7e6",
+        "revCount": 441,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Open-Wine-Components/umu-launcher"
+      },
+      "original": {
+        "dir": "packaging/nix",
+        "ref": "0.1-RC4",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Open-Wine-Components/umu-launcher"
       }
     },
     "unstable": {
