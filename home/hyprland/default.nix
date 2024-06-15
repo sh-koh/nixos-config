@@ -2,7 +2,6 @@
 , config
 , lib
 , inputs
-, outputs
 , ...
 }: {
   imports = [
@@ -30,11 +29,6 @@
         "11, monitor:DP-1, default:true"
         "1, monitor:eDP-1, default:true"
         "1, monitor:HDMI-A-1, default:true"
-        (if builtins.getEnv "HOST" == "atrebois" then
-          "r[1-9], layoutopt:orientation:right"
-          "r[11-19], layoutopt:orientation:left"
-        else
-          "")
       ];
 
       windowrulev2 = [
@@ -143,6 +137,11 @@
         workspace_swipe_use_r = true;
       };
       
+      opengl = {
+        nvidia_anti_flicker = false;
+        force_introspection = 0;
+      };
+
       misc = {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
