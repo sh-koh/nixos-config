@@ -22,7 +22,7 @@
       monitor = [ 
         "HDMI-A-1,preferred,0x0,auto"
         "DP-1,highrr,2560x0,auto"
-        "eDP-1,1620x1080@60,0x0,1"
+        "eDP-1,2160x1440@60,0x0,1.5"
       ];
 
       workspace = [
