@@ -8,7 +8,7 @@
     lfs.enable = true;
 
     userName = "sh-koh";
-    userEmail = "abdel.briand.a@gmail.com";
+    userEmail = "70974710+sh-koh@users.noreply.github.com";
     package = pkgs.gitFull;
 
     extraConfig = {
