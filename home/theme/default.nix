@@ -16,9 +16,9 @@
       package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
-      name = "phinger-cursors-dark";
-      package = pkgs.phinger-cursors;
-      size = 16;
+      name = "Afterglow-Recolored-Catppuccin-Macchiato";
+      package = pkgs.afterglow-cursors-recolored;
+      size = 24;
     };
   };
 
@@ -36,9 +36,9 @@
       terminal = 0.98;
     };
     cursor = {
-      name = "phinger-cursors-dark";
-      package = pkgs.phinger-cursors;
-      size = 16;
+      name = config.gtk.cursorTheme.name;
+      package = config.gtk.cursorTheme.package;
+      size = config.gtk.cursorTheme.size;
     };
     fonts = {
       serif = {
