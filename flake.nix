@@ -74,7 +74,7 @@
     umu = {
       type = "git";
       url = "https://github.com/Open-Wine-Components/umu-launcher";
-      ref = "0.1-RC4";
+      rev = "89a49751ffbeeed0beeba21ee9ba7fd7c94ce78f"; # 0.1-RC4
       dir = "packaging/nix";
       submodules = true;
       inputs.nixpkgs.follows = "unstable";
