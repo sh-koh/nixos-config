@@ -1,12 +1,5 @@
 { config, pkgs, lib, ... }:
 {
-  home.packages = with pkgs; [
-    btop
-    imv
-    mpv
-    wl-clipboard
-  ];
-
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {

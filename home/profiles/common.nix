@@ -18,6 +18,11 @@
   };
 
   home.packages = with pkgs; [
+    btop
+    loupe
+    celluloid
+    pavucontrol
+    wl-clipboard
     vesktop
     firefox
     grex
