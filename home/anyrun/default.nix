@@ -9,7 +9,7 @@ in
     enable = true;
     config = {
       width = { fraction = 0.3; };
-      height = { fraction = 0.4; };
+      height = { fraction = 0.5; };
       x = { fraction = 0.5; };
       y = { fraction = 0.5; };
       hideIcons = false;
@@ -17,7 +17,7 @@ in
       layer = "overlay";
       hidePluginInfo = true;
       closeOnClick = true;
-      showResultsImmediately = true;
+      showResultsImmediately = false;
       maxEntries = null;
       plugins = with anyrun.packages.${pkgs.system}; [
         applications
@@ -30,15 +30,16 @@ in
     extraCss = with config.lib.stylix.colors; ''
       * {
         all: unset;
-        font-family: Lexend;
+        font-family: ${config.stylix.fonts.serif.name};
         font-size: 100%;
         padding: 4px;
-        border-radius: 2px;
+        border-radius: 3px;
+        transition: 125ms;
       }
       
       #window {
         color: #${base04};
-        background-color: transparent;
+        background-color: alpha(#000, 0.3);
       }
       
       #main {
@@ -46,28 +47,34 @@ in
         padding: 10px;
       }
 
-      box#main { 
-        border: solid 2px #${base01};
+      list#main {
+        padding: 0px; 
+        margin: 0px;
+      }
+
+      #match {
+        color: #${base04};
       }
       
       #match:selected {
-        font-weight: bold;
-        color: #${base05};
-        background-color: #${base02}; /*base0A*/
+        color: #${base06};
+        background-color: alpha(#${base08}, 0.3);
+        border: 1px solid alpha(#${base08}, 0.5);
+        padding: 10px 0;
       }
       
       #entry {
         font-weight: bold;
-        margin: 4px;
+        font-size: 110%;
+        margin: 2px;
         padding: 10px;
-        color: #${base08};
-        background-color: rgba(172, 65, 66 ,0.1);
-        border-bottom: 2px solid #${base08};
+        color: #${base01};
+        background-color: #${base08};
       }
       
       box {
         background-color: transparent;
-        padding: 8px;
+        padding: 0px;
       }
     '';
   };
