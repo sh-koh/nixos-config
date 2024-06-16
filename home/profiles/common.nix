@@ -9,6 +9,7 @@
     ../hyprland
     ../shell
     ../theme
+    ../zathura
   ];
 
   home = {
