@@ -1,5 +1,27 @@
-{ inputs, ... }: {
+{ inputs , ... }:
+{
   additions = final: _prev: import ../pkgs final.pkgs;
+
+  stable = final: prev: {
+    stable = import inputs.stable {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
+
+  unstable = final: prev: {
+    unstable = import inputs.unstable {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
+
+  master = final: prev: {
+    master = import inputs.master {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
 
   modifications = final: prev: {
     nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
@@ -18,27 +40,6 @@
         substituteInPlace lutris/util/magic.py \
           --replace '"libmagic.so.1"' "'${prev.lib.getLib prev.file}/lib/libmagic.so.1'"
       '';
-    };
-  };
-
-  stable = final: _prev: {
-    stable = import inputs.stable {
-      inherit (final) system;
-      config.allowUnfree = true;
-    };
-  };
-
-  unstable = final: _prev: {
-    unstable = import inputs.unstable {
-      inherit (final) system;
-      config.allowUnfree = true;
-    };
-  };
-
-  master = final: _prev: {
-    master = import inputs.master {
-      inherit (final) system;
-      config.allowUnfree = true;
     };
   };
 }

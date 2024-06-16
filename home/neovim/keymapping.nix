@@ -1,11 +1,4 @@
-{ config
-, pkgs
-, lib
-, inputs
-, outputs
-, ...
-}: {
-  programs.nixvim.keymaps = [
+{ programs.nixvim.keymaps = [
     {
       action = "<cmd>CHADopen<CR>";
       key = "<C-b>";

@@ -1,6 +1,4 @@
-{ pkgs, config, lib, ...}: {
-
-  programs.zoxide = {
+{ programs.zoxide = {
     enable = true;
     options = [
       "" 

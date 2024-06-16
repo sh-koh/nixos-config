@@ -1,10 +1,5 @@
-{ config
-, pkgs
-, lib
-, inputs
-, outputs
-, ...
-}: {
+{ pkgs, ... }:
+{
   imports = [
     ../ags
     ../anyrun

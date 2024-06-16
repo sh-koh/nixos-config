@@ -1,6 +1,4 @@
-{ pkgs, lib, config, ... }: {
-
-  programs.yazi = {
+{ programs.yazi = {
     enable = true;
     settings = {
     };

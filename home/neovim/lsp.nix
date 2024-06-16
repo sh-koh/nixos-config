@@ -1,11 +1,4 @@
-{ config
-, pkgs
-, lib
-, inputs
-, outputs
-, ...
-}: {
-  programs.nixvim.plugins.lsp-format.enable = true;
+{ programs.nixvim.plugins.lsp-format.enable = true;
   programs.nixvim.plugins.lsp = {
     enable = true;
     servers = {

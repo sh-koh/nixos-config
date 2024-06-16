@@ -1,5 +1,5 @@
-{ pkgs, config, lib, ... }: {
-
+{ pkgs, config, lib, ... }:
+{
   programs.fzf = {
     enable = true;
     defaultCommand = "${lib.getExe pkgs.fd} -H --type f";

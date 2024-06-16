@@ -1,10 +1,5 @@
-{ pkgs
-, lib
-, config
-, inputs
-, outputs
-, ...
-}: {
+{ pkgs, config, ... }:
+{
   networking = {
     hostName = "atrebois";
     networkmanager.enable = true;

@@ -1,12 +1,4 @@
-{ config
-, lib
-, pkgs
-, inputs
-, outputs
-, ...
-}: {
-
-  virtualisation.docker = {
+{ virtualisation.docker = {
     enable = true;
     enableOnBoot = false;
   };

@@ -1,11 +1,4 @@
-{ pkgs
-, lib
-, config
-, inputs
-, outputs
-, ...
-}: {
-  environment.variables = {
+{ environment.variables = {
     LIBVA_DRIVER_NAME = "iHD";
     STAGING_SHARED_MEMORY = "1";
     STAGING_WRITECOPY = "1";

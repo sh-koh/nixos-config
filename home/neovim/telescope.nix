@@ -1,11 +1,4 @@
-{ config
-, pkgs
-, lib
-, inputs
-, outputs
-, ...
-}: {
-  programs.nixvim.plugins.telescope = {
+{ programs.nixvim.plugins.telescope = {
     enable = true;
     extensions = {
       ui-select.enable = true;

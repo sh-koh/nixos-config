@@ -1,10 +1,5 @@
-{ config
-, lib
-, pkgs
-, inputs
-, outputs
-, ...
-}: {
+{ lib, pkgs, ... }:
+{
   boot = {
     kernelParams = [
       "iommu=pt"

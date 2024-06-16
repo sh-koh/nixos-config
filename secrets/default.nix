@@ -1,11 +1,13 @@
-{ pkgs
-, lib
-, config
-, inputs
-, outputs
-, ...
-}: {
-  imports = [ inputs.agenix.nixosModules.default ];
+{ pkgs, inputs, ... }:
+let
+  inherit (inputs) agenix mysecrets;
+in
+{
+  imports = [ agenix.nixosModules.default ];
+
+  environment.systemPackages = [
+    agenix.packages.${pkgs.system}.agenix
+  ];
 
   age.identityPaths = [
     "/etc/ssh/ssh_host_rsa_key"
@@ -14,7 +16,7 @@
 
   age.secrets = {
     shakoh-pwd = {
-      file = "${inputs.secrets}/me/shakoh-pwd.age";
+      file = "${mysecrets}/me/shakoh-pwd.age";
       mode = "0400";
       owner = "root";
     };
@@ -22,27 +24,27 @@
 
   age.secrets = {
     vpn-eni-cfg = {
-      file = "${inputs.secrets}/pro/vpn-eni-cfg.age";
+      file = "${mysecrets}/pro/vpn-eni-cfg.age";
       mode = "0400";
       owner = "root";
     };
     vpn-eni-crt = {
-      file = "${inputs.secrets}/pro/vpn-eni-crt.age";
+      file = "${mysecrets}/pro/vpn-eni-crt.age";
       mode = "0400";
       owner = "root";
     };
     vpn-eni-key = {
-      file = "${inputs.secrets}/pro/vpn-eni-key.age";
+      file = "${mysecrets}/pro/vpn-eni-key.age";
       mode = "0400";
       owner = "root";
     };
     vpn-eni-up = {
-      file = "${inputs.secrets}/pro/vpn-eni-up.age";
+      file = "${mysecrets}/pro/vpn-eni-up.age";
       mode = "0500";
       owner = "root";
     };
     eni-logins = {
-      file = "${inputs.secrets}/pro/eni-logins.age";
+      file = "${mysecrets}/pro/eni-logins.age";
       mode = "0400";
       owner = "root";
     };

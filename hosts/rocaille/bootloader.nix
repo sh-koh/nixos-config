@@ -1,10 +1,5 @@
-{ pkgs
-, lib
-, config
-, inputs
-, outputs
-, ...
-}: {
+{ pkgs, ... }:
+{
   boot = {
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "max";

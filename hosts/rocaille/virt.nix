@@ -1,10 +1,5 @@
-{ config
-, lib
-, pkgs
-, inputs
-, outputs
-, ...
-}: {
+{ pkgs , ... }:
+{
   boot = {
     kernelParams = [
       "intel_iommu=on"

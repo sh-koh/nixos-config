@@ -1,12 +1,10 @@
-{ config
-, pkgs
-, lib
-, inputs
-, outputs
-, ...
-}: {
+{ config, inputs , ... }:
+let
+  inherit (inputs) nixvim;
+in
+{
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    nixvim.homeManagerModules.nixvim
     ./coq.nix
     ./keymapping.nix
     ./lsp.nix

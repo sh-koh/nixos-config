@@ -1,6 +1,4 @@
-{ pkgs, config, lib, ... }: {
-
-  imports = [
+{ imports = [
     ./bat.nix
     ./direnv.nix
     ./eza.nix

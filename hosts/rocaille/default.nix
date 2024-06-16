@@ -136,25 +136,42 @@
     ];
   };
   
-  nix = {
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+  nix = let 
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  in {
+    package = pkgs.nixVersions.latest;
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     settings = {
-      trusted-users = [ "root" "@wheel" ];
+      flake-registry = "";
+      nix-path = config.nix.nixPath;
+      max-jobs = 8;
+      use-cgroups = true;
       use-xdg-base-directories = true;
       auto-allocate-uids = true;
       auto-optimise-store = true;
       builders-use-substitutes = true;
+      always-allow-substitutes = true;
       experimental-features = [
         "auto-allocate-uids"
         "ca-derivations"
         "cgroups"
+        "configurable-impure-env"
+        "daemon-trust-override"
         "dynamic-derivations"
         "fetch-closure"
+        "fetch-tree"
         "flakes"
+        "git-hashing"
+        "impure-derivations"
+        "local-overlay-store"
+        "mounted-ssh-store"
         "nix-command"
+        "no-url-literals"
+        "parse-toml-timestamps"
+        "read-only-local-store"
         "recursive-nix"
-        "repl-flake"
+        "verified-fetches"
       ];
     };
   };

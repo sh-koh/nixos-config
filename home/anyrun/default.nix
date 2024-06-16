@@ -1,11 +1,9 @@
-{ pkgs
-, config
-, inputs
-, lib
-, theme
-, ...
-}: {
-  imports = [ inputs.anyrun.homeManagerModules.default ];
+{ config, pkgs, inputs, ... }:
+let
+  inherit (inputs) anyrun;
+in
+{
+  imports = [ anyrun.homeManagerModules.default ];
 
   programs.anyrun = {
     enable = true;
@@ -21,7 +19,7 @@
       closeOnClick = true;
       showResultsImmediately = true;
       maxEntries = null;
-      plugins = with inputs.anyrun.packages.${pkgs.system}; [
+      plugins = with anyrun.packages.${pkgs.system}; [
         applications
         dictionary
         rink

@@ -1,6 +1,12 @@
 {
   description = "Shakoh's NixOS flake";
   inputs = {
+    master = {
+      type = "github";
+      owner = "NixOS";
+      repo = "nixpkgs";
+      ref = "master";
+    };
     unstable = {
       type = "github";
       owner = "NixOS";
@@ -12,12 +18,6 @@
       owner = "NixOS";
       repo = "nixpkgs";
       ref = "nixos-24.05";
-    };
-    master = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "master";
     };
     home-manager = {
       type = "github";
@@ -67,9 +67,9 @@
       owner = "ryantm";
       repo = "agenix";
       ref = "main";
-      inputs.nixpkgs.follows = "stable";
+      inputs.nixpkgs.follows = "unstable";
     };
-    secrets = {
+    mysecrets = {
       type = "git";
       url = "ssh://git@github.com/sh-koh/nix-secrets.git";
       ref = "main";
@@ -78,11 +78,7 @@
     };
   };
 
-  outputs = { 
-    self,
-    unstable,
-    ...
-  }@inputs:
+  outputs = { self, unstable, ... }@inputs:
   let
     inherit (self) outputs;
     forAllSystems = unstable.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];

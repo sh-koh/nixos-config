@@ -1,10 +1,5 @@
-{ pkgs
-, lib
-, config
-, inputs
-, outputs
-, ...
-}: {
+{ pkgs , ... }:
+{
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     loader.efi.canTouchEfiVariables = true;

@@ -1,15 +1,12 @@
-{ pkgs
-, config
-, lib
-, inputs
-, outputs
-, ...
-}: {
-  imports = [ inputs.ags.homeManagerModules.default ];
+{ pkgs, config, lib, inputs, ... }:
+let
+  inherit (inputs) ags;
+in
+{
+  imports = [ ags.homeManagerModules.default ];
 
   programs.ags = {
     enable = true;
-    #package = ;
     #configDir = ./cfg;
     configDir = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/Git/nixos-config/home/ags/cfg";
     extraPackages = with pkgs; [

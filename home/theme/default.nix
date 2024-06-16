@@ -1,13 +1,10 @@
-{ pkgs
-, config
-, lib
-, inputs
-, outputs
-, theme
-, ...
-}: {
+{ pkgs, config, inputs, ... }:
+let
+  inherit (inputs) stylix;
+in
+{
   
-  imports = [ inputs.stylix.homeManagerModules.stylix ];
+  imports = [ stylix.homeManagerModules.stylix ];
 
   gtk = {
     enable = true;

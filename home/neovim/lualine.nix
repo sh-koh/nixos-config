@@ -1,11 +1,4 @@
-{ pkgs
-, config
-, lib
-, inputs
-, outputs
-, ...
-}: {
-  programs.nixvim.plugins = {
+{ programs.nixvim.plugins = {
     lualine = {
       enable = true;
       globalstatus = true;
