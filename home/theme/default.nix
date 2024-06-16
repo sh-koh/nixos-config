@@ -21,7 +21,7 @@ in
 
   qt = {
     enable = true;
-    platformTheme.name = "adwaita-dark";
+    platformTheme.name = "gtk2";
   };
 
   stylix = {
