@@ -49,9 +49,9 @@
     enableAllFirmware = lib.mkDefault true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     bluetooth.enable = true;
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
         nv-codec-headers-12
         vaapiVdpau

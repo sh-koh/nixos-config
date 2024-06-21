@@ -14,8 +14,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "shezdy";
     repo = "hyprsplit";
-    rev = "v0.40.0";
-    hash = "sha256-sDzwTFLBPoopt7PvCZm0zUnst7oxJ5BgGaajdJnGHEs=";
+    rev = "v0.41.1";
+    hash = "sha256-7R/Q4QRJa2mm+gAU+rJ0XGKMwXPxDq7J/iAq0fjKhKY=";
   };
 
   nativeBuildInputs = [
