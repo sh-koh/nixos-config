@@ -27,7 +27,7 @@
     firefox
     grex
     gimp
-    gnome.nautilus
+    nautilus
     jq
     libreoffice
     overskride
