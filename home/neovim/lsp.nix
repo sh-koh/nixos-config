@@ -21,7 +21,6 @@
       bashls.enable = true;
       nginx-language-server.enable = true;
       marksman.enable = true;
-      phpactor.enable = true;
       terraformls.enable = true;
     };
   };

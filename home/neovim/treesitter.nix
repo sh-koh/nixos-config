@@ -2,7 +2,9 @@
     treesitter = {
       enable = true;
       nixvimInjections = true;
-      incrementalSelection.enable = true;
+      settings = {
+        incremental_selection.enable = true;
+      };
     };
     treesitter-refactor = {
       enable = true;
