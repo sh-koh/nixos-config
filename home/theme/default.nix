@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }:
+{ lib, pkgs, config, inputs, ... }:
 let
   inherit (inputs) stylix;
 in
@@ -13,15 +13,14 @@ in
       package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
-      name = "Afterglow-Recolored-Catppuccin-Macchiato";
-      package = pkgs.afterglow-cursors-recolored;
-      size = 24;
+      name = config.stylix.cursor.name;
+      package = config.stylix.cursor.package;
+      size = config.stylix.cursor.size;
     };
   };
 
   qt = {
     enable = true;
-    platformTheme.name = "gtk2";
   };
 
   stylix = {
@@ -33,9 +32,9 @@ in
       terminal = 0.98;
     };
     cursor = {
-      name = config.gtk.cursorTheme.name;
-      package = config.gtk.cursorTheme.package;
-      size = config.gtk.cursorTheme.size;
+      name = "Afterglow-Recolored-Catppuccin-Macchiato";
+      package = pkgs.afterglow-cursors-recolored;
+      size = 24;
     };
     fonts = {
       serif = {
@@ -60,8 +59,8 @@ in
     };
     polarity = "dark";
     image = pkgs.fetchurl {
-      url = "https://preview.redd.it/r1cji9zj3nva1.jpg?width=5760&format=pjpg&auto=webp&s=3545dd013e63c4c67745117d7e20a41d9ea9e7ef";
-      sha256 = "1GUCUtxFqgqlr3e36OSP8bP0hihwdlUzTbfPDElUZG8=";
+      url = "https://wallpaperaccess.com/full/4439470.jpg";
+      hash = "sha256-ANrdbCrHoeUkWAnEE7MXKOYAf7YqEski6YhzaU+H8nk=";
     };
     
     base16Scheme = {
