@@ -29,8 +29,6 @@
 
       exec-once = [
         "${pkgs.systemd}/bin/systemctl --user import-environment PATH"
-        "${pkgs.swww}/bin/swww-daemon &"
-        "${pkgs.swww}/bin/swww img ${config.stylix.image}"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &"
       ];
       
@@ -88,17 +86,9 @@
       };
 
       group = {
-        #"col.border_active" = ;
-        #"col.border_inactive" = ;
-        #"col.border_locked_active" = ;
-        #"col.border_locked_inactive" = ;
         groupbar = {
           font_family = "Lexend";
           font_size = 10;
-          #"col.active" = ;
-          #"col.inactive" = ;
-          #"col.locked_active" = ;
-          #"col.locked_inactive" = ;
         };
       };
       
@@ -108,7 +98,7 @@
       };
       
       master = {
-        new_is_master = true;
+        new_status = "master";
         new_on_top = true;
         mfact = 0.60;
         allow_small_split = true;
@@ -172,6 +162,7 @@
             esac
           '';
         });
+
         getActiveMonitor = lib.getExe (pkgs.writeShellApplication {
           name = "get-active-monitor.sh";
           runtimeInputs = with pkgs; [ satty grim jq hyprland];
@@ -185,7 +176,6 @@
                 --initial-tool "crop"
           '';
         });
-
       in [
         "$mainMod, Return, exec, $terminal"
         "$mainMod, Space, exec, $menu"
