@@ -126,8 +126,7 @@
         no_direct_scanout = false;
         focus_on_activate = true;
         initial_workspace_tracking = 1;
-        vrr = 1;
-        vfr = true;
+        vrr = 0;
       };
       
       plugin = {
@@ -243,9 +242,9 @@
         ]
       ) 9));
     };
-    plugins = [
-      pkgs.hyprXPrimary
-      pkgs.hyprsplit
+    plugins = with pkgs; [
+      hyprXPrimary
+      hyprsplit
     ];
   };
 }
