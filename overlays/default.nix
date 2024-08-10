@@ -1,45 +1,35 @@
 { inputs , ... }:
-{
+let
+  inherit (inputs) master unstable stable;
+in {
   additions = final: _prev: import ../pkgs final.pkgs;
 
-  stable = final: prev: {
-    stable = import inputs.stable {
-      inherit (final) system;
-      config.allowUnfree = true;
-    };
-  };
-
-  unstable = final: prev: {
-    unstable = import inputs.unstable {
-      inherit (final) system;
-      config.allowUnfree = true;
-    };
-  };
-
   master = final: prev: {
-    master = import inputs.master {
+    master = import master {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
+
+  unstable = final: _prev: {
+    unstable = import unstable {
+      inherit (final) system;
+      config.allowUnfree = true;
+    };
+  };
+
+  stable = final: _prev: {
+    stable = import stable {
       inherit (final) system;
       config.allowUnfree = true;
     };
   };
 
   modifications = final: prev: {
-    nerdfonts = prev.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+    nerdfonts = prev.nerdfonts.override { fonts = [ "Iosevka" ]; };
+    iosevka-bin = prev.iosevka-bin.override { variant = "SS15"; };
     prismlauncher = prev.prismlauncher.override { withWaylandGLFW = true; };
     btop = prev.btop.override { cudaSupport = true; };
-    lutris = prev.lutris.override { extraPkgs = pkgs: [ inputs.umu.packages.${final.system}.umu ]; };
-    lutris-unwrapped = prev.lutris-unwrapped.overrideAttrs {
-      version = "0.5.17";
-      src = prev.fetchFromGitHub {
-        owner = "lutris";
-        repo = "lutris";
-        rev = "v0.5.17";
-        hash = "sha256-Tr5k5LU0s75+1B17oK8tlgA6SlS1SHyyLS6UBKadUmw=";
-      };
-      postPatch = ''
-        substituteInPlace lutris/util/magic.py \
-          --replace '"libmagic.so.1"' "'${prev.lib.getLib prev.file}/lib/libmagic.so.1'"
-      '';
-    };
+    lutris = prev.lutris.override { extraPkgs = _: [ inputs.umu.packages.${final.system}.umu ]; };
   };
 }
