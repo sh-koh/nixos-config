@@ -8,7 +8,7 @@
     __GL_VRR_ALLOWED = "1";
     __GL_DXVK_OPTIMIZATIONS = "1";
     __GL_ALLOW_UNOFFICIAL_PROTOCOL = "1";
-    __NVD_BACKEND = "direct";
+    NVD_BACKEND = "direct";
     STAGING_SHARED_MEMORY = "1";
     STAGING_WRITECOPY = "1";
     LIBSEAT_BACKEND = "logind";
