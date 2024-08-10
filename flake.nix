@@ -1,5 +1,4 @@
-{
-  description = "Shakoh's NixOS flake";
+{ description = "Shakoh's NixOS flake";
   inputs = {
     master = {
       type = "github";
@@ -26,6 +25,13 @@
       ref = "master";
       inputs.nixpkgs.follows = "unstable";
     };
+    utils = {
+      type = "github";
+      owner = "sh-koh";
+      repo = "nix-utils";
+      ref = "main";
+      inputs.nixpkgs.follows = "unstable";
+    };
     stylix = {
       type = "github";
       owner = "danth";
@@ -38,7 +44,7 @@
       owner = "nix-community";
       repo = "nixvim";
       ref = "main";
-      inputs.nixpkgs.follows = "unstable";
+      #inputs.nixpkgs.follows = "unstable";
     };
     anyrun = {
       type = "github";
@@ -57,7 +63,8 @@
     umu = {
       type = "git";
       url = "https://github.com/Open-Wine-Components/umu-launcher";
-      rev = "89a49751ffbeeed0beeba21ee9ba7fd7c94ce78f"; # 0.1-RC4
+      #rev = "89a49751ffbeeed0beeba21ee9ba7fd7c94ce78f"; # 0.1-RC4
+      ref = "main";
       dir = "packaging/nix";
       submodules = true;
       inputs.nixpkgs.follows = "unstable";
@@ -78,24 +85,28 @@
     };
   };
 
-  outputs = { self, unstable, ... }@inputs:
+  outputs = { self, unstable, utils, ... }@inputs:
   let
     inherit (self) outputs;
-    forAllSystems = unstable.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
-    mkNixos = modules:
-      unstable.lib.nixosSystem {
-        inherit modules;
-        specialArgs = { inherit inputs outputs; };
-      };
   in {
-    packages = forAllSystems (system: import ./pkgs unstable.legacyPackages.${system});
+    formatter = utils.lib.forAllSystems (sys: unstable.legacyPackages.${sys}.nixfmt-rfc-style);
+    packages = utils.lib.forAllSystems (sys: import ./pkgs unstable.legacyPackages.${sys});
     overlays = import ./overlays { inherit inputs outputs; };
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
     nixosConfigurations = {
-      atrebois = mkNixos [ ./hosts/atrebois ];
-      rocaille = mkNixos [ ./hosts/rocaille ];
-      cravite = mkNixos [ ./hosts/cravite ];
+      atrebois = unstable.lib.nixosSystem {
+        modules = [ ./hosts/atrebois ];
+        specialArgs = { inherit inputs outputs; };
+      };
+      rocaille = unstable.lib.nixosSystem {
+        modules = [ ./hosts/rocaille ];
+        specialArgs = { inherit inputs outputs; };
+      };
+      cravite = unstable.lib.nixosSystem {
+        modules = [ ./hosts/cravite ];
+        specialArgs = { inherit inputs outputs; };
+      };
     };
   };
 }
