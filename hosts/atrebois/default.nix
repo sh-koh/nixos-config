@@ -143,18 +143,22 @@
 
   programs.dconf.enable = true;
   gtk.iconCache.enable = true;
-  fonts.packages = with pkgs; [ jetbrains-mono lexend nerdfonts ];
+  fonts.packages = with pkgs; [
+    lexend
+    nerdfonts
+    iosevka-bin
+  ];
 
   time.timeZone = "Europe/Paris";
   console.keyMap = "us-acentos";
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.stable
-      outputs.overlays.master
+    overlays = with outputs.overlays; [
+      additions
+      modifications
+      stable
+      master
     ];
   };
 
