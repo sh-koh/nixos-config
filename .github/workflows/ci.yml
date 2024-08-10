@@ -1,0 +1,30 @@
+name: CI
+
+on: [ push, pull_request]
+
+jobs:
+  tests:
+    name: Check flake sanity
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.NIX_SECRETS }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          install_url: "https://nixos.org/nix/install"
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: Get metadata
+        run: nix flake metadata
+
+      - name: Check flake
+        run: nix flake check --all-systems
