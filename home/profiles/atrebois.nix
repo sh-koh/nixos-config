@@ -23,7 +23,6 @@
     dolphin-emu
     gpu-screen-recorder
     lutris
-    osu-lazer-bin
     prismlauncher
     ryujinx
     tetrio-desktop
