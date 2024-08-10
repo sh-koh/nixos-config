@@ -2,26 +2,30 @@
   programs.nixvim.plugins.lsp = {
     enable = true;
     servers = {
-      nixd.enable = true;
-      nil-ls.enable = true;
-      gopls.enable = true;
-      ruff.enable = true;
-      ruff-lsp.enable = true;
-      dockerls.enable = true;
-      docker-compose-language-service.enable = true;
-      ansiblels.enable = true;
-      yamlls.enable = true;
-      jsonls.enable = true;
-      taplo.enable = true;
-      sqls.enable = true;
-      html.enable = true;
-      htmx.enable = true;
-      tsserver.enable = true;
-      cssls.enable = true;
-      bashls.enable = true;
-      nginx-language-server.enable = true;
-      marksman.enable = true;
-      terraformls.enable = true;
+      bashls.enable = true; # Bash
+      nixd.enable = true; # Nix
+
+      hls.enable = true; # Haskell
+      gopls.enable = true; # Go
+      ruff.enable = true; # Python
+      ruff-lsp.enable = true; # Python
+      tsserver.enable = true; # Typescript/Javascript
+      zls.enable = true; # Zig
+
+      dockerls.enable = true; # Docker
+      docker-compose-language-service.enable = true; # Docker-compose
+      ansiblels.enable = true; # Ansible
+      terraformls.enable = true; # Terraform
+      nginx-language-server.enable = true; # Nginx
+
+      yamlls.enable = true; # Yaml
+      jsonls.enable = true; # JSON
+      taplo.enable = true; # Toml
+      sqls.enable = true; # SQL
+      html.enable = true; # HTML
+      htmx.enable = true; # HTMX
+      cssls.enable = true; # CSS
+      marksman.enable = true; # Markdown
     };
   };
 }
