@@ -1,9 +1,7 @@
-{ lib, pkgs, config, inputs, ... }:
+{ pkgs, config, inputs, ... }:
 let
   inherit (inputs) stylix;
-in
-{
-  
+in {
   imports = [ stylix.homeManagerModules.stylix ];
 
   gtk = {
@@ -29,32 +27,29 @@ in
       applications = 1.0;
       desktop = 1.0;
       popups = 1.0;
-      terminal = 0.98;
+      terminal = 0.99;
     };
     cursor = {
-      name = "Afterglow-Recolored-Catppuccin-Macchiato";
-      package = pkgs.afterglow-cursors-recolored;
+      name = "Simp1e";
+      package = pkgs.simp1e-cursors;
       size = 24;
     };
     fonts = {
-      serif = {
-        package = pkgs.lexend;
-        name = "Lexend";
-      };
-      sansSerif = config.stylix.fonts.serif;
+      serif = config.stylix.fonts.monospace;
+      sansSerif = config.stylix.fonts.monospace;
       monospace = {
-        package = pkgs.jetbrains-mono;
-        name = "JetBrains Mono";
+        package = pkgs.iosevka-bin;
+        name = "Iosevka Term SS15";
       };
       emoji = {
         name = "Noto Color Emoji";
         package = pkgs.noto-fonts-emoji;
       };
       sizes = {
-        applications = 10;
-        desktop = 10;
-        popups = 10;
-        terminal = 10;
+        applications = 11;
+        desktop = 11;
+        popups = 11;
+        terminal = 11;
       };
     };
     polarity = "dark";
