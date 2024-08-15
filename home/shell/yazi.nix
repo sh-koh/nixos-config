@@ -1,8 +1,7 @@
-{ programs.yazi = {
+{
+  programs.yazi = {
     enable = true;
-    settings = {
-    };
-    keymap = {
-    };
+    settings = { };
+    keymap = { };
   };
 }

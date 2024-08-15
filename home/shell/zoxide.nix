@@ -1,7 +1,6 @@
-{ programs.zoxide = {
+{
+  programs.zoxide = {
     enable = true;
-    options = [
-      "" 
-    ];
+    options = [ "" ];
   };
 }

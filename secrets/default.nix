@@ -5,9 +5,7 @@ in
 {
   imports = [ agenix.nixosModules.default ];
 
-  environment.systemPackages = [
-    agenix.packages.${pkgs.system}.agenix
-  ];
+  environment.systemPackages = [ agenix.packages.${pkgs.system}.agenix ];
 
   age.identityPaths = [
     "/etc/ssh/ssh_host_rsa_key"

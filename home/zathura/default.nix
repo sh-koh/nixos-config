@@ -3,7 +3,8 @@
   programs.zathura = {
     enable = true;
     options = {
-      font = config.stylix.fonts.monospace.name + " " + (builtins.toString config.stylix.fonts.sizes.terminal);
+      font =
+        config.stylix.fonts.monospace.name + " " + (builtins.toString config.stylix.fonts.sizes.terminal);
       selection-notification = true;
       selection-clipboard = "clipboard";
       adjust-open = "best-fit";

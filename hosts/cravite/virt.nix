@@ -1,4 +1,5 @@
-{ virtualisation.docker = {
+{
+  virtualisation.docker = {
     enable = true;
     enableOnBoot = false;
   };

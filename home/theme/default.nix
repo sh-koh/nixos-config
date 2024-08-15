@@ -1,7 +1,13 @@
-{ pkgs, config, inputs, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 let
   inherit (inputs) stylix;
-in {
+in
+{
   imports = [ stylix.homeManagerModules.stylix ];
 
   gtk = {
@@ -57,7 +63,7 @@ in {
       url = "https://wallpaperaccess.com/full/4439470.jpg";
       hash = "sha256-ANrdbCrHoeUkWAnEE7MXKOYAf7YqEski6YhzaU+H8nk=";
     };
-    
+
     base16Scheme = {
       base00 = "#0F1419"; # #0F1419 ----
       base01 = "#131721"; # #131721 ---
@@ -75,6 +81,6 @@ in {
       base0D = "#6A9FB5"; # #6A9FB5 Functions, Methods, Attribute IDs, Headings
       base0E = "#AA759F"; # #AA759F Keywords, Storage, Selector, Markup Italic, Diff Changed
       base0F = "#AA759F"; # #AA759F Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
-    };          
+    };
   };
 }

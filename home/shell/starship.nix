@@ -17,8 +17,8 @@ in
       format = lib.strings.concatStrings [
         "$direnv"
         "$directory"
-	      "$hostname"
-	      "$localip"
+        "$hostname"
+        "$localip"
 
         "$python"
         "$nodejs"
@@ -78,7 +78,7 @@ in
         format = "[${pad.left}$user${pad.right}](fg:red)";
       };
       direnv = {
-        disabled = false; 
+        disabled = false;
         format = "[${pad.left}direnv${pad.right}](fg:cyan)";
       };
       container = {

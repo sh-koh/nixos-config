@@ -1,4 +1,5 @@
-{ programs.zellij = {
+{
+  programs.zellij = {
     enable = true;
     #package = ;
     settings = {

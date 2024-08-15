@@ -1,4 +1,5 @@
-{ programs.nixvim.plugins.lsp-format.enable = true;
+{
+  programs.nixvim.plugins.lsp-format.enable = true;
   programs.nixvim.plugins.lsp = {
     enable = true;
     servers = {

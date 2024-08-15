@@ -1,8 +1,6 @@
 { lib, modulesPath, ... }:
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5727bbfc-f35c-43b8-a461-d0c921b1834e";

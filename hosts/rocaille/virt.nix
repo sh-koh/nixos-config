@@ -1,4 +1,4 @@
-{ pkgs , ... }:
+{ pkgs, ... }:
 {
   boot = {
     kernelParams = [
@@ -29,7 +29,7 @@
     enable = true;
     onBoot = "ignore";
     onShutdown = "shutdown";
-    qemu = { 
+    qemu = {
       swtpm.enable = true;
       ovmf.packages = [ pkgs.OVMFFull.fd ];
     };

@@ -1,11 +1,12 @@
-{ stdenv
-, fetchFromGitHub
-, pkg-config
-, meson
-, ninja
-, hyprland ? hyprland
-, pixman
-, libdrm
+{
+  stdenv,
+  fetchFromGitHub,
+  pkg-config,
+  meson,
+  ninja,
+  hyprland ? hyprland,
+  pixman,
+  libdrm,
 }:
 
 stdenv.mkDerivation (finalAttrs: {

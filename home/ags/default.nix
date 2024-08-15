@@ -1,4 +1,10 @@
-{ pkgs, config, lib, inputs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}:
 let
   inherit (inputs) ags;
 in

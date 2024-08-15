@@ -1,4 +1,5 @@
-{ description = "Shakoh's NixOS flake";
+{
+  description = "Shakoh's NixOS flake";
   inputs = {
     master = {
       type = "github";
@@ -85,28 +86,41 @@
     };
   };
 
-  outputs = { self, unstable, utils, ... }@inputs:
-  let
-    inherit (self) outputs;
-  in {
-    formatter = utils.lib.forAllSystems (sys: unstable.legacyPackages.${sys}.nixfmt-rfc-style);
-    packages = utils.lib.forAllSystems (sys: import ./pkgs unstable.legacyPackages.${sys});
-    overlays = import ./overlays { inherit inputs outputs; };
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
-    nixosConfigurations = {
-      atrebois = unstable.lib.nixosSystem {
-        modules = [ ./hosts/atrebois ];
-        specialArgs = { inherit inputs outputs; };
-      };
-      rocaille = unstable.lib.nixosSystem {
-        modules = [ ./hosts/rocaille ];
-        specialArgs = { inherit inputs outputs; };
-      };
-      cravite = unstable.lib.nixosSystem {
-        modules = [ ./hosts/cravite ];
-        specialArgs = { inherit inputs outputs; };
+  outputs =
+    {
+      self,
+      unstable,
+      utils,
+      ...
+    }@inputs:
+    let
+      inherit (self) outputs;
+    in
+    {
+      formatter = utils.lib.forAllSystems (sys: unstable.legacyPackages.${sys}.nixfmt-rfc-style);
+      packages = utils.lib.forAllSystems (sys: import ./pkgs unstable.legacyPackages.${sys});
+      overlays = import ./overlays { inherit inputs outputs; };
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
+      nixosConfigurations = {
+        atrebois = unstable.lib.nixosSystem {
+          modules = [ ./hosts/atrebois ];
+          specialArgs = {
+            inherit inputs outputs;
+          };
+        };
+        rocaille = unstable.lib.nixosSystem {
+          modules = [ ./hosts/rocaille ];
+          specialArgs = {
+            inherit inputs outputs;
+          };
+        };
+        cravite = unstable.lib.nixosSystem {
+          modules = [ ./hosts/cravite ];
+          specialArgs = {
+            inherit inputs outputs;
+          };
+        };
       };
     };
-  };
 }

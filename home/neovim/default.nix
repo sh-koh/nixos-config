@@ -1,4 +1,4 @@
-{ config, inputs , ... }:
+{ config, inputs, ... }:
 let
   inherit (inputs) nixvim;
 in

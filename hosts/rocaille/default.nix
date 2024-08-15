@@ -1,10 +1,12 @@
-{ config
-, pkgs
-, lib
-, inputs
-, outputs
-, ...
-}: {
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  outputs,
+  ...
+}:
+{
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ../../secrets
@@ -14,7 +16,7 @@
     ./virt.nix
     ./hardware-configuration.nix
   ];
- 
+
   # Services et démons
   services = {
     dbus.enable = true;
@@ -56,7 +58,7 @@
       PasswordAuthentication = false;
     };
   };
-  
+
   # Configuration des programmes.
   users.defaultUserShell = pkgs.zsh;
   programs = {
@@ -65,13 +67,18 @@
     adb.enable = true;
   };
 
-  programs.hyprland = { enable = true; };
+  programs.hyprland = {
+    enable = true;
+  };
 
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
     config = {
-      hyprland.default = [ "hypland" "gtk" ];
+      hyprland.default = [
+        "hypland"
+        "gtk"
+      ];
     };
   };
 
@@ -104,13 +111,15 @@
       "adbusers"
       "networkmanager"
     ];
-  }; 
+  };
 
   # Home-manager
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
     users.shakoh = import ../../home/profiles/rocaille.nix;
   };
 
@@ -140,46 +149,48 @@
       master
     ];
   };
-  
-  nix = let 
+
+  nix =
+    let
       flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    package = pkgs.nixVersions.latest;
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-    settings = {
-      flake-registry = "";
-      nix-path = config.nix.nixPath;
-      max-jobs = 8;
-      use-cgroups = true;
-      use-xdg-base-directories = true;
-      auto-allocate-uids = true;
-      auto-optimise-store = true;
-      builders-use-substitutes = true;
-      always-allow-substitutes = true;
-      experimental-features = [
-        "auto-allocate-uids"
-        "ca-derivations"
-        "cgroups"
-        "configurable-impure-env"
-        "daemon-trust-override"
-        "dynamic-derivations"
-        "fetch-closure"
-        "fetch-tree"
-        "flakes"
-        "git-hashing"
-        "impure-derivations"
-        "local-overlay-store"
-        "mounted-ssh-store"
-        "nix-command"
-        "no-url-literals"
-        "parse-toml-timestamps"
-        "read-only-local-store"
-        "recursive-nix"
-        "verified-fetches"
-      ];
+    in
+    {
+      package = pkgs.nixVersions.latest;
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+      settings = {
+        flake-registry = "";
+        nix-path = config.nix.nixPath;
+        max-jobs = 8;
+        use-cgroups = true;
+        use-xdg-base-directories = true;
+        auto-allocate-uids = true;
+        auto-optimise-store = true;
+        builders-use-substitutes = true;
+        always-allow-substitutes = true;
+        experimental-features = [
+          "auto-allocate-uids"
+          "ca-derivations"
+          "cgroups"
+          "configurable-impure-env"
+          "daemon-trust-override"
+          "dynamic-derivations"
+          "fetch-closure"
+          "fetch-tree"
+          "flakes"
+          "git-hashing"
+          "impure-derivations"
+          "local-overlay-store"
+          "mounted-ssh-store"
+          "nix-command"
+          "no-url-literals"
+          "parse-toml-timestamps"
+          "read-only-local-store"
+          "recursive-nix"
+          "verified-fetches"
+        ];
+      };
     };
-  };
 
   # https://nixos.org/nixos/options.html
   system.stateVersion = "23.05";

@@ -1,4 +1,5 @@
-{ programs.nixvim.plugins = {
+{
+  programs.nixvim.plugins = {
     coq-thirdparty.enable = true;
     coq-nvim = {
       enable = true;

@@ -1,7 +1,8 @@
-{ inputs , ... }:
+{ inputs, ... }:
 let
   inherit (inputs) master unstable stable;
-in {
+in
+{
   additions = final: _prev: import ../pkgs final.pkgs;
 
   master = final: prev: {

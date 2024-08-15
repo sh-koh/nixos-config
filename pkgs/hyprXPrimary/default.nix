@@ -1,9 +1,10 @@
-{ stdenv
-, fetchFromGitHub
-, hyprland ? hyprland
-, pixman
-, libdrm
-, pkg-config
+{
+  stdenv,
+  fetchFromGitHub,
+  hyprland ? hyprland,
+  pixman,
+  libdrm,
+  pkg-config,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -16,13 +17,11 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-ltRLHOpgYxtm7EfvikDgLPiG0AiJaAFIHwGdLe9aoNE=";
   };
 
-  nativeBuildInputs = [
-    pkg-config
-  ];
+  nativeBuildInputs = [ pkg-config ];
 
   buildInputs = [
     pixman
-    libdrm 
+    libdrm
     hyprland
   ] ++ hyprland.buildInputs;
 

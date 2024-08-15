@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./common.nix
-  ];
+  imports = [ ./common.nix ];
 
   programs = {
     obs-studio = {
@@ -35,7 +33,7 @@
       AUDIO_OUTPUT="alsa_output.usb-Logitech_PRO_X_000000000000-00.analog-stereo.monitor"
       AUDIO_INPUT="alsa_input.usb-BIRD_UM1_BIRD_UM1-00.mono-fallback"
       CLIPS_PATH=/media/SSHD/Clips
-      
+
       if [[ $(pidof gpu-screen-recorder) == "" ]]; then
         ${pkgs.libnotify}/bin/notify-send "Started replay buffer..."
         gpu-screen-recorder \
