@@ -171,7 +171,7 @@
       flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
     in
     {
-      package = pkgs.nixVersions.latest;
+      package = pkgs.nixVersions.nix_2_23;
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
       settings = {
