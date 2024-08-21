@@ -1,5 +1,13 @@
-pkgs: {
-  #example = pkgs.callPackage ./example { };
-  hyprXPrimary = pkgs.callPackage ./hyprXPrimary { };
-  hyprsplit = pkgs.callPackage ./hyprsplit { };
+_:
+{
+  perSystem = {
+    pkgs,
+    ...
+  }:
+  {
+    packages = {
+      hyprXPrimary = pkgs.callPackage ./hyprXPrimary { };
+      hyprsplit = pkgs.callPackage ./hyprsplit { };
+    };
+  };
 }

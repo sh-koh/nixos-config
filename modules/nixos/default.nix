@@ -1,4 +1,17 @@
+{ ... }:
 {
-  # List your module files here
-  # my-module = import ./my-module.nix;
+  flake.nixosModules = {
+    bluetooth = ./bluetooth;
+    common = ./common;
+    desktop = ./desktop;
+    docker = ./docker;
+    eni-vpn = ./eni-vpn;
+    gaming = ./gaming;
+    intel = ./intel;
+    nix = ./nix;
+    nvidia = ./nvidia;
+    printing = ./printing;
+    secrets = ./secrets;
+    vfio = ./vfio;
+  };
 }

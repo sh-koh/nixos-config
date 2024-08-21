@@ -1,7 +1,7 @@
 {
   stdenv,
   fetchFromGitHub,
-  hyprland ? hyprland,
+  hyprland,
   pixman,
   libdrm,
   pkg-config,
@@ -13,8 +13,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "zakk4223";
     repo = "hyprxprimary";
-    rev = "69388ceb830ba6c68496f928dec173e578d6fd14";
-    hash = "sha256-ltRLHOpgYxtm7EfvikDgLPiG0AiJaAFIHwGdLe9aoNE=";
+    rev = "7b781613900cac7ebc3058ff5b4b43d6cded07a6";
+    hash = "sha256-5im4uZbcxXK62+VswOhtFgHQ+4tZ7yDq7RnuSkV+t64=";
   };
 
   nativeBuildInputs = [ pkg-config ];

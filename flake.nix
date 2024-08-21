@@ -1,81 +1,58 @@
 {
-  description = "Shakoh's NixOS flake";
-  inputs = {
-    master = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "master";
+  description = "Shakoh's NixOS and Home-manager flake";
+
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; }
+    {
+      systems = [
+        "x86_64-linux" 
+        "aarch64-linux"
+      ];
+
+      imports = [
+        ./hosts
+        ./lib
+        ./modules
+        ./pkgs
+        ./users
+      ];
+
+      perSystem = { pkgs, ... }:
+      {
+        devShells.default = pkgs.mkShell {
+          name = "nixos-deployment-shell";
+          packages = with pkgs; [ git ];
+          formatter = pkgs.nixfmt-rfc-style;
+        };
+      };
     };
-    unstable = {
+
+  inputs = {
+    nixpkgs = {
       type = "github";
       owner = "NixOS";
       repo = "nixpkgs";
       ref = "nixos-unstable";
-    };
-    stable = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "nixos-24.05";
     };
     home-manager = {
       type = "github";
       owner = "nix-community";
       repo = "home-manager";
       ref = "master";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-parts = {
+      type = "github";
+      owner = "hercules-ci";
+      repo = "flake-parts";
+      ref = "main";
     };
     utils = {
       type = "github";
       owner = "sh-koh";
       repo = "nix-utils";
       ref = "main";
-      inputs.nixpkgs.follows = "unstable";
-    };
-    stylix = {
-      type = "github";
-      owner = "danth";
-      repo = "stylix";
-      ref = "master";
-      inputs.nixpkgs.follows = "unstable";
-    };
-    nixvim = {
-      type = "github";
-      owner = "nix-community";
-      repo = "nixvim";
-      ref = "main";
-      #inputs.nixpkgs.follows = "unstable";
-    };
-    anyrun = {
-      type = "github";
-      owner = "kirottu";
-      repo = "anyrun";
-      ref = "master";
-      inputs.nixpkgs.follows = "unstable";
-    };
-    ags = {
-      type = "github";
-      owner = "aylur";
-      repo = "ags";
-      ref = "main";
-      inputs.nixpkgs.follows = "unstable";
-    };
-    umu = {
-      type = "git";
-      url = "https://github.com/Open-Wine-Components/umu-launcher";
-      #rev = "89a49751ffbeeed0beeba21ee9ba7fd7c94ce78f"; # 0.1-RC4
-      ref = "main";
-      dir = "packaging/nix";
-      submodules = true;
-      inputs.nixpkgs.follows = "unstable";
-    };
-    agenix = {
-      type = "github";
-      owner = "ryantm";
-      repo = "agenix";
-      ref = "main";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     mysecrets = {
       type = "git";
@@ -84,43 +61,52 @@
       shallow = true;
       flake = false;
     };
-  };
-
-  outputs =
-    {
-      self,
-      unstable,
-      utils,
-      ...
-    }@inputs:
-    let
-      inherit (self) outputs;
-    in
-    {
-      formatter = utils.lib.forAllSystems (sys: unstable.legacyPackages.${sys}.nixfmt-rfc-style);
-      packages = utils.lib.forAllSystems (sys: import ./pkgs unstable.legacyPackages.${sys});
-      overlays = import ./overlays { inherit inputs outputs; };
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
-      nixosConfigurations = {
-        atrebois = unstable.lib.nixosSystem {
-          modules = [ ./hosts/atrebois ];
-          specialArgs = {
-            inherit inputs outputs;
-          };
-        };
-        rocaille = unstable.lib.nixosSystem {
-          modules = [ ./hosts/rocaille ];
-          specialArgs = {
-            inherit inputs outputs;
-          };
-        };
-        cravite = unstable.lib.nixosSystem {
-          modules = [ ./hosts/cravite ];
-          specialArgs = {
-            inherit inputs outputs;
-          };
-        };
-      };
+    agenix = {
+      type = "github";
+      owner = "ryantm";
+      repo = "agenix";
+      ref = "main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
+    ags = {
+      type = "github";
+      owner = "aylur";
+      repo = "ags";
+      ref = "main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    anyrun = {
+      type = "github";
+      owner = "kirottu";
+      repo = "anyrun";
+      ref = "master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+    nixvim = {
+      type = "github";
+      owner = "nix-community";
+      repo = "nixvim";
+      ref = "main";
+      #inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+    stylix = {
+      type = "github";
+      owner = "danth";
+      repo = "stylix";
+      ref = "master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+    umu = {
+      type = "git";
+      url = "https://github.com/Open-Wine-Components/umu-launcher";
+      ref = "main";
+      dir = "packaging/nix";
+      submodules = true;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 }
