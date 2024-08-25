@@ -27,4 +27,4 @@ jobs:
         run: nix flake metadata
 
       - name: Check flake
-        run: nix flake check --all-systems
+        run: nix flake check --all-systems --verbose
