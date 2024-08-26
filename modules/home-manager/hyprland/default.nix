@@ -23,9 +23,9 @@
 
       windowrulev2 = [
         "noborder, class:^(Xdg-desktop-portal-gtk)$"
-        "noshadow, class:^(Xdg-desktop-portal-gtk)$"
         "noblur, class:^(Xdg-desktop-portal-gtk)$"
         "dimaround, class:^(Xdg-desktop-portal-gtk)$"
+        "noshadow, class:^(Xdg-desktop-portal-gtk)$"
 
         "noshadow, class:^(polkit-gnome-authentication-agent-1)$"
         "noblur, class:^(polkit-gnome-authentication-agent-1)$"
@@ -57,7 +57,7 @@
       };
 
       render = {
-        explicit_sync = 1;
+        explicit_sync = 0;
         explicit_sync_kms = 0;
         direct_scanout = true;
       };
@@ -67,11 +67,16 @@
         force_introspection = 0;
       };
 
+      cursor = {
+        default_monitor = "DP-1";
+      };
+
       general = {
         gaps_in = 5;
         gaps_out = 10;
         border_size = 1;
         layout = "master";
+        allow_tearing = true;
       };
 
       decoration = {
