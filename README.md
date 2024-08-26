@@ -19,7 +19,7 @@
 - [x] [home-manager](https://github.com/nix-community/home-manager)
 - [x] [nixvim](https://github.com/nix-community/nixvim)
 - [x] [stylix](https://github.com/danth/stylix)
-- [ ] [agenix](https://github.com/ryantm/agenix) -> [ragenix](https://github.com/yaxitech/ragenix)
+- [x] [agenix](https://github.com/ryantm/agenix) -> [ragenix](https://github.com/yaxitech/ragenix)
 - [ ] [impermanence](https://github.com/nix-community/impermanence)
 - [ ] [lanzaboote](https://github.com/nix-community/lanzaboote)
 - [ ] [disko](https://github.com/nix-community/disko)

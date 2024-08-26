@@ -61,13 +61,12 @@
       shallow = true;
       flake = false;
     };
-    agenix = {
+    ragenix = {
       type = "github";
-      owner = "ryantm";
-      repo = "agenix";
+      owner = "yaxitech";
+      repo = "ragenix";
       ref = "main";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
     ags = {
       type = "github";

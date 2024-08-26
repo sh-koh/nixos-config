@@ -1,16 +1,15 @@
 {
-  pkgs,
   inputs,
-  config,
+  inputs',
   ...
 }:
 {
   imports = [
-    inputs.agenix.nixosModules.default
+    inputs.ragenix.nixosModules.default
   ];
 
   environment.systemPackages = [
-    inputs.agenix.packages.${pkgs.system}.agenix
+    inputs'.ragenix.packages.default
   ];
 
   age.identityPaths = [
