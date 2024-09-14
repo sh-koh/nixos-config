@@ -11,12 +11,12 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hyprsplit";
-  version = "0.1";
+  version = "v${hyprland.version}";
   src = fetchFromGitHub {
     owner = "shezdy";
     repo = "hyprsplit";
-    rev = "fcf00b770e3b89fd93de2de1bb5e68721090f5fe";
-    hash = "sha256-AMK4/87EdBcl8ukTdHMll+zbU76TySqpgwgi6J/jyks=";
+    rev = "v${hyprland.version}";
+    hash = "sha256-r533kNIyfgPi/q8ddIYyDK1Pmupt/F3ncHuFo3zjDkU=";
   };
 
   nativeBuildInputs = [

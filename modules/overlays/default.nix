@@ -7,7 +7,6 @@
       {
         nerdfonts = prev.nerdfonts.override { fonts = [ "Iosevka" ]; };
         iosevka-bin = prev.iosevka-bin.override { variant = "SS15"; };
-        prismlauncher = prev.prismlauncher.override { withWaylandGLFW = true; };
         btop = prev.btop.override { cudaSupport = true; };
         lutris = prev.lutris.override { extraPkgs = _: [ inputs'.umu.packages.umu ]; };
       });

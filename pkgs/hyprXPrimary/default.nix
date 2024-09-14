@@ -17,7 +17,9 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-5im4uZbcxXK62+VswOhtFgHQ+4tZ7yDq7RnuSkV+t64=";
   };
 
-  nativeBuildInputs = [ pkg-config ];
+  nativeBuildInputs = [
+    pkg-config
+  ];
 
   buildInputs = [
     pixman

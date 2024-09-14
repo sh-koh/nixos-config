@@ -4,6 +4,7 @@
       enable = true;
       nixvimInjections = true;
       settings = {
+        highlight.enable = true;
         incremental_selection.enable = true;
       };
     };
