@@ -8,13 +8,9 @@
     inputs.ragenix.nixosModules.default
   ];
 
-  environment.systemPackages = [
-    inputs'.ragenix.packages.default
-  ];
-
   age.identityPaths = [
     "/etc/ssh/ssh_host_rsa_key"
-    "/home/shakoh/.ssh/id_secrets"
+    "/etc/ssh/ssh_host_ed25519_key"
   ];
 
   age.secrets = with inputs; {

@@ -23,6 +23,16 @@ in
     ./atrebois
     ./rocaille
     ./cravite
+    #./timber-hearth #atrebois
+    #./attlerock #rocaille
+    #./brittle-hollow #cravite
+    #./hollows-lantern #lanterne
+    #./giants-deep #leviathe
+    #./ash-twin #sablière rouge
+    #./ember-twin #sablière noire
+    #./dark-bramble #sombronce
+    ./quantum-moon #lune quantique
+    #./interloper #l'intrus
   ];
 
   _module.args = {

@@ -502,10 +502,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1718470096,
-        "narHash": "sha256-HDnR1LzFtfZ04GJmau/zjDmlwNqdthB7ucuKML1Xyg4=",
+        "lastModified": 1727028246,
+        "narHash": "sha256-kWKyeccJWC1KrCKaRwCK1ZAU1dtCB/QZrkOfWD/JuJQ=",
         "ref": "main",
-        "rev": "c5317d8e5471678e237ca637b0588fac3bdc58b3",
+        "rev": "5d515f5d6b7cdadc3aca19483d6ab5dfd4b2ff8f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/sh-koh/nix-secrets.git"
@@ -556,7 +556,7 @@
     },
     "nixpkgs-lib": {
       "locked": {
-        "lastModified": 1725233747,
+        "lastModified": 1727021412,
         "narHash": "sha256-Ss8QWLXdr2JCBPcYChJhz4xJm+h/xjl4G0c0XlP6a74=",
         "type": "tarball",
         "url": "https://github.com/NixOS/nixpkgs/archive/356624c12086a18f2ea2825fed34523d60ccc4e3.tar.gz"
@@ -644,11 +644,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1725794804,
-        "narHash": "sha256-QJvZDYfbcOM1Pt6YUPl+Xmw+JDJQtokdYj4P7sXuF7U=",
+        "lastModified": 1726755133,
+        "narHash": "sha256-03XIEjHeZEjHXctsXYUB+ZLQmM0WuhR6qWQjwekFk/M=",
         "owner": "yaxitech",
         "repo": "ragenix",
-        "rev": "7f6c227f86c5b4e6e7f6d2d62c614acd28d25627",
+        "rev": "687ee92114bce9c4724376cf6b21235abe880bfa",
         "type": "github"
       },
       "original": {

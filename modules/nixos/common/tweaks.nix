@@ -5,23 +5,15 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-    loader.efi.canTouchEfiVariables = true;
-    loader.systemd-boot = {
-      enable = true;
-      consoleMode = "max";
-    };
-    kernelParams = [
-      "mitigations=off"
-      "spectre_v2=off"
-    ];
-    kernelModules = [
-      "acpi-cpufreq"
-    ];
-    kernel.sysctl = {
-      "vm.max_map_count" = "16777216";
-    };
+    kernelParams = [ "mitigations=off" "spectre_v2=off" ];
     tmp.useTmpfs = true;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot = {
+        enable = true;
+        consoleMode = "keep";
+      };
+    };
   };
 
   zramSwap.enable = true;
@@ -29,8 +21,6 @@
   services = {
     dbus.enable = true;
     dbus.implementation = "broker";
-    fstrim.enable = true;
-    upower.enable = true;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
