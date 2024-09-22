@@ -1,7 +1,6 @@
 {
   programs.kitty = {
     enable = true;
-    shellIntegration.enableZshIntegration = true;
     settings = {
       repaint_delay = 10;
       sync_to_monitor = "yes";

@@ -31,6 +31,12 @@
         "noblur, class:^(polkit-gnome-authentication-agent-1)$"
         "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
         "stayfocused, class:^(polkit-gnome-authentication-agent-1)$"
+
+        "immediate, class:^(steam_app_.*)$"
+        "immediate, class:^(gamescope)$"
+        "immediate, class:^(Minecraft.*)$"
+        "immediate, class:^(osu\!)$"
+        "immediate, class:^(overwatch\.exe)$"
       ];
 
       exec-once = [
@@ -57,8 +63,8 @@
       };
 
       render = {
-        explicit_sync = 0;
-        explicit_sync_kms = 0;
+        explicit_sync = 1;
+        explicit_sync_kms = 1;
         direct_scanout = true;
       };
 
@@ -139,8 +145,11 @@
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
         focus_on_activate = true;
-        initial_workspace_tracking = 1;
+        initial_workspace_tracking = 2;
+        middle_click_paste = false;
+        render_unfocused_fps = 60;
         vrr = 1;
+        vfr = true;
       };
 
       plugin = {
