@@ -1,15 +1,6 @@
 {
   programs.nixvim.keymaps = [
     {
-      action = "<cmd>CHADopen<CR>";
-      key = "<C-b>";
-      mode = "n";
-      options = {
-        silent = true;
-        desc = "Toggle Tree.";
-      };
-    }
-    {
       action = "<cmd>bnext<CR>";
       key = "<C-.>";
       mode = "n";

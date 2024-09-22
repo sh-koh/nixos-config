@@ -17,9 +17,11 @@ in
     enable = true;
     viAlias = true;
     vimAlias = true;
-    clipboard.providers.wl-copy.enable = true;
-    clipboard.register = "unnamedplus";
     highlight.NormalNC.fg = "#${config.lib.stylix.colors.base04}";
+    clipboard = {
+      providers.wl-copy.enable = true;
+      register = "unnamedplus";
+    };
     opts = {
       number = true;
       relativenumber = true;
