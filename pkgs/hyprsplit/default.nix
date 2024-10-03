@@ -11,11 +11,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hyprsplit";
-  version = "v${hyprland.version}";
+  version = "v0.43.0";
   src = fetchFromGitHub {
     owner = "shezdy";
     repo = "hyprsplit";
-    rev = "v${hyprland.version}";
+    rev = "v0.43.0";
     hash = "sha256-r533kNIyfgPi/q8ddIYyDK1Pmupt/F3ncHuFo3zjDkU=";
   };
 
