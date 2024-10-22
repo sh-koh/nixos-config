@@ -9,6 +9,7 @@
     gaming = ./gaming;
     intel = ./intel;
     nix = ./nix;
+    notre-minecraft = ./notre-minecraft;
     nvidia = ./nvidia;
     printing = ./printing;
     secrets = ./secrets;

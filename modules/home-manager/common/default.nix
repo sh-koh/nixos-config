@@ -7,25 +7,32 @@
     compression = true;
     matchBlocks = {
       "atrebois" = {
-        hostname = "192.168.1.201";
         host = "atrebois";
+        hostname = "192.168.1.201";
         port = 72;
         user = "shakoh";
         identityFile = "~/.ssh/id_atrebois";
       };
       "rocaille" = {
-        hostname = "192.168.1.202";
         host = "rocaille";
+        hostname = "192.168.1.202";
         port = 72;
         user = "shakoh";
         identityFile = "~/.ssh/id_rocaille";
       };
       "cravite" = {
-        hostname = "192.168.1.253";
         host = "cravite";
+        hostname = "192.168.1.253";
         port = 72;
         user = "shakoh";
         identityFile = "~/.ssh/id_cravite";
+      };
+      "notre-minecraft" = {
+        host = "notre-minecraft";
+        hostname = "notre-minecraft.shakoh.fr";
+        port = 72;
+        user = "shakoh";
+        identityFile = "~/.ssh/id_quantum-moon";
       };
     };
   };
