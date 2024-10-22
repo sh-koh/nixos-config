@@ -21,8 +21,11 @@
       {
         devShells.default = pkgs.mkShell {
           name = "deployment-shell";
-          packages = with pkgs; [ git ];
           formatter = pkgs.nixfmt-rfc-style;
+          packages = with pkgs; [
+            just
+            git
+          ];
         };
       };
     };
@@ -51,6 +54,7 @@
       owner = "hercules-ci";
       repo = "flake-parts";
       ref = "main";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     utils = {
       type = "github";
