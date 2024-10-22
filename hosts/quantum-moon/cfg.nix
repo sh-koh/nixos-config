@@ -3,7 +3,20 @@ let
   inherit (inputs.self.lib.sshKeys.shakoh.toQuantumMoon) atrebois rocaille;
 in
 {
-  boot.kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_hardened;
+  boot = {
+    tmp.useTmpfs = true;
+    loader.efi.canTouchEfiVariables = true;
+    loader.systemd-boot = {
+      enable = true;
+    };
+    kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_hardened;
+    kernelParams = [ "mitigations=off" "spectre_v2=off" ];
+    kernelModules = [ "acpi-cpufreq" ];
+    kernel.sysctl = {
+      "vm.max_map_count" = "1048576";
+    };
+  };
+
   networking = {
     hostName = "quantum-moon";
     useDHCP = lib.mkDefault true;
