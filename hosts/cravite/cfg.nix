@@ -1,16 +1,12 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  outputs,
-  ...
-}:
+{ inputs, ... }:
 let
   inherit (inputs.self.lib.sshKeys.shakoh.toCravite) atrebois rocaille;
 in
 {
-  boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
+  boot = {
+    tmp.useTmpfs = true;
+    kernelParams = [ "mitigations=off" "spectre_v2=off" ];
+  };
 
   users.users.shakoh.openssh.authorizedKeys.keys = [ atrebois rocaille ];
 }

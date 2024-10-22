@@ -1,19 +1,15 @@
 {
   inputs,
-  inputs',
   ...
 }:
 {
   imports = [
-    inputs.ragenix.nixosModules.default
-  ];
-
-  environment.systemPackages = [
-    inputs'.ragenix.packages.default
+    inputs.agenix.nixosModules.default
   ];
 
   age.identityPaths = [
     "/etc/ssh/ssh_host_rsa_key"
+    "/etc/ssh/ssh_host_ed25519_key"
     "/home/shakoh/.ssh/id_secrets"
   ];
 
@@ -40,7 +36,7 @@
     };
     vpn-eni-up = {
       file = "${mysecrets}/pro/vpn-eni-up.age";
-      mode = "0500";
+      mode = "0400";
       owner = "root";
     };
     eni-logins = {

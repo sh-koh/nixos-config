@@ -9,6 +9,7 @@
       cemu
       dolphin-emu
       gpu-screen-recorder
+      heroic
       lutris
       prismlauncher
       ryujinx
