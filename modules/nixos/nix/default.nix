@@ -23,7 +23,14 @@
         auto-allocate-uids = true;
         auto-optimise-store = true;
         builders-use-substitutes = true;
-        allowed-users = [ "shakoh" ];
+        allowed-users = [
+          "shakoh"
+          "@wheel"
+        ];
+        trusted-users = [
+          "shakoh"
+          "@wheel"
+        ];
         extra-substituters = [
           "https://nix-community.cachix.org"
         ];
