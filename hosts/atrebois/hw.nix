@@ -5,6 +5,7 @@
 }:
 {
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     supportedFilesystems = [ "ntfs" ];
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   };
@@ -34,7 +35,12 @@
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  nixpkgs.hostPlatform = "x86_64-linux";
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    hostPlatform = "x86_64-linux";
+    config = {
+      allowUnfree = true;
+      cudaSupport = true;
+    };
+  };
   system.stateVersion = "23.05";
 }
