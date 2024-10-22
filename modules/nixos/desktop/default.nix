@@ -11,6 +11,5 @@
   fonts.packages = with pkgs; [
     lexend
     nerdfonts
-    iosevka-bin
   ];
 }

@@ -62,8 +62,6 @@
         grep = "${getExe ripgrep} -SpnH";
         untar = "tar xpvf";
         zj = "${getExe zellij} $@ options --no-pane-frames --simplified-ui=true";
-
-        rebuild = "sudo nixos-rebuild";
       };
 
     initExtraBeforeCompInit = ''

@@ -33,7 +33,7 @@ in
       applications = 1.0;
       desktop = 1.0;
       popups = 1.0;
-      terminal = 0.99;
+      terminal = 0.98;
     };
     cursor = {
       name = "Simp1e";
@@ -41,21 +41,24 @@ in
       size = 24;
     };
     fonts = {
-      serif = config.stylix.fonts.monospace;
-      sansSerif = config.stylix.fonts.monospace;
+      sansSerif = config.stylix.fonts.serif;
+      serif = {
+        package = pkgs.fira;
+        name = "FiraMono Nerd Font";
+      };
       monospace = {
-        package = pkgs.iosevka-bin;
-        name = "Iosevka NF";
+        package = pkgs.fira-code-nerdfont;
+        name = "FiraCode Nerd Font Mono";
       };
       emoji = {
         name = "Noto Color Emoji";
         package = pkgs.noto-fonts-emoji;
       };
       sizes = {
-        applications = 11;
-        desktop = 11;
-        popups = 11;
-        terminal = 11;
+        applications = 10;
+        desktop = 10;
+        popups = 10;
+        terminal = 10;
       };
     };
     polarity = "dark";

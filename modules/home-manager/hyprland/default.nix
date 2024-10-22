@@ -78,15 +78,17 @@
       };
 
       general = {
-        gaps_in = 5;
-        gaps_out = 10;
+        gaps_in = 3;
+        gaps_out = 6;
         border_size = 1;
+        "col.inactive_border" = lib.mkForce "rgb(${config.lib.stylix.colors.base02})";
+        "col.active_border" = lib.mkForce "rgb(${config.lib.stylix.colors.base03})";
         layout = "master";
         allow_tearing = true;
       };
 
       decoration = {
-        rounding = 3;
+        rounding = 0;
         drop_shadow = true;
         shadow_range = 4;
         shadow_render_power = 3;
@@ -113,8 +115,8 @@
 
       group = {
         groupbar = {
-          font_family = "Lexend";
-          font_size = 10;
+          font_family = config.stylix.fonts.serif.name;
+          font_size = config.stylix.fonts.sizes.desktop;
         };
       };
 
@@ -126,6 +128,7 @@
       master = {
         new_status = "master";
         new_on_top = true;
+        no_gaps_when_only = 1;
         mfact = 0.6;
         allow_small_split = true;
       };
@@ -145,7 +148,7 @@
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
         focus_on_activate = true;
-        initial_workspace_tracking = 2;
+        initial_workspace_tracking = 1;
         middle_click_paste = false;
         render_unfocused_fps = 60;
         vrr = 1;
@@ -183,7 +186,7 @@
                 jq
               ];
               text = ''
-                case $(hyprctl -j getoption general:layout | jq -r '.str') in 
+                case $(hyprctl -j getoption general:layout | jq -r '.str') in
                   "master") hyprctl keyword general:layout dwindle ;;
                   "dwindle") hyprctl keyword general:layout master ;;
                 esac
