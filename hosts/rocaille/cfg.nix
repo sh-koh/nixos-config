@@ -10,7 +10,7 @@ in
       enable = true;
       consoleMode = "max";
     };
-    kernelPackages = pkgs.linuxKernel.packages.linux_latest;
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     kernelParams = [ "mitigations=off" "spectre_v2=off" ];
     #kernelModules = [ "acpi-cpufreq" ];
     kernel.sysctl = {
