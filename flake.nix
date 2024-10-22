@@ -20,12 +20,17 @@
       perSystem = { pkgs, ... }:
       {
         devShells.default = pkgs.mkShell {
-          name = "nixos-deployment-shell";
+          name = "deployment-shell";
           packages = with pkgs; [ git ];
           formatter = pkgs.nixfmt-rfc-style;
         };
       };
     };
+
+  nixConfig = {
+    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+  };
 
   inputs = {
     nixpkgs = {
@@ -61,6 +66,7 @@
       shallow = true;
       flake = false;
     };
+    # Dependencies (in alphabetical order)
     agenix = {
       type = "github";
       owner = "ryantm";
@@ -90,6 +96,13 @@
       ref = "main";
       #inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+    };
+    raspberry-pi = {
+      type = "github";
+      owner = "nix-community";
+      repo = "raspberry-pi-nix";
+      ref = "master";
+      #inputs.nixpkgs.follows = "nixpkgs"; # Do not override nixpkgs to use the cache.
     };
     stylix = {
       type = "github";

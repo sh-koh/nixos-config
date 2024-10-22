@@ -9,6 +9,7 @@ in
       ./hw.nix
 
       nixosModules.bluetooth
+      nixosModules.common
       nixosModules.docker
       nixosModules.nix
     ]);
