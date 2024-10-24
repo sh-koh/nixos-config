@@ -6,18 +6,18 @@
       bashls.enable = true; # Bash
       nixd.enable = true; # Nix
 
-      hls.enable = true; # Haskell
+      hls = { enable = true; installGhc = true; };# Haskell
       gopls.enable = true; # Go
       ruff.enable = true; # Python
-      ruff-lsp.enable = true; # Python
-      tsserver.enable = true; # Typescript/Javascript
+      ruff_lsp.enable = true; # Python
+      ts_ls.enable = true; # Typescript/Javascript
       zls.enable = true; # Zig
 
       dockerls.enable = true; # Docker
-      docker-compose-language-service.enable = true; # Docker-compose
+      docker_compose_language_service.enable = true; # Docker-compose
       ansiblels.enable = true; # Ansible
       terraformls.enable = true; # Terraform
-      nginx-language-server.enable = true; # Nginx
+      nginx_language_server.enable = true; # Nginx
 
       yamlls.enable = true; # Yaml
       jsonls.enable = true; # JSON
