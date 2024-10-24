@@ -8,15 +8,17 @@
   pixman,
   libdrm,
 }:
-
+let
+  version = "v0.44.1";
+in
 stdenv.mkDerivation (finalAttrs: {
+  inherit version;
   pname = "hyprsplit";
-  version = "v0.43.0";
   src = fetchFromGitHub {
     owner = "shezdy";
     repo = "hyprsplit";
-    rev = "v0.43.0";
-    hash = "sha256-r533kNIyfgPi/q8ddIYyDK1Pmupt/F3ncHuFo3zjDkU=";
+    rev = version;
+    hash = "sha256-l+DQHWPMyUCXbKhbIFVooTKKnCRQ97Ic5smw4VzUcTc=";
   };
 
   nativeBuildInputs = [
