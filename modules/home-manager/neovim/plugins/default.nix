@@ -8,6 +8,7 @@
     ./dashboard
     ./direnv
     ./gitsigns
+    ./image
     ./indent-blankline
     ./lint
     ./lualine
