@@ -46,10 +46,6 @@
       open = true;
       package = config.boot.kernelPackages.nvidiaPackages.beta;
     };
-  };
-
-  hardware = {
-    
     graphics = {
       enable = true;
       enable32Bit = true;
@@ -63,5 +59,10 @@
         egl-wayland
       ];
     };
+  };
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    cudaSupport = true;
   };
 }
