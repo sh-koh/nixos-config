@@ -32,7 +32,7 @@ in
     opacity = {
       applications = 1.0;
       desktop = 1.0;
-      popups = 1.0;
+      popups = 0.98;
       terminal = 0.98;
     };
     cursor = {
