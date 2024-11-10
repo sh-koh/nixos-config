@@ -1,0 +1,29 @@
+{
+  imports = [
+    ./autopairs
+    ./bufferline
+    ./cmp
+    ./colorizer
+    ./commentary
+    ./dashboard
+    ./direnv
+    ./gitsigns
+    ./indent-blankline
+    ./lint
+    ./lualine
+    ./luasnip
+    ./lsp
+    ./markdown-preview
+    ./markview
+    ./neocord
+    ./neogit
+    ./neorg
+    ./oil
+    ./surround
+    ./telescope
+    ./treesitter
+    ./trim
+    ./web-devicons
+    ./which-key
+  ];
+}

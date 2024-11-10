@@ -15,5 +15,24 @@
       highlightCurrentScope.enable = true;
       navigation.enable = true;
     };
+    treesitter-textobjects = {
+      enable = true;
+      move = {
+        enable = true;
+        disable = [ ];
+        setJumps = true;
+      };
+      select = {
+        enable = true;
+        disable = [ ];
+        includeSurroundingWhitespace = false;
+        lookahead = true;
+        selectionModes = { };
+      };
+      swap = {
+        enable = true;
+        disable = [ ];
+      };
+    };
   };
 }
