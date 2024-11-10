@@ -82,7 +82,7 @@
       type = "github";
       owner = "aylur";
       repo = "ags";
-      ref = "main";
+      ref = "v2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     anyrun = {
