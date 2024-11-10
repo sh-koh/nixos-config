@@ -22,6 +22,7 @@
   };
 
   home.packages = with pkgs; [
+    # Desktop apps
     libreoffice
     gimp
     vesktop
@@ -31,5 +32,16 @@
     remmina
     teams-for-linux
     thunderbird
+
+    # DevOps tools
+    ansible
+    kubectl
+    opentofu
+    (vagrant.override { withLibvirt = false; })
+    #tenv
+    terraform
   ];
+
+
+  nixpkgs.config.cudaSupport = true;
 }
