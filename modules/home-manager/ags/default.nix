@@ -11,9 +11,11 @@
 
   programs.ags = {
     enable = true;
+    package = inputs'.ags.packages.agsFull;
     configDir = ./cfg;
     #configDir = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/git/nixos-config/modules/home-manager/ags/cfg";
     extraPackages = with pkgs; [
+      inputs'.ags.packages.apps
       inputs'.ags.packages.battery
       inputs'.ags.packages.bluetooth
       inputs'.ags.packages.io
@@ -22,6 +24,7 @@
       inputs'.ags.packages.notifd
       inputs'.ags.packages.powerprofiles
       inputs'.ags.packages.wireplumber
+      hyprland
       bash
       dart-sass
       coreutils

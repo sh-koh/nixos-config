@@ -15,56 +15,92 @@ $blue: #6A9FB5;
 $magenta: #9080b7;
 
 @mixin btn($clr) {
+  transition: 150ms;
   padding: 2px 6px;
   margin: 2px;
-  border-radius: 3px;
   color: $clr;
   background: rgba($clr, 0.1);
-  border-right: 1px solid $clr;
 
   &:hover {
-    background: rgba($clr, 0.2);
+    background: rgba($clr, 0.4);
     color: $clr;
   }
 
   &:active {
-    border-radius: 6px;
-    background: rgba($dark, 0.1);
+    background: rgba($dark, 0.3);
     color: $dark;
-    border-right: 1px solid $dark;
+    border-left: 2px solid $dark;
   }
 }
 
 * {
-  font-size: 98%;
+  border-radius: 0px;
 }
 
 window.Bar {
   color: $white;
   background: transparent;
-}
-
-window.Bar>centerbox {
-  background: rgba($black, 0.97);
-}
-
-window.Bar>centerbox>button {
-  @include btn($red);
-  padding: 6px 6px;
-  margin: 4px;
-  border-radius: 3px;
-}
-
-.workspaces-box>button {
   padding: 2px 6px;
   margin: 2px;
-  border-radius: 3px;
+
+  >centerbox {
+    background: rgba($black, 0.97);
+  }
+
+  .start {
+    .panel {
+      @include btn($green);
+    }
+  }
+
+  .middle {
+    .focused {
+      @include btn($blue);
+      border-left: 2px solid $blue;
+    }
+
+    .occupied {
+      @include btn($blue);
+      border-left: 2px dotted rgba($blue, 0.5);
+    }
+
+    .empty {
+      @include btn($darker);
+    }
+  }
+
+  .end {
+    .time {
+      @include btn($yellow);
+      padding: 6px 6px;
+    }
+  }
 }
 
-.workspace {
-  @include btn($dark);
-}
 
-.focused {
-  @include btn($green);
+window.Panel {
+  color: $white;
+  background: transparent;
+  padding: 2px 6px;
+  margin: 2px;
+
+  >box {
+    min-width: 350px;
+    background: rgba($black, 0.7);
+  }
+
+  .start {}
+
+  .middle {}
+
+  .end {
+    min-width: 200px;
+    min-height: 200px;
+
+    >drawingarea {
+
+      min-width: 200px;
+      min-height: 200px;
+    }
+  }
 }
