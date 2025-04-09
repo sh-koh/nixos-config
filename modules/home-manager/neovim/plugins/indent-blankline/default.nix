@@ -10,10 +10,14 @@
         exclude = {
           buftypes = [ "terminal" "nofile" ];
           filetypes = [
-            "help"
-            "dashboard"
-            "oil"
             "calendar"
+            "checkhealth"
+            "dashboard"
+            "floaterm"
+            "help"
+            "lspinfo"
+            "oil"
+            "TelescopePrompt"
           ];
         };
       };

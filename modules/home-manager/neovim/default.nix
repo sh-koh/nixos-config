@@ -7,6 +7,7 @@
   ];
 
   programs.nixvim = {
+    nixpkgs.useGlobalPackages = true;
     enable = true;
     viAlias = true;
     vimAlias = true;
@@ -49,9 +50,9 @@
       cursorline = true;
       showmode = false;
     };
-    highlight = with config.lib.stylix.colors.withHashtag; {
+    highlightOverride = with config.lib.stylix.colors.withHashtag; {
       WinSeparator.fg = base02;
-      DashboardHeader.fg = base08;
+      MiniIndentscopeSymbol.fg = base02;
     };
   };
 }

@@ -1,111 +1,71 @@
 { lib, ... }:
-let
-  lang = icon: color: {
-    symbol = icon;
-    format = "[${pad.left}$symbol${pad.right}](${color})";
-  };
-  pad = {
-    left = "\\[";
-    right = "\\]";
-  };
-in
 {
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
     settings = {
       add_newline = false;
       format = lib.strings.concatStrings [
-        "$direnv"
-        "$directory"
         "$hostname"
-        "$localip"
-
-        "$python"
-        "$nodejs"
-        "$zig"
-        "$golang"
-        "$terraform"
-        "$container"
+        "$directory"
 
         "$fill"
 
-        "$git_status"
         "$git_branch"
+        "$git_status"
 
         "$line_break"
 
-        "$username"
+        "$direnv"
         "$status"
       ];
-      custom.space = {
-        when = ''! test $env'';
-        format = " ";
+      line_break = {
+        disabled = false;
       };
-      line_break.disabled = false;
       fill = {
         symbol = " ";
       };
       status = {
-        symbol = "✗";
-        not_found_symbol = "󰍉";
-        not_executable_symbol = "";
-        sigint_symbol = "󰂭";
-        signal_symbol = "󱑽";
+        disabled = false;
+        format = "[$symbol]($style)";
+        symbol = "󰅖";
+        not_found_symbol = "󰦀";
+        not_executable_symbol = "󰂭";
+        sigint_symbol = "󱄊";
+        signal_symbol = "󰓦";
         success_symbol = ">";
-        format = "[$symbol](fg:yellow) ";
+        style = "fg:yellow";
         map_symbol = true;
-        disabled = false;
-      };
-      cmd_duration = {
-        min_time = 1000;
-        format = "[${pad.left}$duration${pad.right}](fg:green)";
-      };
-      time = {
-        disabled = false;
-        time_format = "%R";
-        format = "[${pad.left}$time${pad.right}](fg:purple)";
       };
       hostname = {
-        ssh_only = true;
-        format = "[${pad.left}$hostname${pad.right}](fg:blue)";
-      };
-      localip = {
         disabled = false;
-        format = "[${pad.left}$localipv4${pad.right}](fg:yellow)";
-      };
-      username = {
-        show_always = true;
-        format = "[${pad.left}$user${pad.right}](fg:red)";
+        format = "[$hostname]($style)> ";
+        style = "fg:red";
+        ssh_only = true;
       };
       direnv = {
         disabled = false;
-        format = "[${pad.left}direnv${pad.right}](fg:cyan)";
-      };
-      container = {
-        symbol = "box";
-        format = "[${pad.left}$symbol${pad.right}](blue)";
+        format = "[\\(❄️\\)]($style)";
+        style = "fg:cyan";
       };
       directory = {
-        format = "[${pad.left}$path${pad.right}](fg:blue)";
+        disabled = false;
+        format = "[$path]($style) [$read_only]($read_only_style)";
+        read_only = "";
+        style = "fg:blue";
+        read_only_style = "fg:red";
+        truncation_symbol = "󰇘/";
         truncation_length = 6;
-        truncation_symbol = "~/󰇘/";
       };
       git_status = {
-        format = "([${pad.left}$all_status$ahead_behind${pad.right}](fg:yellow))";
+        disabled = false;
+        format = "([\\($all_status$ahead_behind\\)]($style))";
+        style = "fg:yellow";
       };
       git_branch = {
-        style = "";
-        format = "[${pad.left}$branch${pad.right}](fg:green)(:$remote_branch)";
+        disabled = false;
+        format = "[$branch]($style)(:$remote_branch)";
+        style = "fg:green";
       };
-      python = lang "py" "green";
-      nodejs = lang "js" "yellow";
-      golang = lang "go" "cyan";
-      zig = lang "zig" "yellow";
-      terraform = lang "tf" "purple";
-      rust = lang "rust" "red";
-      kubernetes = lang "k8s" "blue";
-      c = lang "c" "blue";
     };
   };
 }

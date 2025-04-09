@@ -1,10 +1,15 @@
+{ config, ... }:
 {
   programs.nixvim.plugins = {
     gitsigns = {
       enable = true;
-      settings.signs = {
-        add.text = "+";
-        change.text = "~";
+      settings = {
+        current_line_blame = true;
+        trouble = config.programs.nixvim.plugins.trouble.enable;
+        signs = {
+          add.text = "+";
+          change.text = "~";
+        };
       };
     };
   };

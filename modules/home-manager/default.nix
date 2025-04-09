@@ -9,6 +9,5 @@
     neovim = ./neovim;
     shell = ./shell;
     theme = ./theme;
-    zathura = ./zathura;
   };
 }

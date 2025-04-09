@@ -1,21 +1,36 @@
-{ config, inputs, withSystem, ... }:
+{
+  config,
+  inputs,
+  withSystem,
+  ...
+}:
 let
-  mkNixos = system: extraModules:
-    let
-      specialArgs = withSystem system ({ inputs', self', ... }:
-        { inherit self' inputs' inputs; });
-    in
+  mkNixos =
+    system: extraModules:
     inputs.nixpkgs.lib.nixosSystem {
-      inherit specialArgs;
-      modules = [
-        config.flake.nixosModules.common
+      specialArgs = withSystem system (
+        { inputs', self', ... }:
         {
-          nixpkgs.overlays = with config.flake.overlays; [
-            additions
-            modifications
-          ];
+          inherit self' inputs' inputs;
         }
-      ] ++ extraModules;
+      );
+      modules =
+        with config.flake.nixosModules;
+        [
+          {
+            nixpkgs = {
+              hostPlatform = system;
+              config.allowUnfree = true;
+              overlays = with config.flake.overlays; [
+                additions
+                modifications
+              ];
+            };
+          }
+          common
+          theme
+        ]
+        ++ extraModules;
     };
 in
 {
@@ -23,16 +38,12 @@ in
     ./atrebois
     ./rocaille
     ./cravite
-    #./timber-hearth #atrebois
-    #./attlerock #rocaille
-    #./brittle-hollow #cravite
-    #./hollows-lantern #lanterne
-    #./giants-deep #leviathe
-    #./ash-twin #sablière rouge
-    #./ember-twin #sablière noire
-    #./dark-bramble #sombronce
-    ./quantum-moon #lune quantique
-    #./interloper #l'intrus
+    #./lanterne
+    #./leviathe
+    #./sabliere-rouge
+    #./sabliere-noire
+    #./sombronce
+    ./lune-quantique
   ];
 
   _module.args = {

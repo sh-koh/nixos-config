@@ -1,30 +1,35 @@
 {
   imports = [
-    ./autopairs
-    ./bufferline
-    ./cmp
-    ./colorizer
-    ./commentary
-    ./dashboard
+    #./autopairs
+    #./bufferline
+    #./cmp
+    #./colorizer
+    #./commentary
+    #./dashboard
     ./direnv
-    ./gitsigns
-    ./image
-    ./indent-blankline
+    #./floaterm
+    #./gitsigns
+    #./image
+    #./indent-blankline
     ./lint
-    ./lualine
-    ./luasnip
+    #./lualine
+    #./luasnip
     ./lsp
     ./markdown-preview
     ./markview
+    ./mini
     ./neocord
-    ./neogit
-    ./neorg
+    #./neogit
+    #./neorg
+    ./orgmode
     ./oil
-    ./surround
+    #./surround
     ./telescope
+    ./toggleterm
     ./treesitter
-    ./trim
-    ./web-devicons
-    ./which-key
+    #./trim
+    ./trouble
+    #./web-devicons
+    #./which-key
   ];
 }

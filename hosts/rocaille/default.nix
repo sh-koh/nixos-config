@@ -1,19 +1,35 @@
-{ config, mkNixos, withSystem, ... }:
+{
+  config,
+  mkNixos,
+  withSystem,
+  ...
+}:
 let
-  inherit (config.flake) nixosModules;
+  system = "x86_64-linux";
 in
 {
-  flake.nixosConfigurations.rocaille = withSystem "x86_64-linux" ({ ... }:
-    mkNixos "x86_64-linux" [
-      ./cfg.nix
-      ./hw.nix
+  flake.nixosConfigurations.rocaille = withSystem system (
+    _:
+    mkNixos system (
+      with config.flake.nixosModules;
+      [
+        ./cfg.nix
+        ./hw.nix
 
-      nixosModules.bluetooth
-      nixosModules.desktop
-      nixosModules.docker
-      nixosModules.eni-vpn
-      nixosModules.intel
-      nixosModules.nix
-      nixosModules.printing
-    ]);
+        bluetooth
+        desktop
+        docker
+        eni-vpn
+        intel
+        nix
+        printing
+        {
+          nix.settings = {
+            cores = 2;
+            max-jobs = 2;
+          };
+        }
+      ]
+    )
+  );
 }

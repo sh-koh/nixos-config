@@ -1,4 +1,3 @@
-{ ... }:
 {
   flake.nixosModules = {
     bluetooth = ./bluetooth;
@@ -13,6 +12,7 @@
     nvidia = ./nvidia;
     printing = ./printing;
     secrets = ./secrets;
+    theme = ./theme;
     vfio = ./vfio;
   };
 }

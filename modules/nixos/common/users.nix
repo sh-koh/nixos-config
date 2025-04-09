@@ -1,21 +1,19 @@
-{ pkgs, config, inputs, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  lib,
+  ...
+}:
 {
   imports = [
     inputs.self.nixosModules.secrets
   ];
 
-  security.sudo.execWheelOnly = true;
-  programs = {
-    command-not-found.enable = false;
-    zsh.enable = true;
-  };
-
-  users = {
-    defaultUserShell = pkgs.zsh;
-    mutableUsers = false;
-  };
+  environment.shells = lib.mkIf (config.users.users.shakoh.shell == pkgs.nushell) [ pkgs.nushell ];
 
   environment.systemPackages = with pkgs; [
+    btop
     coreutils
     curl
     jq
@@ -24,36 +22,42 @@
     lshw
     pciutils
     psmisc
+    tldr
     usbutils
     wget
+    wikiman
   ];
 
-  users.users.root = {
-    uid = 0;
-    home = "/root";
-    hashedPassword = "!"; # Disable root password authentication
+  users = {
+    mutableUsers = false;
+    users = {
+      root = {
+        uid = 0;
+        home = "/root";
+        hashedPassword = "!";
+      };
+      shakoh = {
+        uid = 1000;
+        isNormalUser = true;
+        shell = pkgs.nushell;
+        hashedPasswordFile = config.age.secrets.shakoh-pwd.path;
+        extraGroups = [
+          "wheel"
+          "video"
+          "audio"
+          "input"
+          "kvm"
+          "libvirtd"
+          "docker"
+          "adbusers"
+          "networkmanager"
+          "wireshark"
+        ];
+      };
+    };
   };
 
-  users.users.shakoh = {
-    uid = 1000;
-    isNormalUser = true;
-    useDefaultShell = true;
-    hashedPasswordFile = config.age.secrets.shakoh-pwd.path;
-    extraGroups = [
-      "wheel"
-      "video"
-      "audio"
-      "input"
-      "kvm"
-      "libvirtd"
-      "qemu-libvirtd"
-      "docker"
-      "adbusers"
-      "networkmanager"
-      "wireshark"
-    ];
-  };
-
+  security.sudo.execWheelOnly = true;
 
   time.timeZone = "Europe/Paris";
   console.keyMap = "us-acentos";

@@ -1,27 +1,38 @@
 {
   config,
+  inputs,
   mkNixos,
   withSystem,
   ...
 }:
 let
-  inherit (config.flake) nixosModules;
+  system = "x86_64-linux";
 in
 {
-  flake.nixosConfigurations.atrebois = withSystem "x86_64-linux" ({ ... }:
-    mkNixos "x86_64-linux" [
-      ./cfg.nix
-      ./hw.nix
+  flake.nixosConfigurations.atrebois = withSystem system (
+    _:
+    mkNixos system (
+      with config.flake.nixosModules;
+      [
+        ./cfg.nix
+        ./hw.nix
 
-      nixosModules.bluetooth
-      nixosModules.desktop
-      nixosModules.docker
-      nixosModules.eni-vpn
-      nixosModules.gaming
-      nixosModules.nix
-      nixosModules.nvidia
-      nixosModules.printing
-      nixosModules.vfio
-    ]
+        bluetooth
+        desktop
+        docker
+        eni-vpn
+        gaming
+        nix
+        nvidia
+        printing
+        vfio
+        {
+          nix.settings = {
+            cores = 4;
+            max-jobs = 4;
+          };
+        }
+      ]
+    )
   );
 }

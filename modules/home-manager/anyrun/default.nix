@@ -13,18 +13,10 @@ in
   programs.anyrun = {
     enable = true;
     config = {
-      width = {
-        fraction = 0.3;
-      };
-      height = {
-        fraction = 0.5;
-      };
-      x = {
-        fraction = 0.5;
-      };
-      y = {
-        fraction = 0.5;
-      };
+      width.fraction = 0.3;
+      height.fraction = 0.5;
+      x.fraction = 0.5;
+      y.fraction = 0.5;
       hideIcons = false;
       ignoreExclusiveZones = false;
       layer = "overlay";
@@ -50,18 +42,13 @@ in
         transition: 125ms;
       }
 
-      #window {
-        color: #${base04};
-        background-color: alpha(#000, 0.3);
-      }
-
       #main {
         background-color: #${base00};
         padding: 10px;
       }
 
       list#main {
-        padding: 0px; 
+        padding: 0px;
         margin: 0px;
       }
 

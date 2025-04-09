@@ -1,25 +1,14 @@
-$blacker: #0F1419;
-$black: #131721;
-$darker: #272D38;
-$dark: #3E4B59;
-$white: #BFBDB6;
-$whiter: #E6E1CF;
-$light: #E6E1CF;
-$lighter: #F3F4F5;
-$red: #AC4142;
-$yellow: #F4BF75;
-$orange: #D28445;
-$green: #90A959;
-$cyan: #75B5AA;
-$blue: #6A9FB5;
-$magenta: #9080b7;
+@use '/home/shakoh/.cache/.ags_colors' as *;
+
 
 @mixin btn($clr) {
   transition: 150ms;
+  min-width: 18px;
   padding: 2px 6px;
   margin: 2px;
   color: $clr;
   background: rgba($clr, 0.1);
+  border-radius: 2px;
 
   &:hover {
     background: rgba($clr, 0.4);
@@ -27,66 +16,85 @@ $magenta: #9080b7;
   }
 
   &:active {
-    background: rgba($dark, 0.3);
-    color: $dark;
-    border-left: 2px solid $dark;
+    background: rgba($base03, 0.3);
+    color: $base03;
+    border-bottom: 1px solid $base03;
   }
 }
 
 * {
   border-radius: 0px;
+  font-family: "FiraCode Nerd Font Mono";
 }
 
 window.Bar {
-  color: $white;
+  color: $base04;
   background: transparent;
   padding: 2px 6px;
   margin: 2px;
 
   >centerbox {
-    background: rgba($black, 0.97);
+    background: $base00;
   }
 
   .start {
-    .panel {
-      @include btn($green);
+    .music {
+      @include btn($base08)
     }
   }
 
   .middle {
     .focused {
-      @include btn($blue);
-      border-left: 2px solid $blue;
+      @include btn($base0D);
+      border-bottom: 2px solid rgba($base0D, 0.6);
     }
 
     .occupied {
-      @include btn($blue);
-      border-left: 2px dotted rgba($blue, 0.5);
+      @include btn($base0D);
+      border-bottom: 2px dotted rgba($base0D, 0.4);
     }
 
     .empty {
-      @include btn($darker);
+      @include btn($base03);
     }
   }
 
   .end {
+    .audio {
+      @include btn($base09);
+    }
+
+    .bluetooth {
+      @include btn($base0E);
+    }
+
+    .networking {
+      @include btn($base0D);
+    }
+
+    .battery {
+      @include btn($base0C);
+    }
+
     .time {
-      @include btn($yellow);
-      padding: 6px 6px;
+      @include btn($base0B);
+    }
+
+    .panel {
+      @include btn($base0A);
     }
   }
 }
 
-
 window.Panel {
-  color: $white;
+  color: $base04;
   background: transparent;
   padding: 2px 6px;
   margin: 2px;
 
   >box {
     min-width: 350px;
-    background: rgba($black, 0.7);
+    background: rgba($base01, 0.7);
   }
 
   .start {}
@@ -101,6 +109,117 @@ window.Panel {
 
       min-width: 200px;
       min-height: 200px;
+    }
+  }
+}
+
+eventbox.Notification {
+
+  font-size: 90%;
+
+  &:first-child>box {
+    margin-top: 1rem;
+  }
+
+  &:last-child>box {
+    margin-bottom: 1rem;
+  }
+
+  // eventboxes can not take margins so we style its inner box instead
+  >box {
+    min-width: 350px;
+    border-radius: 2px;
+    background-color: $base00;
+    margin: .5rem 1rem .5rem 1rem;
+    box-shadow: 2px 3px 8px 0 rgba($base00, 0.5);
+    border: 1px solid $base03;
+  }
+
+  &.critical>box {
+    border: 1pt solid rgba($base08, .4);
+
+    .header {
+      .app-name {
+        color: rgba($base08, .8);
+      }
+
+      .app-icon {
+        color: rgba($base08, .6);
+      }
+    }
+  }
+
+  .header {
+    padding: .5rem;
+    color: rgba($base0D, 0.5);
+
+    .app-icon {
+      margin: 0 .4rem;
+    }
+
+    .app-name {
+      margin-right: .3rem;
+      font-weight: bold;
+
+      &:first-child {
+        margin-left: .4rem;
+      }
+    }
+
+    .time {
+      margin: 0 .4rem;
+    }
+
+    button {
+      padding: .2rem;
+      min-width: 0;
+      min-height: 0;
+    }
+  }
+
+  separator {
+    margin: 0 .4rem;
+    background-color: rgba($base0D, .1);
+  }
+
+  .content {
+    margin: 1rem;
+    margin-top: .5rem;
+
+    .summary {
+      font-size: 1.2em;
+      color: $base0D;
+    }
+
+    .body {
+      color: rgba($base0D, 0.8);
+    }
+
+    .image {
+      border: 1px solid rgba($base0D, .02);
+      margin-right: .5rem;
+      border-radius: 9px;
+      min-width: 100px;
+      min-height: 100px;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+  .actions {
+    margin: 1rem;
+    margin-top: 0;
+
+    button {
+      margin: 0 .3rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

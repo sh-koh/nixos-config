@@ -1,15 +1,18 @@
+{ config, ... }:
 {
   programs.nixvim.plugins = {
     trim = {
       enable = true;
       settings = {
-        highlight = true;
+        highlight = false;
+        highlight_bg = config.lib.stylix.colors.withHashtag.base08;
         ft_blocklist = [
+          "calendar"
           "checkhealth"
           "dashboard"
           "floaterm"
+          "help"
           "lspinfo"
-          "calendar"
           "oil"
           "TelescopePrompt"
         ];

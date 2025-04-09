@@ -7,13 +7,14 @@
   zramSwap.enable = true;
 
   services = {
-    fstrim.enable = true;
-    upower.enable = true;
-    fwupd.enable = true;
     dbus = {
       enable = true;
       implementation = "broker";
     };
+    fstrim.enable = true;
+    fwupd.enable = true;
+    gvfs.enable = true;
+    upower.enable = true;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";

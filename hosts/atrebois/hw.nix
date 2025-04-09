@@ -7,7 +7,13 @@
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     supportedFilesystems = [ "ntfs" ];
-    initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "sd_mod"
+    ];
   };
 
   fileSystems = {
@@ -26,21 +32,22 @@
     "/media/SSD" = {
       device = "/dev/disk/by-label/SSD";
       fsType = "btrfs";
+      options = [
+        "nofail"
+        "compress=zstd"
+      ];
     };
     "/media/SSHD" = {
       device = "/dev/disk/by-label/SSHD";
       fsType = "btrfs";
+      options = [
+        "nofail"
+        "compress=zstd"
+      ];
     };
   };
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableAllFirmware;
 
-  nixpkgs = {
-    hostPlatform = "x86_64-linux";
-    config = {
-      allowUnfree = true;
-      cudaSupport = true;
-    };
-  };
   system.stateVersion = "23.05";
 }

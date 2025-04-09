@@ -12,7 +12,7 @@
     treesitter-refactor = {
       enable = true;
       smartRename.enable = true;
-      highlightCurrentScope.enable = true;
+      highlightCurrentScope.enable = false;
       navigation.enable = true;
     };
     treesitter-textobjects = {

@@ -1,6 +1,9 @@
 { inputs, ... }:
 {
-  imports = [ inputs.raspberry-pi.nixosModules.raspberry-pi ];
+  imports = with inputs.raspberry-pi.nixosModules; [
+    raspberry-pi
+    sd-image
+  ];
 
   raspberry-pi-nix = {
     board = "bcm2712";
@@ -28,6 +31,16 @@
             enable = true;
             value = true;
           };
+
+          display_auto_detect = {
+            enable = true;
+            value = true;
+          };
+
+          disable_overscan = {
+            enable = true;
+            value = true;
+          };
         };
         dt-overlays = {
           # Make GPU works.
@@ -36,11 +49,27 @@
             params = { };
           };
         };
+        base-dt-params = {
+          krnbt = {
+            enable = true;
+            value = "on";
+          };
+          i2c_arm = {
+            enable = true;
+            value = "on";
+          };
+          i2s = {
+            enable = true;
+            value = "on";
+          };
+          spi = {
+            enable = true;
+            value = "on";
+          };
+        };
       };
     };
   };
 
-  nixpkgs.hostPlatform = "aarch64-linux";
-  nixpkgs.config.allowUnfree = true;
   system.stateVersion = "23.11";
 }

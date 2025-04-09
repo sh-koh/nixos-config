@@ -6,93 +6,113 @@
     };
     keymaps = [
       {
-        action = "<cmd>bnext<CR>";
-        key = "<C-.>";
+        mode = "i";
+        key = "<Tab>";
+        action = ''pumvisible() ? "\<C-n>" : "\<Tab>"'';
+        options = {
+          silent = true;
+          expr = true;
+          desc = "Select next completion with <Tab>";
+        };
+      }
+      {
+        mode = "i";
+        key = "<S-Tab>";
+        action = ''pumvisible() ? "\<C-p>" : "\<S-Tab>"'';
+        options = {
+          silent = true;
+          expr = true;
+          desc = "Select previous completion with <S-Tab>";
+        };
+      }
+      {
         mode = "n";
+        key = "<leader>F";
+        action = "<cmd>lua MiniFiles.open()<CR>";
+        options = {
+          silent = true;
+          desc = "Open MiniFiles explorer";
+        };
+      }
+      {
+        mode = "n";
+        key = "<C-.>";
+        action = "<cmd>bnext<CR>";
         options = {
           silent = true;
           desc = "Switch to next buffer";
         };
       }
       {
-        action = "<cmd>bprev<CR>";
-        key = "<C-,>";
         mode = "n";
+        key = "<C-,>";
+        action = "<cmd>bprev<CR>";
         options = {
           silent = true;
           desc = "Switch to previous buffer";
         };
       }
       {
-        action = "<cmd>bdelete<CR>";
-        key = "<C-/>";
         mode = "n";
+        key = "<C-/>";
+        action = "<cmd>bdelete<CR>";
         options = {
           silent = false;
           desc = "Close focused buffer";
         };
       }
       {
-        action = "<cmd>tabnext<CR>";
-        key = "g.";
         mode = "n";
+        key = "g.";
+        action = "<cmd>tabnext<CR>";
         options = {
           silent = true;
           desc = "Switch to next tab";
         };
       }
       {
-        action = "<cmd>tabprev<CR>";
-        key = "g,";
         mode = "n";
+        key = "g,";
+        action = "<cmd>tabprev<CR>";
         options = {
           silent = true;
           desc = "Switch to previous tab";
         };
       }
       {
-        action = "<cmd>tabnew<CR>";
-        key = "g/";
         mode = "n";
+        key = "g/";
+        action = "<cmd>tabnew<CR>";
         options = {
           silent = false;
           desc = "Open a new tab";
         };
       }
       {
-        action = "<cmd>tabclose<CR>";
-        key = "g?";
         mode = "n";
+        key = "g?";
+        action = "<cmd>tabclose<CR>";
         options = {
           silent = false;
           desc = "Close focused tab";
         };
       }
       {
-        action = "<cmd>nohlsearch<CR>";
-        key = "<Esc>";
         mode = "n";
+        key = "<esc>";
+        action = "<cmd>nohlsearch<CR>";
         options = {
           silent = true;
           desc = "Clear highlight after search";
         };
       }
       {
-        action = "<cmd>Neogit<CR>";
-        key = "<leader>p";
-        mode = "n";
+        mode = "t";
+        key = "<esc>";
+        action = "<C-\\><C-n>";
         options = {
           silent = true;
-          desc = "Open Neogit";
-        };
-      }
-      {
-        action = "<cmd>Oil<CR>";
-        key = "<leader>b";
-        mode = "n";
-        options = {
-          silent = true;
-          desc = "Invoke Oil";
+          desc = "Normal mode from terminal mode";
         };
       }
     ];

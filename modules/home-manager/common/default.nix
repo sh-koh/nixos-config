@@ -1,4 +1,3 @@
-{ ... }:
 {
   services.ssh-agent.enable = true;
   programs.ssh = {
@@ -22,7 +21,7 @@
       };
       "cravite" = {
         host = "cravite";
-        hostname = "192.168.1.253";
+        hostname = "192.168.1.210";
         port = 72;
         user = "shakoh";
         identityFile = "~/.ssh/id_cravite";
@@ -32,7 +31,7 @@
         hostname = "notre-minecraft.shakoh.fr";
         port = 72;
         user = "shakoh";
-        identityFile = "~/.ssh/id_quantum-moon";
+        identityFile = "~/.ssh/id_lune-quantique";
       };
     };
   };

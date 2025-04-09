@@ -1,16 +1,32 @@
-{ config, mkNixos, withSystem, ... }:
+{
+  config,
+  mkNixos,
+  withSystem,
+  ...
+}:
 let
-  inherit (config.flake) nixosModules;
+  system = "aarch64-linux";
 in
 {
-  flake.nixosConfigurations.cravite = withSystem "aarch64-linux" ({ ... }:
-    mkNixos "aarch64-linux" [
-      ./cfg.nix
-      ./hw.nix
+  flake.nixosConfigurations.cravite = withSystem system (
+    _:
+    mkNixos system (
+      with config.flake.nixosModules;
+      [
+        ./cfg.nix
+        ./hw.nix
 
-      nixosModules.bluetooth
-      nixosModules.common
-      nixosModules.docker
-      nixosModules.nix
-    ]);
+        bluetooth
+        common
+        docker
+        nix
+        {
+          nix.settings = {
+            cores = 2;
+            max-jobs = 2;
+          };
+        }
+      ]
+    )
+  );
 }

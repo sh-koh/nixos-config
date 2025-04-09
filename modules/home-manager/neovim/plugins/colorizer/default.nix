@@ -1,8 +1,10 @@
 {
   programs.nixvim.plugins = {
-    nvim-colorizer = {
+    colorizer = {
       enable = true;
-      userDefaultOptions.names = false;
+      settings = {
+        user_default_options.names = false;
+      };
     };
   };
 }

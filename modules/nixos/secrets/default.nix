@@ -19,30 +19,5 @@
       mode = "0400";
       owner = "root";
     };
-    vpn-eni-cfg = {
-      file = "${mysecrets}/pro/vpn-eni-cfg.age";
-      mode = "0400";
-      owner = "root";
-    };
-    vpn-eni-crt = {
-      file = "${mysecrets}/pro/vpn-eni-crt.age";
-      mode = "0400";
-      owner = "root";
-    };
-    vpn-eni-key = {
-      file = "${mysecrets}/pro/vpn-eni-key.age";
-      mode = "0400";
-      owner = "root";
-    };
-    vpn-eni-up = {
-      file = "${mysecrets}/pro/vpn-eni-up.age";
-      mode = "0400";
-      owner = "root";
-    };
-    eni-logins = {
-      file = "${mysecrets}/pro/eni-logins.age";
-      mode = "0400";
-      owner = "root";
-    };
   };
 }

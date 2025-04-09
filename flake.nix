@@ -1,9 +1,9 @@
 {
   description = "Shakoh's NixOS and Home-manager flake";
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; }
-    {
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -13,26 +13,39 @@
         ./hosts
         ./lib
         ./modules
+        ./overlays
         ./pkgs
         ./users
       ];
 
-      perSystem = { pkgs, ... }:
-      {
-        devShells.default = pkgs.mkShell {
-          name = "deployment-shell";
+      perSystem =
+        { pkgs, self', ... }:
+        {
           formatter = pkgs.nixfmt-rfc-style;
-          packages = with pkgs; [
-            just
-            git
-          ];
+          devShells.default = pkgs.mkShellNoCC {
+            inherit (self') formatter;
+            name = "deployment-shell";
+            stdenv.shell = pkgs.nushell;
+            packages = with pkgs; [
+              deadnix
+              git
+              just
+              nushell
+              statix
+            ];
+          };
         };
-      };
     };
 
   nixConfig = {
-    extra-substituters = [ "https://nix-community.cachix.org" ];
-    extra-trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://cuda-maintainers.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+    ];
   };
 
   inputs = {
@@ -82,7 +95,6 @@
       type = "github";
       owner = "aylur";
       repo = "ags";
-      ref = "v2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     anyrun = {
@@ -98,7 +110,7 @@
       owner = "nix-community";
       repo = "nixvim";
       ref = "main";
-      #inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
     raspberry-pi = {
@@ -106,7 +118,6 @@
       owner = "nix-community";
       repo = "raspberry-pi-nix";
       ref = "master";
-      #inputs.nixpkgs.follows = "nixpkgs"; # Do not override nixpkgs to use the cache.
     };
     stylix = {
       type = "github";
@@ -116,12 +127,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    umu = {
-      type = "git";
-      url = "https://github.com/Open-Wine-Components/umu-launcher";
+    xivlauncher-rb = {
+      type = "github";
+      owner = "drakon64";
+      repo = "nixos-xivlauncher-rb";
       ref = "main";
-      dir = "packaging/nix";
-      submodules = true;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zen-browser-flake = {
+      type = "github";
+      owner = "youwen5";
+      repo = "zen-browser-flake";
+      ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -1,13 +1,15 @@
-_:
+{ inputs, ... }:
 {
-  perSystem = {
-    pkgs,
-    ...
-  }:
-  {
-    packages = {
-      hyprXPrimary = pkgs.callPackage ./hyprXPrimary { };
-      hyprsplit = pkgs.callPackage ./hyprsplit { };
+  perSystem =
+    { pkgs, system, ... }:
+    {
+      _module.args.pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      packages = {
+        breezex-cursor = pkgs.callPackage ./breezex-cursor { };
+      };
     };
-  };
 }
