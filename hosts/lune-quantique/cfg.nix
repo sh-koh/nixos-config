@@ -1,12 +1,9 @@
 {
-  lib,
-  pkgs,
   inputs,
+  pkgs,
+  lib,
   ...
 }:
-let
-  inherit (inputs.self.lib.sshKeys.shakoh.toLuneQuantique) atrebois rocaille;
-in
 {
   boot = {
     tmp.useTmpfs = true;
@@ -19,7 +16,6 @@ in
       "mitigations=off"
       "spectre_v2=off"
     ];
-    kernelModules = [ "acpi-cpufreq" ];
     kernel.sysctl = {
       "vm.max_map_count" = "1048576";
     };
@@ -30,8 +26,8 @@ in
     useDHCP = lib.mkDefault true;
     firewall.enable = false; # Use Hetzner's firewall
   };
-  users.users.shakoh.openssh.authorizedKeys.keys = [
-    atrebois
-    rocaille
-  ];
+
+  users.users.shakoh.openssh.authorizedKeys.keys = lib.mapAttrsToList (
+    _: v: v
+  ) inputs.self.lib.pubKeys.ssh.shakoh.toLuneQuantique;
 }

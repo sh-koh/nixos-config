@@ -1,10 +1,11 @@
-{ inputs, pkgs, ... }:
-let
-  inherit (inputs.self.lib.sshKeys.shakoh.toRocaille) atrebois;
-in
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 {
   networking.hostName = "rocaille";
-  users.users.shakoh.openssh.authorizedKeys.keys = [ atrebois ];
 
   boot = {
     tmp.useTmpfs = true;
@@ -26,6 +27,10 @@ in
       "vm.max_map_count" = "1048576";
     };
   };
+
+  users.users.shakoh.openssh.authorizedKeys.keys = lib.mapAttrsToList (
+    _: v: v
+  ) inputs.self.lib.pubKeys.ssh.shakoh.toRocaille;
 
   programs = {
     adb.enable = true;

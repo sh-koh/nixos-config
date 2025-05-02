@@ -1,10 +1,10 @@
-{ inputs, pkgs, ... }:
-let
-  inherit (inputs.self.lib.sshKeys.shakoh.toAtrebois) rocaille;
-in
 {
-  users.users.shakoh.openssh.authorizedKeys.keys = [ rocaille ];
-
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
+{
   networking = {
     hostName = "atrebois";
     firewall = {
@@ -43,6 +43,10 @@ in
       "vm.max_map_count" = "1048576";
     };
   };
+
+  users.users.shakoh.openssh.authorizedKeys.keys = lib.mapAttrsToList (
+    _: v: v
+  ) inputs.self.lib.pubKeys.ssh.shakoh.toAtrebois;
 
   programs = {
     adb.enable = true;

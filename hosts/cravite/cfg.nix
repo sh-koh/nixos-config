@@ -1,7 +1,4 @@
-{ inputs, ... }:
-let
-  inherit (inputs.self.lib.sshKeys.shakoh.toCravite) atrebois rocaille;
-in
+{ inputs, lib, ... }:
 {
   boot = {
     tmp = {
@@ -17,10 +14,9 @@ in
   };
 
   networking.hostName = "cravite";
-  users.users.shakoh.openssh.authorizedKeys.keys = [
-    atrebois
-    rocaille
-  ];
+  users.users.shakoh.openssh.authorizedKeys.keys = lib.mapAttrsToList (
+    _: v: v
+  ) inputs.self.lib.pubKeys.ssh.shakoh.toCravite;
 
   services.k3s = {
     enable = true;
