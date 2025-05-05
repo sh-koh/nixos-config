@@ -37,6 +37,11 @@
       };
       plugins = lib.mkForce [ ];
     };
+    hosts = {
+      "192.168.1.201" = [ "atrebois" ];
+      "192.168.1.202" = [ "rocaille" ];
+      "192.168.1.210" = [ "cravite" ];
+    };
   };
 
   # FIXME: Hangs, making rebuild fail

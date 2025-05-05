@@ -43,7 +43,7 @@ in
     #./sabliere-rouge
     #./sabliere-noire
     #./sombronce
-    ./lune-quantique
+    #./lune-quantique
   ];
 
   _module.args = {

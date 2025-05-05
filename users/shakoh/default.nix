@@ -38,6 +38,5 @@ in
     "shakoh@atrebois" = mkHome "x86_64-linux" [ ./atrebois.nix ];
     "shakoh@rocaille" = mkHome "x86_64-linux" [ ./rocaille.nix ];
     "shakoh@cravite" = mkHome "aarch64-linux" [ ./cravite.nix ];
-    "shakoh@lune-quantique" = mkHome "aarch64-linux" [ ./lune-quantique.nix ];
   };
 }

@@ -26,13 +26,6 @@
         user = "shakoh";
         identityFile = "~/.ssh/id_cravite";
       };
-      "notre-minecraft" = {
-        host = "notre-minecraft";
-        hostname = "notre-minecraft.shakoh.fr";
-        port = 72;
-        user = "shakoh";
-        identityFile = "~/.ssh/id_lune-quantique";
-      };
     };
   };
 }
