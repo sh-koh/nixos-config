@@ -1,6 +1,7 @@
 {
-  pkgs,
   config,
+  pkgs,
+  lib,
   inputs',
   ...
 }:
@@ -13,12 +14,11 @@
     systemPackages = with pkgs; [
       cemu
       dolphin-emu
-      heroic
       lutris
       prismlauncher
       ryujinx
       (inputs'.xivlauncher-rb.packages.xivlauncher-rb.override {
-        useGameMode = true;
+        useGameMode = config.programs.gamemode.enable;
         nvngxPath = "${config.hardware.nvidia.package}/lib/nvidia/wine";
       })
     ];
@@ -39,23 +39,61 @@
     gamemode = {
       enable = true;
       enableRenice = true;
-      settings.general = {
-        desiredgov = "performance";
-        defaultgov = "ondemand";
-        reaper_freq = 5;
-        softrealtime = "on";
-        renice = 5;
-        ioprio = 0;
-      };
-      settings.custom = {
-        start = "${pkgs.libnotify}/bin/notify-send 'Gamemode enabled'";
-        end = "${pkgs.libnotify}/bin/notify-send 'Gamemode disabled'";
-      };
+      settings =
+        let
+          nvidiaOverclock = lib.getExe (
+            pkgs.writers.writePython3Bin "nvidia-overclock"
+              {
+                libraries = with pkgs.python312Packages; [
+                  nvidia-ml-py
+                  pynvml
+                ];
+              }
+              ''
+                import sys
+                import pynvml as nv
+                nv.nvmlInit()
+                myGPU = nv.nvmlDeviceGetHandleByIndex(0)
+                if sys.argv[1] == "on":
+                    nv.nvmlDeviceSetPowerManagementLimit(myGPU, 200000)
+                    nv.nvmlDeviceSetGpcClkVfOffset(myGPU, 140)
+                    nv.nvmlDeviceSetMemClkVfOffset(myGPU, 1200)
+                else:
+                    nv.nvmlDeviceSetPowerManagementLimit(myGPU, 175000)
+                    nv.nvmlDeviceSetGpcClkVfOffset(myGPU, 0)
+                    nv.nvmlDeviceSetMemClkVfOffset(myGPU, 0)
+              ''
+          );
+        in
+        {
+          general = {
+            #desiredgov = "performance";
+            desiredgov = "ondemand";
+            defaultgov = "ondemand";
+            reaper_freq = 5;
+            softrealtime = "on";
+            renice = 5;
+            ioprio = 0;
+            inhibit_screensaver = 1;
+            disable_splitlock = 1;
+          };
+          cpu = {
+            park_cores = "0-15";
+            pin_cores = "0-15";
+          };
+          custom = {
+            start = "${pkgs.libnotify}/bin/notify-send 'Gamemode enabled' && pkexec ${nvidiaOverclock} on";
+            end = "${pkgs.libnotify}/bin/notify-send 'Gamemode disabled' && pkexec ${nvidiaOverclock} off";
+          };
+        };
     };
   };
 
-  hardware.opentabletdriver = {
-    enable = true;
-    daemon.enable = true;
+  hardware = {
+    xpadneo.enable = true;
+    opentabletdriver = {
+      enable = true;
+      daemon.enable = true;
+    };
   };
 }

@@ -30,12 +30,20 @@
     gnome-keyring.enable = true;
   };
 
+  xdg = {
+    dataFile = {
+      "lutris/runners/proton/GE-Proton" = {
+        source = pkgs.proton-ge-bin.steamcompattool;
+      };
+    };
+  };
+
   home.packages = with pkgs; [
     celluloid
     drawio
     libreoffice
     loupe
-    #gimp
+    gimp3
     gnome-secrets
     nautilus
     papers

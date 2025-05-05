@@ -1,35 +1,9 @@
+{ lib, ... }:
 {
-  imports = [
-    #./autopairs
-    #./bufferline
-    #./cmp
-    #./colorizer
-    #./commentary
-    #./dashboard
-    ./direnv
-    #./floaterm
-    #./gitsigns
-    #./image
-    #./indent-blankline
-    ./lint
-    #./lualine
-    #./luasnip
-    ./lsp
-    ./markdown-preview
-    ./markview
-    ./mini
-    ./neocord
-    #./neogit
-    #./neorg
-    ./orgmode
-    ./oil
-    #./surround
-    ./telescope
-    ./toggleterm
-    ./treesitter
-    #./trim
-    ./trouble
-    #./web-devicons
-    #./which-key
+  imports = lib.pipe (builtins.readDir ./.) [
+    (lib.filterAttrs (
+      _name: type: type == "directory" # && name != ${./oil}
+    ))
+    (lib.mapAttrsToList (name: _: ./${name}))
   ];
 }

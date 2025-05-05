@@ -25,7 +25,7 @@
     drawio
     libreoffice
     loupe
-    #gimp
+    gimp3
     gnome-secrets
     nautilus
     papers

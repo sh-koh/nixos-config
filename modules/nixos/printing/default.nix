@@ -8,7 +8,10 @@
     };
     printing = {
       enable = true;
-      drivers = [ pkgs.epson-escpr ];
+      drivers = with pkgs; [
+        epson-escpr
+        epson-escpr2
+      ];
     };
   };
 }

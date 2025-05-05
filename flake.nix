@@ -25,12 +25,12 @@
           devShells.default = pkgs.mkShellNoCC {
             inherit (self') formatter;
             name = "deployment-shell";
-            stdenv.shell = pkgs.nushell;
+            stdenv.shell = pkgs.bash;
             packages = with pkgs; [
+              self'.packages.neokoh
               deadnix
               git
               just
-              nushell
               statix
             ];
           };
@@ -99,7 +99,7 @@
     };
     anyrun = {
       type = "github";
-      owner = "kirottu";
+      owner = "anyrun-org";
       repo = "anyrun";
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -110,6 +110,14 @@
       owner = "nix-community";
       repo = "nixvim";
       ref = "main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+    pogit = {
+      type = "github";
+      owner = "y-syo";
+      repo = "pogit";
+      ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };

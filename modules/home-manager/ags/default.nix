@@ -41,7 +41,7 @@
   services.xembed-sni-proxy.enable = true;
 
   home.file.".cache/.ags_colors.scss" = {
-    enable = config.programs.ags.enable;
+    inherit (config.programs.ags) enable;
     onChange = ''${pkgs.systemd}/bin/systemctl --user restart ags.service'';
     text = with config.lib.stylix.colors.withHashtag; ''
       $base00: ${base00};

@@ -87,8 +87,8 @@
                 mirror = false;
               };
             };
-            file_sorter.__raw = lib.mkIf (config.programs.nixvim.plugins.mini.enable) "require('mini.fuzzy').get_telescope_sorter";
-            generic_sorter.__raw = lib.mkIf (config.programs.nixvim.plugins.mini.enable) "require('mini.fuzzy').get_telescope_sorter";
+            file_sorter.__raw = lib.mkIf config.programs.nixvim.plugins.mini.enable "require('mini.fuzzy').get_telescope_sorter";
+            generic_sorter.__raw = lib.mkIf config.programs.nixvim.plugins.mini.enable "require('mini.fuzzy').get_telescope_sorter";
           };
           pickers = {
             find_files = {

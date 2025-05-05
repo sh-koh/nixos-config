@@ -27,6 +27,7 @@
         ll = "ls -lat";
         rg = "${getExe ripgrep} -SpnH";
         untar = "tar xpvf";
+        mktar = "tar czvf";
       };
     configFile = {
       text = ''

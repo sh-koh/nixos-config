@@ -12,22 +12,6 @@
 
   environment.shells = lib.mkIf (config.users.users.shakoh.shell == pkgs.nushell) [ pkgs.nushell ];
 
-  environment.systemPackages = with pkgs; [
-    btop
-    coreutils
-    curl
-    jq
-    grex
-    lm_sensors
-    lshw
-    pciutils
-    psmisc
-    tldr
-    usbutils
-    wget
-    wikiman
-  ];
-
   users = {
     mutableUsers = false;
     users = {

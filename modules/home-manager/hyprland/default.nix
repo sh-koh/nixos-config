@@ -276,7 +276,7 @@
             }
           );
 
-          UWSMApp = cmd: "uwsm app -- ${lib.getExe cmd}";
+          UWSMApp = cmd: "${lib.getExe pkgs.uwsm} app -- ${lib.getExe cmd}";
         in
         [
           "SUPER, Return, exec, ${UWSMApp config.programs.kitty.package} -1"
@@ -285,7 +285,7 @@
           "SUPER, Escape, exec, ${UWSMApp config.programs.ags.package} toggle Panel-$(${lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl"} monitors -j | ${lib.getExe pkgs.jq} -r '.[] | select(.focused == true) | .id')"
 
           "SUPER ALT, S, exec, ${lib.getExe' pkgs.systemd "systemctl"} suspend"
-          "SUPER ALT, Q, exec, ${lib.getExe' pkgs.systemd "loginctl"} terminate-user \"\""
+          "SUPER ALT, Q, exec, ${lib.getExe pkgs.uwsm} stop"
           "SUPER SHIFT, Q, exec, ${lib.getExe' pkgs.systemd "loginctl"} lock-session"
           "SUPER, I, exec, ${layoutSwitcher}"
           "SUPER, W, killactive,"

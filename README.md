@@ -1,32 +1,31 @@
 <h1 align="center">Shakoh's NixOS configuration</h1>
 
-### ❄️  Desktop
-- Compositor: [hyprland](https://github.com/hyprwm/Hyprland)
+### ❄️ Desktop
+- Wayland compositor: [Hyprland](https://github.com/hyprwm/Hyprland)
 - Font: [FiraCode](https://github.com/tonsky/FiraCode)
-- Theme: custom color scheme using [stylix](https://github.com/danth/stylix)
-- Term: [kitty](https://github.com/kovidgoyal/kitty)
+- Theme: [custom color scheme](https://github.com/sh-koh/nixos-config/blob/master/modules/nixos/theme/default.nix#L61) using [stylix](https://github.com/danth/stylix)
+- Terminal: [kitty](https://github.com/kovidgoyal/kitty)
 - Bar/Widgets: [ags](https://github.com/aylur/ags)
 - App launcher: [anyrun](https://github.com/Kirottu/anyrun)
 - Icon theme: [papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
 - Text editor: [neovim](https://github.com/neovim/neovim) configured with [nixvim](https://github.com/nix-community/nixvim)
-- File manager: [zoxide](https://github.com/ajeetdsouza/zoxide) & [fzf](https://github.com/junegunn/fzf) & [yazi](https://github.com/sxyazi/yazi)
+- File managers: [zoxide](https://github.com/ajeetdsouza/zoxide) & [nautilus](https://apps.gnome.org/Nautilus)
 - Task manager: [btop](https://github.com/aristocratos/btop)
-- Image viewer: [imv](https://sr.ht/~exec64/imv)
-- Video player: [mpv](https://github.com/mpv-player/mpv)
-- Office suite: [libreoffice](https://www.libreoffice.org/download/download-libreoffice/)
+- Image viewer: [loupe](https://apps.gnome.org/Loupe)
+- Video player: [celluloid](https://celluloid-player.github.io)
 
-### 🔨 To-do
-- [x] [home-manager](https://github.com/nix-community/home-manager)
+### 🔨 To-do list
+- [x] [home-manager](https://github.com/nix-community/home-manager) (standalone)
 - [x] [flake-parts](https://github.com/hercules-ci/flake-parts)
 - [x] [nixvim](https://github.com/nix-community/nixvim)
 - [x] [stylix](https://github.com/danth/stylix)
-- [ ] [agenix](https://github.com/ryantm/agenix) -> [vaultix](https://github.com/milieuim/vaultix)
-- [ ] [impermanence](https://github.com/nix-community/impermanence)
+- [ ] migration from [agenix](https://github.com/ryantm/agenix) to [vaultix](https://github.com/milieuim/vaultix)
 - [ ] [disko](https://github.com/nix-community/disko)
 - [ ] [lanzaboote](https://github.com/nix-community/lanzaboote)
+- [ ] [impermanence](https://github.com/nix-community/impermanence)
 
 
-### 🙏 Credits
+### 👼 Credits
 - [ViperML](https://github.com/viperML), learned a lot from his config structure
 - [Fufexan](https://github.com/fufexan), early inspiration
 - [Gerg](https://github.com/Gerg-L), early inspiration too

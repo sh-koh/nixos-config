@@ -4,12 +4,7 @@
   inputs,
   ...
 }:
-let
-  inherit (inputs) anyrun;
-in
 {
-  imports = [ anyrun.homeManagerModules.default ];
-
   programs.anyrun = {
     enable = true;
     config = {
@@ -24,12 +19,9 @@ in
       closeOnClick = true;
       showResultsImmediately = false;
       maxEntries = null;
-      plugins = with anyrun.packages.${pkgs.system}; [
+      plugins = with inputs.anyrun.packages.${pkgs.system}; [
         applications
-        dictionary
-        rink
         shell
-        translate
       ];
     };
     extraCss = with config.lib.stylix.colors; ''
