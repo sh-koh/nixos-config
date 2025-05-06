@@ -10,10 +10,9 @@
       enable = true;
       inlayHints = true;
       servers = {
-        bashls.enable = true; # Bash
-        nushell.enable = true; # Nushell
+        bashls.enable = true;
+        nushell.enable = true;
         nixd = {
-          # Nix
           enable = true;
           settings = {
             formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
@@ -26,40 +25,42 @@
           };
         };
 
-        gopls.enable = true; # Go
+        gopls.enable = true;
         hls = {
-          # Haskell
           enable = true;
           installGhc = false;
         };
-        lua_ls.enable = true; # Lua
-        ruff.enable = true; # Python
+        lua_ls.enable = true;
+        purescriptls = {
+          enable = true;
+          package = null;
+        };
+        ruff.enable = true;
         rust_analyzer = {
-          # Rust
           enable = true;
           installRustc = false;
           installCargo = false;
         };
-        ts_ls.enable = true; # Typescript/Javascript
-        zls.enable = true; # Zig
+        ts_ls.enable = true;
+        zls.enable = true;
 
-        dockerls.enable = true; # Docker
-        docker_compose_language_service.enable = true; # Docker-compose
-        ansiblels.enable = true; # Ansible
-        terraformls = { # opentofu
+        dockerls.enable = true;
+        docker_compose_language_service.enable = true;
+        ansiblels.enable = true;
+        terraformls = {
           enable = true;
-          #package = pkgs.opentofu-ls;
+          package = pkgs.opentofu-ls;
         };
-        nginx_language_server.enable = true; # Nginx
+        nginx_language_server.enable = true;
 
-        yamlls.enable = true; # Yaml
-        jsonls.enable = true; # JSON
-        taplo.enable = true; # Toml
-        sqls.enable = true; # SQL
-        html.enable = true; # HTML
-        htmx.enable = true; # HTMX
-        cssls.enable = true; # CSS
-        marksman.enable = true; # Markdown
+        yamlls.enable = true;
+        jsonls.enable = true;
+        taplo.enable = true;
+        sqls.enable = true;
+        html.enable = true;
+        htmx.enable = true;
+        cssls.enable = true;
+        marksman.enable = true;
       };
     };
     lsp-format = {
