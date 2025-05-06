@@ -37,6 +37,9 @@
           "networkmanager"
           "wireshark"
         ];
+        openssh.authorizedKeys.keys = lib.mapAttrsToList (
+          _: v: v
+        ) inputs.self.lib.pubKeys.ssh.shakoh.${config.networking.hostName};
       };
     };
   };

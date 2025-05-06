@@ -44,10 +44,6 @@
     };
   };
 
-  users.users.shakoh.openssh.authorizedKeys.keys = lib.mapAttrsToList (
-    _: v: v
-  ) inputs.self.lib.pubKeys.ssh.shakoh.toAtrebois;
-
   programs = {
     adb.enable = true;
     wireshark = {
