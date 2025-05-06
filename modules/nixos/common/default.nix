@@ -1,8 +1,4 @@
+{ inputs, ... }:
 {
-  imports = [
-    ./locale.nix
-    ./net.nix
-    ./tweaks.nix
-    ./users.nix
-  ];
+  imports = inputs.self.lib.listAllFiles ./.;
 }

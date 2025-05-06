@@ -26,9 +26,7 @@
     settings = {
       KbdInteractiveAuthentication = false;
       PasswordAuthentication = false;
-      AllowUsers = [
-        "shakoh"
-      ];
+      AllowUsers = [ "shakoh" ];
     };
   };
 }
