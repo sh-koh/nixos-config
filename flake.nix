@@ -10,6 +10,7 @@
       ];
 
       imports = [
+        inputs.vaultix.flakeModules.default
         ./hosts
         ./lib
         ./modules
@@ -35,7 +36,37 @@
             ];
           };
         };
-    };
+
+      flake = {
+        vaultix = {
+          identity = "/home/shakoh/.ssh/id_secrets_new";
+          extraRecipients = [ ];
+          defaultSecretDirectory = "./secrets";
+          cache = "./secrets/.cache";
+          nodes = inputs.self.nixosConfigurations;
+          extraPackages = [ ];
+        };
+        sshKeys = {
+          secrets = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL2z8hygqaNYhnnm0xucyHWsBNcMQO8ofg5uJq43N4+s";
+          shakoh =
+            let
+              atreboisKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAo4dwuiL8j7itIdLUOvSt89UhjT4DvQYYBPqf0QVIGB";
+              rocailleKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJSMD7TLNxz5Xmtf5Dcnud+j5TJqQCHnWLXrDoRM3aFT";
+              craviteKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKyeR3fIMoNYzIn1fGdZR9ZPhaF5kuQyzjomqIYqPLkk";
+              # lanterneKey = "";
+              # leviatheKey = "";
+              # sabliereRougeKey = "";
+              # sabliereNoireKey = "";
+              # sombronceKey = "";
+              # luneQuantiqueKey = "";
+            in {
+              atrebois = { inherit rocailleKey; };
+              rocaille = { inherit atreboisKey; };
+              cravite = { inherit atreboisKey rocailleKey; };
+            };
+          };
+        };
+      };
 
   nixConfig = {
     extra-substituters = [
@@ -84,13 +115,6 @@
       flake = false;
     };
     # Dependencies (in alphabetical order)
-    agenix = {
-      type = "github";
-      owner = "ryantm";
-      repo = "agenix";
-      ref = "main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     ags = {
       type = "github";
       owner = "aylur";
@@ -134,6 +158,14 @@
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+    };
+    vaultix = {
+      type = "github";
+      owner = "milieuim";
+      repo = "vaultix";
+      ref = "main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
     };
     xivlauncher-rb = {
       type = "github";

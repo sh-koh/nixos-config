@@ -6,10 +6,7 @@
   ...
 }:
 {
-  imports = [
-    inputs.self.nixosModules.secrets
-    inputs.self.nixosModules.nushell
-  ];
+  imports = with inputs.self.nixosModules; [ nushell ];
 
   users = {
     mutableUsers = false;
@@ -38,13 +35,13 @@
         ];
         openssh.authorizedKeys.keys = lib.mapAttrsToList (
           _name: value: value
-        ) inputs.self.lib.pubKeys.ssh.shakoh.${config.networking.hostName};
+        ) inputs.self.sshKeys.shakoh.${config.networking.hostName};
       };
     };
   };
 
   security.sudo.execWheelOnly = true;
-  #systemd.sysusers.enable = true;
+  systemd.sysusers.enable = true;
 
   time.timeZone = "Europe/Paris";
   console.keyMap = "us-acentos";
