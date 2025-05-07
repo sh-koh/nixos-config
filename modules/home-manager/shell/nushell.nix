@@ -7,28 +7,7 @@
 {
   programs.nushell = {
     enable = true;
-    environmentVariables = {
-      DIRENV_LOG_FORMAT = "";
-      GOPATH = "${config.home.homeDirectory}/.local/share/go";
-      NIXPKGS_ALLOW_UNFREE = if config.nixpkgs.config.allowUnfree then 1 else 0;
-      PAGER = "${config.programs.nushell.shellAliases.less}";
-      EDITOR = "nvim";
-    };
-    shellAliases =
-      with lib;
-      with pkgs;
-      {
-        cat = "${getExe bat} --style=auto --color=auto --paging=never --tabs=2 --wrap=never";
-        cd = "__zoxide_z";
-        fd = "${getExe fd} -H";
-        fg = "job unfreeze";
-        l = "ls -sat";
-        less = "${getExe bat} --style=auto --color=auto --paging=always --number --tabs=2 --wrap=never";
-        ll = "ls -lat";
-        rg = "${getExe ripgrep} -SpnH";
-        untar = "tar xpvf";
-        mktar = "tar czvf";
-      };
+    environmentVariables = config.programs.bash.sessionVariables;
     configFile = {
       text = ''
         $env.config = {

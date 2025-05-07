@@ -26,19 +26,19 @@
       };
       status = {
         disabled = false;
-        format = "[$symbol]($style)";
+        format = "[$symbol]($style) ";
         symbol = "󰅖";
         not_found_symbol = "󰦀";
         not_executable_symbol = "󰂭";
         sigint_symbol = "󱄊";
         signal_symbol = "󰓦";
-        success_symbol = ">";
+        success_symbol = ">>";
         style = "fg:yellow";
         map_symbol = true;
       };
       hostname = {
         disabled = false;
-        format = "[$hostname]($style)> ";
+        format = "[$hostname]($style) · ";
         style = "fg:red";
         ssh_only = true;
       };

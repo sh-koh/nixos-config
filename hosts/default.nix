@@ -28,6 +28,7 @@ let
             };
           }
           common
+          nushell
           theme
         ]
         ++ extraModules;

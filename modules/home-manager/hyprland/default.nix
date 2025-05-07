@@ -47,7 +47,7 @@
 
         "float, initialTitle:^(Picture-in-Picture)$"
         "move 100%-w-0 0%-w-0, initialTitle:^(Picture-in-Picture)$"
-        "size 27% 27%, initialTitle:^(Picture-in-Picture)$"
+        "size 533 300, initialTitle:^(Picture-in-Picture)$"
         "pin , initialTitle:^(Picture-in-Picture)$"
 
         "immediate, class:^(steam_app_.*)$"

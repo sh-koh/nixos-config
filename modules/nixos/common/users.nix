@@ -8,9 +8,8 @@
 {
   imports = [
     inputs.self.nixosModules.secrets
+    inputs.self.nixosModules.nushell
   ];
-
-  environment.shells = lib.mkIf (config.users.users.shakoh.shell == pkgs.nushell) [ pkgs.nushell ];
 
   users = {
     mutableUsers = false;
@@ -23,7 +22,7 @@
       shakoh = {
         uid = 1000;
         isNormalUser = true;
-        shell = pkgs.nushell;
+        # shell = pkgs.nushell;
         hashedPasswordFile = config.age.secrets.shakoh-pwd.path;
         extraGroups = [
           "wheel"
@@ -38,13 +37,14 @@
           "wireshark"
         ];
         openssh.authorizedKeys.keys = lib.mapAttrsToList (
-          _: v: v
+          _name: value: value
         ) inputs.self.lib.pubKeys.ssh.shakoh.${config.networking.hostName};
       };
     };
   };
 
   security.sudo.execWheelOnly = true;
+  #systemd.sysusers.enable = true;
 
   time.timeZone = "Europe/Paris";
   console.keyMap = "us-acentos";
