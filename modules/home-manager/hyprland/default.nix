@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs',
   ...
 }:
 {
@@ -497,12 +498,20 @@
       enable = true;
       xdgOpenUsePortal = true;
       extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
+        xdg-desktop-portal-gtk
       ];
       config.common.default = [
         "hyprland"
         "gtk"
+      ];
+    };
+    autostart = {
+      enable = true;
+      entries = map (p: "${p}/share/applications/${p.meta.mainProgram}.desktop") [
+        inputs'.zen-browser-flake.packages.zen-browser
+        pkgs.thunderbird
+        pkgs.vesktop
       ];
     };
   };
