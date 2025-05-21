@@ -64,6 +64,14 @@
         "rounding 0, floating:0, onworkspace:w[tg1]"
         "bordersize 0, floating:0, onworkspace:f[1]"
         "rounding 0, floating:0, onworkspace:f[1]"
+
+        # App dispatch
+        "workspace 1, class:^(zen)$"
+        "workspace 2, class:^(vesktop)$"
+        "workspace 3, class:^(thunderbird)$"
+        "workspace ${
+          if config.home.sessionVariables.HOSTNAME == "atrebois" then "19" else "9"
+        }, class:^(steam)$"
       ];
 
       input = {
