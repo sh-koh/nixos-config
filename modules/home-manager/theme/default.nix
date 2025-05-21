@@ -47,7 +47,9 @@
       url = "https://cdnb.artstation.com/p/assets/images/images/041/173/737/large/coppertine-numa-bg.jpg?1630968865";
       hash = "sha256-lc+8tDhxjHXJEPhB7T3vb2rC0RiXwbPKYRsTA5FdcfM=";
     };
-    targets = { };
+    targets = {
+      qt.enable = true;
+    };
     base16Scheme = {
       base00 = "#151515"; # ----
       base01 = "#202020"; # ---

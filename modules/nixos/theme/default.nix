@@ -57,6 +57,7 @@
       grub.enable = false;
       gnome-text-editor.enable = false;
       nixos-icons.enable = false;
+      qt.enable = true;
     };
     base16Scheme = {
       base00 = "#151515"; # ----
