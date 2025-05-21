@@ -14,6 +14,7 @@
     anyrun
     hyprland
     kitty
+    vesktop
   ];
 
   programs = {
@@ -53,7 +54,6 @@
     teams-for-linux
     telegram-desktop
     thunderbird
-    vesktop
     wl-clipboard
     inputs'.zen-browser-flake.packages.zen-browser
 

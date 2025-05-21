@@ -519,7 +519,7 @@
       entries = map (p: "${p}/share/applications/${p.meta.mainProgram}.desktop") [
         inputs'.zen-browser-flake.packages.zen-browser
         pkgs.thunderbird
-        pkgs.vesktop
+        config.programs.vesktop.package
       ];
     };
   };
