@@ -25,15 +25,16 @@
         # shell = pkgs.nushell;
         hashedPasswordFile = config.age.secrets.shakoh-pwd.path;
         extraGroups = [
-          "wheel"
-          "video"
+          "adbusers"
           "audio"
+          "docker"
+          "gamemode"
           "input"
           "kvm"
           "libvirtd"
-          "docker"
-          "adbusers"
           "networkmanager"
+          "video"
+          "wheel"
           "wireshark"
         ];
         openssh.authorizedKeys.keys = lib.mapAttrsToList (

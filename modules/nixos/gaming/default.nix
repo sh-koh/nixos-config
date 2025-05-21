@@ -41,10 +41,9 @@
       enableRenice = true;
       settings = {
         general = {
-          #desiredgov = "performance";
-          desiredgov = "ondemand";
-          defaultgov = "ondemand";
           reaper_freq = 5;
+          desiredgov = "performance";
+          #desiredgov = "ondemand";
           softrealtime = "on";
           renice = 5;
           ioprio = 0;
@@ -56,8 +55,8 @@
           pin_cores = "0-15";
         };
         custom = {
-          start = "${pkgs.systemd}/bin/systemctl start nvidia-overclock && ${pkgs.libnotify}/bin/notify-send 'Gamemode enabled'";
-          end = "${pkgs.systemd}/bin/systemctl stop nvidia-overclock && ${pkgs.libnotify}/bin/notify-send 'Gamemode disabled'";
+          start = "${pkgs.libnotify}/bin/notify-send 'Gamemode enabled'";
+          end = "${pkgs.libnotify}/bin/notify-send 'Gamemode disabled'";
         };
       };
     };
