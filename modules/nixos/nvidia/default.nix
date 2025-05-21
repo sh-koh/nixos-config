@@ -11,6 +11,7 @@
       options nvidia NVreg_EnableGpuFirmware=1
       options nvidia NVreg_EnablePCIeGen3=1
       options nvidia NVreg_EnableMSI=1
+      options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
     '';
   };
 
