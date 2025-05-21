@@ -129,11 +129,12 @@
     };
     stylix = {
       type = "github";
-      owner = "danth";
+      owner = "nix-community";
       repo = "stylix";
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+      inputs.flake-parts.follows = "flake-parts";
     };
     xivlauncher-rb = {
       type = "github";
