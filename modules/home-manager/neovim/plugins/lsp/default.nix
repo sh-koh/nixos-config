@@ -14,15 +14,18 @@
         nushell.enable = true;
         nixd = {
           enable = true;
-          settings = {
-            formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
-            nixpkgs.expr = ''let flake = (builtins.getFlake ("git+file://" + builtins.toString ./.)).inputs; in import (builtins.head (builtins.attrValues flake)).inputs.nixpkgs {}'';
-            options = {
-              nixos.expr = ''let flake = (builtins.getFlake ("git+file://" + builtins.toString ./.)).nixosConfigurations; in (builtins.head (builtins.attrValues flake)).options'';
-              home_manager.expr = ''let flake = (builtins.getFlake ("git+file://" + builtins.toString ./.)).homeConfigurations; in (builtins.head (builtins.attrValues flake)).options'';
-              nixvim.expr = ''let flake = (builtins.getFlake ("git+file://" + builtins.toString ./.)).packages.${pkgs.system}.neovimNixvim; in (builtins.head (builtins.attrValues flake)).options'';
+          settings =
+            let
+              flake = ''(builtins.getFlake ("git+file://" + builtins.toString ./.))'';
+            in
+            {
+              formatting.command = [ "${lib.getExe pkgs.nixfmt-rfc-style}" ];
+              nixpkgs.expr = "import ${flake}.inputs.nixpkgs {}";
+              options = {
+                nixos.expr = ''(builtins.head (builtins.attrValues ${flake}.nixosConfigurations)).options'';
+                home-manager.expr = ''(builtins.head (builtins.attrValues ${flake}.homeConfigurations)).options'';
+              };
             };
-          };
         };
 
         gopls.enable = true;
@@ -58,7 +61,6 @@
         taplo.enable = true;
         sqls.enable = true;
         html.enable = true;
-        htmx.enable = true;
         cssls.enable = true;
         marksman.enable = true;
       };
