@@ -45,7 +45,11 @@
           logLimit = 50;
         };
         plugins = {
-          CustomIdle.enabled = true;
+          CustomIdle = {
+            enabled = true;
+            idleTimeout = 0;
+            remainInIdle = false;
+          };
           CrashHandler.enabled = true;
           WebKeybinds.enabled = true;
           WebScreenShareFixes.enabled = true;
