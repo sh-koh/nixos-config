@@ -60,6 +60,12 @@ window.Bar {
   }
 
   .end {
+    .tray-icons {
+      button {
+        @include btn($base04);
+      }
+    }
+
     .audio {
       @include btn($base09);
     }

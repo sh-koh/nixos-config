@@ -5,6 +5,7 @@ import Battery from "gi://AstalBattery"
 import Bluetooth from "gi://AstalBluetooth"
 import Mpris from "gi://AstalMpris"
 import Network from "gi://AstalNetwork"
+import Tray from "gi://AstalTray"
 import Wp from "gi://AstalWp"
 
 
@@ -53,6 +54,21 @@ function Workspaces(monitorID: number) {
       </button>
     )
   )
+}
+
+function TrayIcons() {
+  const tray = Tray.get_default()
+  return <box className="tray-icons">
+    {bind(tray, "items").as(items => items.map(item => (
+      <menubutton
+        tooltipMarkup={bind(item, "tooltipMarkup")}
+        usePopover={false}
+        actionGroup={bind(item, "actionGroup").as(ag => ["dbusmenu", ag])}
+        menuModel={bind(item, "menuModel")}>
+        <icon gicon={bind(item, "gicon")} />
+      </menubutton>
+    )))}
+  </box>
 }
 
 function BatteryStatus() {
@@ -213,6 +229,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, monitorID: number) {
         vertical={false}
         valign={Gtk.Align.CENTER}
         halign={Gtk.Align.END} >
+        <TrayIcons />
         <AudioStatus />
         <BluetoothStatus />
         <NetworkStatus />

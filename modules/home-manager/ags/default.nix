@@ -27,6 +27,7 @@
         network
         notifd
         powerprofiles
+        tray
         wireplumber
       ]
       ++ (with pkgs; [
