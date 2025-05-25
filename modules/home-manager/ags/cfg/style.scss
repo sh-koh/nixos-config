@@ -22,6 +22,56 @@
   }
 }
 
+@mixin text-btn($clr) {
+  @include btn($clr);
+  padding: 0px;
+
+  &:hover {
+    .text {
+      margin: 0px;
+      padding: 0px 6px;
+      min-width: 20px;
+      background-color: rgba($base01, 0.5);
+    }
+  }
+
+  &:active {
+    .text {
+      margin: 0px;
+      padding: 0px 6px;
+      min-width: 20px;
+      color: rgba($clr, 0.5)
+    }
+  }
+
+  .logo {
+    padding: 0px;
+    margin-left: 8px;
+    min-width: 10px;
+  }
+
+  .text {
+    margin: 0px;
+    padding: 0px 6px;
+    min-width: 20px;
+    background-color: $base01;
+
+  }
+}
+
+@mixin panel-common {
+  color: $base04;
+  background: transparent;
+  padding: 2px 6px;
+  margin: 2px;
+
+  .start {}
+
+  .middle {}
+
+  .end {}
+}
+
 * {
   border-radius: 0px;
   font-family: "FiraCode Nerd Font Mono";
@@ -38,8 +88,20 @@ window.Bar {
   }
 
   .start {
+    .leftpanel {
+      @include text-btn($base0C);
+    }
+
     .music {
-      @include btn($base08)
+      @include text-btn($base08)
+    }
+
+    .audio-speaker {
+      @include text-btn($base09);
+    }
+
+    .audio-microphone {
+      @include text-btn($base0B);
     }
   }
 
@@ -66,42 +128,44 @@ window.Bar {
       }
     }
 
-    .audio {
-      @include btn($base09);
-    }
-
     .bluetooth {
-      @include btn($base0E);
+      @include text-btn($base0D);
     }
 
     .networking {
-      @include btn($base0D);
+      @include text-btn($base0E);
     }
 
     .battery {
-      @include btn($base0C);
+      @include text-btn($base0C);
     }
 
     .time {
-      @include btn($base0B);
+      @include text-btn($base0B);
     }
 
-    .panel {
+    .rightpanel {
       @include btn($base0A);
+
+      >box {
+        min-width: 350px;
+        background: rgba($base01, 0.8);
+
+        box.logo {
+          min-width: 50px;
+        }
+
+        box.text {
+          min-width: 550px;
+        }
+      }
+
     }
   }
 }
 
-window.Panel {
-  color: $base04;
-  background: transparent;
-  padding: 2px 6px;
-  margin: 2px;
-
-  >box {
-    min-width: 350px;
-    background: rgba($base01, 0.7);
-  }
+window.RightPanel {
+  @include panel-common();
 
   .start {}
 
@@ -117,6 +181,16 @@ window.Panel {
       min-height: 200px;
     }
   }
+}
+
+window.LeftPanel {
+  @include panel-common();
+
+  .start {}
+
+  .middle {}
+
+  .end {}
 }
 
 eventbox.Notification {
