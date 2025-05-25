@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, withSystem, ... }:
 {
   perSystem =
     { pkgs, system, ... }:
@@ -10,7 +10,10 @@
 
       packages = {
         breezex-cursor = pkgs.callPackage ./breezex-cursor { };
-        xivlauncher-rb = pkgs.callPackage ./xivlauncher-rb { };
       };
     };
+
+  flake.packages.x86_64-linux.xivlauncher-rb = withSystem "x86_64-linux" (
+    { pkgs, ... }: pkgs.callPackage ./xivlauncher-rb { }
+  );
 }
