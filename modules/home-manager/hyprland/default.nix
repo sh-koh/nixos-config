@@ -34,13 +34,13 @@
       ];
 
       windowrulev2 = [
+        "noblur, class:negate:^(kitty)$"
+
         "noborder, class:^(Xdg-desktop-portal-gtk)$"
-        "noblur, class:^(Xdg-desktop-portal-gtk)$"
         "dimaround, class:^(Xdg-desktop-portal-gtk)$"
         "noshadow, class:^(Xdg-desktop-portal-gtk)$"
 
         "noshadow, class:^(polkit-gnome-authentication-agent-1)$"
-        "noblur, class:^(polkit-gnome-authentication-agent-1)$"
         "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
         "stayfocused, class:^(polkit-gnome-authentication-agent-1)$"
 
