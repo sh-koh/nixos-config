@@ -14,6 +14,7 @@
     anyrun
     hyprland
     kitty
+    vesktop
   ];
 
   services = {
@@ -27,6 +28,7 @@
     loupe
     gimp3
     gnome-secrets
+    helvum
     nautilus
     papers
     parsec-bin
@@ -35,7 +37,6 @@
     teams-for-linux
     telegram-desktop
     thunderbird
-    vesktop
     wl-clipboard
     inputs'.zen-browser-flake.packages.zen-browser
 

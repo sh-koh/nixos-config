@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs',
   ...
 }:
 {
@@ -33,13 +34,13 @@
       ];
 
       windowrulev2 = [
+        "noblur, class:negate:^(kitty)$"
+
         "noborder, class:^(Xdg-desktop-portal-gtk)$"
-        "noblur, class:^(Xdg-desktop-portal-gtk)$"
         "dimaround, class:^(Xdg-desktop-portal-gtk)$"
         "noshadow, class:^(Xdg-desktop-portal-gtk)$"
 
         "noshadow, class:^(polkit-gnome-authentication-agent-1)$"
-        "noblur, class:^(polkit-gnome-authentication-agent-1)$"
         "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
         "stayfocused, class:^(polkit-gnome-authentication-agent-1)$"
 
@@ -63,6 +64,14 @@
         "rounding 0, floating:0, onworkspace:w[tg1]"
         "bordersize 0, floating:0, onworkspace:f[1]"
         "rounding 0, floating:0, onworkspace:f[1]"
+
+        # App dispatch
+        "workspace 1, class:^(zen)$"
+        "workspace 2, class:^(vesktop)$"
+        "workspace 3, class:^(thunderbird)$"
+        "workspace ${
+          if config.home.sessionVariables.HOSTNAME == "atrebois" then "19" else "9"
+        }, class:^(steam)$"
       ];
 
       input = {
@@ -497,12 +506,20 @@
       enable = true;
       xdgOpenUsePortal = true;
       extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
         xdg-desktop-portal-hyprland
+        xdg-desktop-portal-gtk
       ];
       config.common.default = [
         "hyprland"
         "gtk"
+      ];
+    };
+    autostart = {
+      enable = true;
+      entries = map (p: "${p}/share/applications/${p.meta.mainProgram}.desktop") [
+        inputs'.zen-browser-flake.packages.zen-browser
+        pkgs.thunderbird
+        config.programs.vesktop.package
       ];
     };
   };

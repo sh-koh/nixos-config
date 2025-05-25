@@ -9,11 +9,11 @@ default:
 
 deploy-nixos HOST:
   HOSTNAME={{HOST}} nixos-rebuild --flake .#{{HOST}} --target-host {{HOST}} --use-remote-sudo switch
+
+deploy-home HOST:
   HOSTNAME={{HOST}} nix run 'home-manager#home-manager' -- --flake .#"{{user}}@{{HOST}}" build
   nix copy --to ssh://{{HOST}} ./result
   unlink ./result
-
-deploy-home HOST:
   scp -r ./* {{HOST}}:/tmp/nixos-config
   HOSTNAME={{HOST}} ssh {{HOST}} "nix run 'home-manager#home-manager' -- --flake /tmp/nixos-config#{{user}}@{{HOST}} switch -b backup"
 

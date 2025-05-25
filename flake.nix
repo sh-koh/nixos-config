@@ -28,7 +28,6 @@
             name = "deployment-shell";
             stdenv.shell = pkgs.bash;
             packages = with pkgs; [
-              self'.packages.neokoh
               deadnix
               git
               just
@@ -59,14 +58,15 @@
               # sabliereNoireKey = "";
               # sombronceKey = "";
               # luneQuantiqueKey = "";
-            in {
+            in
+            {
               atrebois = { inherit rocailleKey; };
               rocaille = { inherit atreboisKey; };
               cravite = { inherit atreboisKey rocailleKey; };
             };
-          };
         };
       };
+    };
 
   nixConfig = {
     extra-substituters = [
@@ -153,7 +153,7 @@
     };
     stylix = {
       type = "github";
-      owner = "danth";
+      owner = "nix-community";
       repo = "stylix";
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -166,13 +166,6 @@
       ref = "main";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
-    };
-    xivlauncher-rb = {
-      type = "github";
-      owner = "drakon64";
-      repo = "nixos-xivlauncher-rb";
-      ref = "main";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser-flake = {
       type = "github";

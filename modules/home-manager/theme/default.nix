@@ -6,7 +6,7 @@
   ...
 }:
 {
-  imports = [ inputs.stylix.homeManagerModules.stylix ];
+  imports = [ inputs.stylix.homeModules.stylix ];
 
   stylix = {
     enable = true;
@@ -44,10 +44,12 @@
     };
     polarity = "dark";
     image = pkgs.fetchurl {
-      url = "https://cdnb.artstation.com/p/assets/images/images/041/173/737/large/coppertine-numa-bg.jpg?1630968865";
-      hash = "sha256-lc+8tDhxjHXJEPhB7T3vb2rC0RiXwbPKYRsTA5FdcfM=";
+      url = "https://wallpapercrafter.com/desktop/127267-Thomas-Cole-The-Voyage-of-Life-painting-classic-art-The-Voyage-of-Life-Manhood.jpg"; # Thomas Cole, The Voyage of Life: Manhood
+      hash = "sha256-kjxNJg1dVrJq3TFEywbeVfSDwjqKaQebY0M50pEQryA=";
     };
-    targets = { };
+    targets = {
+      qt.enable = true;
+    };
     base16Scheme = {
       base00 = "#151515"; # ----
       base01 = "#202020"; # ---

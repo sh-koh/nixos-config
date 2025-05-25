@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  lib,
   inputs,
   inputs',
   ...
@@ -27,6 +26,7 @@
         network
         notifd
         powerprofiles
+        tray
         wireplumber
       ]
       ++ (with pkgs; [
