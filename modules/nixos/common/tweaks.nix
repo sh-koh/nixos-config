@@ -4,6 +4,8 @@
     enableAllFirmware = lib.mkDefault true;
   };
 
+  boot.initrd.systemd.enable = true;
+
   zramSwap.enable = true;
 
   services = {

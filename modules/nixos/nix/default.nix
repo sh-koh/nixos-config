@@ -25,9 +25,10 @@
         auto-allocate-uids = true;
         auto-optimise-store = true;
         warn-dirty = false;
+        extra-platforms = lib.mkForce config.boot.binfmt.emulatedSystems;
         builders-use-substitutes = true;
         preallocate-contents = true;
-        #pure-eval = true; # Home-manager news >:(
+        #pure-eval = true; # FIXME: Home-manager news >:(
         keep-derivations = true;
         keep-outputs = true;
         always-allow-substitutes = true;

@@ -21,7 +21,15 @@ let
           with config.flake.homeManagerModules;
           [
             ./core.nix
-            { nixpkgs.config.allowUnfree = true; }
+            {
+              nixpkgs.config = {
+                allowUnfree = true;
+                overlays = with config.flake.overlays; [
+                  default
+                  modifications
+                ];
+              };
+            }
             common
             git
             neovim

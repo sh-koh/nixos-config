@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  inputs',
+  self',
   ...
 }:
 {
@@ -42,7 +42,6 @@
         general = {
           reaper_freq = 5;
           desiredgov = "performance";
-          #desiredgov = "ondemand";
           softrealtime = "on";
           renice = 5;
           ioprio = 0;

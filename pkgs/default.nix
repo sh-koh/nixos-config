@@ -1,19 +1,33 @@
-{ inputs, withSystem, ... }:
+{ inputs, ... }:
 {
   perSystem =
-    { pkgs, system, ... }:
+    {
+      pkgs,
+      system,
+      config,
+      ...
+    }:
     {
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
 
-      packages = {
-        breezex-cursor = pkgs.callPackage ./breezex-cursor { };
-      };
-    };
+      overlayAttrs = config.packages;
 
-  flake.packages.x86_64-linux.xivlauncher-rb = withSystem "x86_64-linux" (
-    { pkgs, ... }: pkgs.callPackage ./xivlauncher-rb { }
-  );
+      packages =
+        {
+          breezex-cursor = pkgs.callPackage ./breezex-cursor { };
+        }
+        // (
+          if system == "x86_64-linux" then
+            {
+              xivlauncher-rb = pkgs.callPackage ./xivlauncher-rb { };
+            }
+          else if system == "aarch64-linux" then
+            { }
+          else
+            { }
+        );
+    };
 }

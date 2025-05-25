@@ -22,7 +22,7 @@
     };
     cursor = {
       name = "BreezeX-Black";
-      package = self'.packages.breezex-cursor;
+      package = pkgs.breezex-cursor;
       size = 32;
     };
     fonts = {

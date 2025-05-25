@@ -10,6 +10,7 @@
       ];
 
       imports = [
+        inputs.flake-parts.flakeModules.easyOverlay
         ./hosts
         ./lib
         ./modules

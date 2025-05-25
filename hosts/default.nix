@@ -22,7 +22,7 @@ let
               hostPlatform = system;
               config.allowUnfree = true;
               overlays = with config.flake.overlays; [
-                additions
+                default
                 modifications
               ];
             };
