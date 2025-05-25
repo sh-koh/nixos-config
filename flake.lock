@@ -647,7 +647,6 @@
         "raspberry-pi": "raspberry-pi",
         "stylix": "stylix",
         "utils": "utils",
-        "xivlauncher-rb": "xivlauncher-rb",
         "zen-browser-flake": "zen-browser-flake"
       }
     },
@@ -1009,27 +1008,6 @@
         "owner": "sh-koh",
         "ref": "main",
         "repo": "nix-utils",
-        "type": "github"
-      }
-    },
-    "xivlauncher-rb": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1745492941,
-        "narHash": "sha256-NeUlC1jFi2V10sA5Vz3e83hpcFOw1ysaejroeINYuH4=",
-        "owner": "drakon64",
-        "repo": "nixos-xivlauncher-rb",
-        "rev": "a4f5639d8ee17cfd27d09b606cfa37a8f4e31422",
-        "type": "github"
-      },
-      "original": {
-        "owner": "drakon64",
-        "ref": "main",
-        "repo": "nixos-xivlauncher-rb",
         "type": "github"
       }
     },

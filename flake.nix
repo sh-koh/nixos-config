@@ -136,13 +136,6 @@
       inputs.home-manager.follows = "home-manager";
       inputs.flake-parts.follows = "flake-parts";
     };
-    xivlauncher-rb = {
-      type = "github";
-      owner = "drakon64";
-      repo = "nixos-xivlauncher-rb";
-      ref = "main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     zen-browser-flake = {
       type = "github";
       owner = "youwen5";

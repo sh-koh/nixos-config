@@ -1,4 +1,4 @@
-{ inputs, config, ... }:
+{ inputs, ... }:
 {
   perSystem =
     { pkgs, system, ... }:
@@ -11,6 +11,7 @@
       packages = {
         neokoh = config.flake.homeConfigurations.shakoh.config.programs.nixvim.build.package;
         breezex-cursor = pkgs.callPackage ./breezex-cursor { };
+        xivlauncher-rb = pkgs.callPackage ./xivlauncher-rb { };
       };
     };
 }

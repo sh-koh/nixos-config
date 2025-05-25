@@ -17,8 +17,7 @@
       lutris
       prismlauncher
       ryujinx
-      (inputs'.xivlauncher-rb.packages.xivlauncher-rb.override {
-        useGameMode = config.programs.gamemode.enable;
+      (xivlauncher-rb.override {
         nvngxPath = "${config.hardware.nvidia.package}/lib/nvidia/wine";
       })
     ];
