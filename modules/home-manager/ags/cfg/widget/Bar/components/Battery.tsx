@@ -11,7 +11,11 @@ export default function BatteryStatus() {
     valign={Gtk.Align.FILL}
     halign={Gtk.Align.CENTER}
     visible={bind(bat, "isPresent")} >
-    <box >
+    <box
+      vertical={false}
+      valign={Gtk.Align.FILL}
+      halign={Gtk.Align.START}
+      spacing={10} >
       <icon className="logo" css={`margin-right: 8px;`} icon={bind(bat, "batteryIconName")} />
       <label className="text"
         valign={Gtk.Align.FILL}

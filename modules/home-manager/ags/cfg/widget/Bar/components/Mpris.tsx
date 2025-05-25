@@ -47,6 +47,7 @@ export default function MusicStatus() {
       className="music"
       cursor="pointer"
       tooltipText={`Nothing is playing...`}
+      visible={false}
       valign={Gtk.Align.CENTER}
       halign={Gtk.Align.CENTER} >
       <box
