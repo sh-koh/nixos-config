@@ -27,7 +27,6 @@
             name = "deployment-shell";
             stdenv.shell = pkgs.bash;
             packages = with pkgs; [
-              self'.packages.neokoh
               deadnix
               git
               just
