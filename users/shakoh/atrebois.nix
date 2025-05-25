@@ -46,6 +46,7 @@
     loupe
     gimp3
     gnome-secrets
+    helvum
     nautilus
     papers
     parsec-bin
