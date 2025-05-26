@@ -219,6 +219,7 @@
         focus_on_activate = true;
         initial_workspace_tracking = 1;
         middle_click_paste = false;
+        enable_anr_dialog = false;
         render_unfocused_fps = 60;
         vrr = 2;
         vfr = true;
