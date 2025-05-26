@@ -33,6 +33,7 @@
     papers
     parsec-bin
     pwvucontrol
+    qbittorrent
     remmina
     teams-for-linux
     telegram-desktop
