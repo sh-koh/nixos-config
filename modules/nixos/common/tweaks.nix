@@ -1,10 +1,15 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   hardware = {
     enableAllFirmware = lib.mkDefault true;
   };
 
-  boot.initrd.systemd.enable = true;
+  boot = {
+    initrd.systemd.enable = true;
+    kernelPackages =
+      lib.mkDefault
+        pkgs.linuxKernel.packages."linux_${lib.concatStringsSep "_" (lib.take 2 (lib.splitVersion pkgs.linuxKernel.kernels.linux_latest.version))}";
+  };
 
   zramSwap.enable = true;
 

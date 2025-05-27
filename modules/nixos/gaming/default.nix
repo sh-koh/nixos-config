@@ -2,14 +2,30 @@
   config,
   pkgs,
   lib,
-  self',
   ...
 }:
 {
+  boot = {
+    kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_xanmod_latest;
+    kernelParams = [
+      "mitigations=off"
+      "spectre_v2=off"
+      "preempt=full"
+    ];
+    kernel.sysctl = {
+      "kernel.sched_cfs_bandwidth_slice_us" = 3000;
+      "net.ipv4.tcp_fin_timeout" = 5;
+      "kernel.split_lock_mitigate" = 0;
+      "vm.max_map_count" = 2147483642;
+    };
+  };
+
   environment = {
     variables = {
       STAGING_SHARED_MEMORY = "1";
       STAGING_WRITECOPY = "1";
+      WINE_LARGE_ADDRESS_AWARE = "1";
+      WINE_SIMULATE_WRITECOPY = "1";
     };
     systemPackages = with pkgs; [
       cemu
