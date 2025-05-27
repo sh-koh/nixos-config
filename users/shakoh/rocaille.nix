@@ -26,6 +26,7 @@
     drawio
     libreoffice
     loupe
+    ghidra
     gimp3
     gnome-secrets
     helvum
@@ -40,9 +41,5 @@
     thunderbird
     wl-clipboard
     inputs'.zen-browser-flake.packages.zen-browser
-
-    file
-    ghidra
-    xxd
   ];
 }

@@ -17,7 +17,7 @@
       daemonCPUSchedPolicy = "idle";
       daemonIOSchedClass = "idle";
       settings = {
-        flake-registry = "";
+        flake-registry = "/etc/nix/registry.json";
         accept-flake-config = true;
         nix-path = config.nix.nixPath;
         use-cgroups = true;
