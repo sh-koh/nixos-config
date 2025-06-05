@@ -21,6 +21,7 @@ in
         docker
         eni-vpn
         intel
+        niri
         nix
         printing
         {

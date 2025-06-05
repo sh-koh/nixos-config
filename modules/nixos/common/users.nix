@@ -45,7 +45,6 @@
   };
 
   security.sudo.execWheelOnly = true;
-  #systemd.sysusers.enable = true;
 
   time.timeZone = "Europe/Paris";
   console.keyMap = "us-acentos";

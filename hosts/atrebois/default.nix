@@ -21,6 +21,7 @@ in
         docker
         eni-vpn
         gaming
+        niri
         nix
         nvidia
         printing

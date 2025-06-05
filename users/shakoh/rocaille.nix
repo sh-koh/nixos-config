@@ -13,6 +13,7 @@
     ags
     anyrun
     kitty
+    niri
     vesktop
   ];
 

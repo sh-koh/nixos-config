@@ -1,11 +1,14 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 {
   hardware = {
     enableAllFirmware = lib.mkDefault true;
   };
 
   boot = {
-    initrd.systemd.enable = true;
     kernelPackages =
       lib.mkDefault
         pkgs.linuxKernel.packages."linux_${lib.concatStringsSep "_" (lib.take 2 (lib.splitVersion pkgs.linuxKernel.kernels.linux_latest.version))}";
@@ -36,4 +39,17 @@
       AllowUsers = [ "shakoh" ];
     };
   };
+
+  # Perlless
+  boot.initrd.systemd.enable = lib.mkDefault true;
+  system.etc.overlay.enable = lib.mkDefault true;
+  services.userborn.enable = lib.mkDefault true;
+  system.tools.nixos-generate-config.enable = lib.mkDefault false;
+  programs.less.lessopen = lib.mkDefault null;
+  programs.command-not-found.enable = lib.mkDefault false;
+  boot.enableContainers = lib.mkDefault false;
+  boot.loader.grub.enable = lib.mkDefault false;
+  environment.defaultPackages = lib.mkDefault [ ];
+  documentation.info.enable = lib.mkDefault false;
+  documentation.nixos.enable = lib.mkDefault false;
 }
