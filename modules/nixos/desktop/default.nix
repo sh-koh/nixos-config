@@ -1,14 +1,61 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
-  imports = [
-    ./audio.nix
-    ./hyprland.nix
-  ];
-
+  fonts.packages = with pkgs; [ lexend ];
   security.polkit.enable = true;
   gtk.iconCache.enable = true;
 
-  fonts.packages = with pkgs; [
-    lexend
-  ];
+  programs.regreet = {
+    enable = true;
+    cageArgs = [
+      "-s"
+      "-d"
+      "-m"
+      "last"
+    ];
+  };
+
+  services = {
+    greetd.enable = true;
+    gnome.gnome-keyring.enable = true;
+  };
+
+  xdg = {
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config.common = {
+        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+      };
+    };
+  };
+
+  environment.variables = {
+    NIXOS_OZONE_WL = "1";
+    XDG_SESSION_TYPE = "wayland";
+    QT_QPA_PLATFORM = "wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    CLUTTER_BACKEND = "wayland";
+    GDK_BACKEND = "wayland";
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+
+  warnings =
+    if config.programs.hyprland.enable && config.programs.niri.enable then
+      [
+        ''
+          Be careful, it seems you have both hyprland and niri enabled at the
+          same time, xdg-desktop-portals might conflict each other.
+        ''
+      ]
+    else
+      [ ];
 }

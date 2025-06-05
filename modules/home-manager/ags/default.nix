@@ -3,6 +3,7 @@
   config,
   inputs,
   inputs',
+  lib,
   ...
 }:
 {
@@ -20,17 +21,19 @@
         apps
         battery
         bluetooth
-        io
         hyprland
+        io
         mpris
         network
+        # niri # TODO: waiting for https://github.com/Aylur/astal/pull/70
         notifd
         powerprofiles
         tray
         wireplumber
       ]
       ++ (with pkgs; [
-        hyprland
+        config.wayland.windowManager.hyprland.package
+        config.programs.niri.package
         bash
         dart-sass
         coreutils
@@ -38,7 +41,11 @@
   };
 
   # Fix floating tray icon for Wine applications in AGS/Hyprland
-  services.xembed-sni-proxy.enable = true;
+  services.snixembed.enable = true;
+
+  systemd.user.services = {
+    ags.Unit.After = lib.mkForce "graphical-session.target";
+  };
 
   home.file.".cache/.ags_colors.scss" = {
     inherit (config.programs.ags) enable;

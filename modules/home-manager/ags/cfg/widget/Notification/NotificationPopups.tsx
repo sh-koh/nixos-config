@@ -27,7 +27,7 @@ class NotificationMap implements Subscribable {
       this.set(id, Notification({
         notification: notifd.get_notification(id)!,
         setup: () => {
-          const expire_timeout = notifd.get_notification(id).get_expire_timeout() < 5000 ? 5000 : notifd.get_notification(id).get_expire_timeout();
+          const expire_timeout = notifd.get_notification(id).get_expire_timeout() < 10000 ? 10000 : notifd.get_notification(id).get_expire_timeout();
           timeout(expire_timeout, () => this.delete(id))
         }
       }))
