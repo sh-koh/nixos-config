@@ -9,10 +9,9 @@
     HOSTNAME = "atrebois";
   };
 
-  imports = with inputs.self.homeManagerModules; [
+  imports = with inputs.self.homeModules; [
     ags
     anyrun
-    hyprland
     kitty
     vesktop
   ];
