@@ -18,10 +18,18 @@ let
         inherit pkgs;
         extraSpecialArgs = { inherit self' inputs' inputs; };
         modules =
-          with config.flake.homeManagerModules;
+          with config.flake.homeModules;
           [
             ./core.nix
-            { nixpkgs.config.allowUnfree = true; }
+            {
+              nixpkgs.config = {
+                allowUnfree = true;
+                overlays = with config.flake.overlays; [
+                  default
+                  modifications
+                ];
+              };
+            }
             common
             git
             neovim

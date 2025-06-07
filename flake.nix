@@ -11,6 +11,7 @@
 
       imports = [
         inputs.vaultix.flakeModules.default
+        inputs.flake-parts.flakeModules.easyOverlay
         ./hosts
         ./lib
         ./modules
@@ -128,6 +129,14 @@
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+    };
+    niri = {
+      type = "github";
+      owner = "sodiboo";
+      repo = "niri-flake";
+      ref = "main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nixvim = {
       type = "github";

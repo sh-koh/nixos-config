@@ -9,11 +9,11 @@
     HOSTNAME = "rocaille";
   };
 
-  imports = with inputs.self.homeManagerModules; [
+  imports = with inputs.self.homeModules; [
     ags
     anyrun
-    hyprland
     kitty
+    niri
     vesktop
   ];
 
@@ -26,6 +26,7 @@
     drawio
     libreoffice
     loupe
+    ghidra
     gimp3
     gnome-secrets
     helvum
@@ -33,15 +34,12 @@
     papers
     parsec-bin
     pwvucontrol
+    qbittorrent
     remmina
     teams-for-linux
     telegram-desktop
     thunderbird
     wl-clipboard
     inputs'.zen-browser-flake.packages.zen-browser
-
-    file
-    ghidra
-    xxd
   ];
 }

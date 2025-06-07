@@ -1,4 +1,4 @@
 { self, ... }:
 {
-  flake.homeManagerModules = self.lib.mkAttrFromEachDir ./.;
+  flake.homeModules = self.lib.mkAttrFromEachDir ./.;
 }

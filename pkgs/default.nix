@@ -1,16 +1,31 @@
 { inputs, ... }:
 {
   perSystem =
-    { pkgs, system, ... }:
+    {
+      pkgs,
+      system,
+      config,
+      ...
+    }:
     {
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
 
-      packages = {
-        breezex-cursor = pkgs.callPackage ./breezex-cursor { };
-        xivlauncher-rb = pkgs.callPackage ./xivlauncher-rb { };
-      };
+      overlayAttrs = config.packages;
+
+      packages =
+        {
+          breezex-cursor = pkgs.callPackage ./breezex-cursor { };
+        }
+        // {
+          x86_64-linux = {
+            xivlauncher-rb = pkgs.callPackage ./xivlauncher-rb { };
+          };
+          aarch64-linux = { };
+          i686-linux = { }; # FIXME
+        }
+        .${system};
     };
 }

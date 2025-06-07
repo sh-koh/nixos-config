@@ -9,11 +9,11 @@
     HOSTNAME = "atrebois";
   };
 
-  imports = with inputs.self.homeManagerModules; [
+  imports = with inputs.self.homeModules; [
     ags
     anyrun
-    hyprland
     kitty
+    niri
     vesktop
   ];
 
@@ -41,9 +41,11 @@
 
   home.packages = with pkgs; [
     celluloid
+    blender
     drawio
     libreoffice
     loupe
+    ghidra
     gimp3
     gnome-secrets
     helvum
@@ -51,16 +53,13 @@
     papers
     parsec-bin
     pwvucontrol
+    qbittorrent
     remmina
     teams-for-linux
     telegram-desktop
     thunderbird
     wl-clipboard
     inputs'.zen-browser-flake.packages.zen-browser
-
-    file
-    ghidra
-    xxd
   ];
 
   nixpkgs.config.cudaSupport = true;

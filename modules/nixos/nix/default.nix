@@ -17,7 +17,7 @@
       daemonCPUSchedPolicy = "idle";
       daemonIOSchedClass = "idle";
       settings = {
-        flake-registry = "";
+        flake-registry = "/etc/nix/registry.json";
         accept-flake-config = true;
         nix-path = config.nix.nixPath;
         use-cgroups = true;
@@ -25,9 +25,10 @@
         auto-allocate-uids = true;
         auto-optimise-store = true;
         warn-dirty = false;
+        extra-platforms = lib.mkForce config.boot.binfmt.emulatedSystems;
         builders-use-substitutes = true;
         preallocate-contents = true;
-        #pure-eval = true; # Home-manager news >:(
+        #pure-eval = true; # FIXME: Home-manager news >:(
         keep-derivations = true;
         keep-outputs = true;
         always-allow-substitutes = true;

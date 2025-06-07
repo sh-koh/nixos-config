@@ -13,8 +13,9 @@
       btop
       coreutils
       curl
-      jq
+      file
       grex
+      jq
       lm_sensors
       lshw
       pciutils
@@ -23,6 +24,7 @@
       usbutils
       wget
       wikiman
+      xxd
     ];
   };
 

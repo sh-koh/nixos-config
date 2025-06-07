@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   programs.nixvim = {
     plugins = {
@@ -37,9 +42,17 @@
             action = "registers";
             options.desc = "Telescope registers";
           };
-          "<leader>th" = {
+          "<leader>tH" = {
             action = "help_tags";
             options.desc = "Telescope help";
+          };
+          "<leader>tn" = {
+            action = "manix";
+            options.desc = "Telescope manix";
+          };
+          "<leader>th" = {
+            action = "hoogle";
+            options.desc = "Telescope hoogle";
           };
         };
         settings = {
@@ -96,10 +109,21 @@
             };
           };
         };
+        extensions = {
+          manix = {
+            enable = true;
+            settings.cword = true;
+            settings.manix_args = [ ];
+          };
+        };
+        enabledExtensions = [ "hoogle" ];
       };
     };
     highlightOverride = with config.lib.stylix.colors.withHashtag; {
       TelescopeBorder.fg = base04;
     };
+    extraPlugins = [
+      pkgs.vimPlugins.telescope_hoogle
+    ];
   };
 }
