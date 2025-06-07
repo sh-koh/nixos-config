@@ -19,15 +19,13 @@
         {
           breezex-cursor = pkgs.callPackage ./breezex-cursor { };
         }
-        // (
-          if system == "x86_64-linux" then
-            {
-              xivlauncher-rb = pkgs.callPackage ./xivlauncher-rb { };
-            }
-          else if system == "aarch64-linux" then
-            { }
-          else
-            { }
-        );
+        // {
+          x86_64-linux = {
+            xivlauncher-rb = pkgs.callPackage ./xivlauncher-rb { };
+          };
+          aarch64-linux = { };
+          i686-linux = { }; # FIXME
+        }
+        .${system};
     };
 }
