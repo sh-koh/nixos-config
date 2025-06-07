@@ -19,7 +19,7 @@ export default function BluetoothStatus() {
         halign={Gtk.Align.FILL}
         truncate={true}
         css={`font-size: 80%;`}
-        label={bind(bluetooth, "isConnected").as(s => s ? "Paired" : "Not paired")} />
+        label={bind(bluetooth, "devices").as(devices => devices[0].connected ? devices[0].name : "Not connected")} />
     </box>
   </button>
 }
