@@ -13,11 +13,17 @@
       enableXdgAutostart = false;
     };
     settings = {
-      monitor = [
-        "HDMI-A-1,preferred,0x0,auto"
-        "DP-1,highrr,2560x0,auto"
-        "eDP-1,2160x1440@60,0x0,1.5"
-      ];
+      monitor =
+        {
+          atrebois = [
+            "DP-1, modeline 606.53 1920 1968 2000 2080 1080 1083 1088 1215 -hsync +vsync, 0x0, 1"
+            "HDMI-A-1, modeline 228.280 2560 2608 2640 2720 1080 1083 1093 1119 -hsync +vsync, auto-left, 1"
+          ];
+          rocaille = [
+            "eDP-1,2160x1440@60,auto,1.5"
+          ];
+        }
+        .${config.home.sessionVariables.HOSTNAME};
 
       workspace = [
         "1, monitor:HDMI-A-1, default:true"
@@ -230,10 +236,13 @@
       exec-once = [
         "uwsm finalize"
         (
-          if config.home.sessionVariables.HOSTNAME != "atrebois" then
-            "${lib.getExe pkgs.xorg.xrandr} --output eDP-1 --primary"
-          else
-            "${lib.getExe pkgs.xorg.xrandr} --output DP-1 --primary"
+          "${lib.getExe pkgs.xorg.xrandr} --output ${
+            {
+              atrebois = "DP-1";
+              rocaille = "eDP-1";
+            }
+            .${config.home.sessionVariables.HOSTNAME}
+          } --primary"
         )
       ];
 
@@ -254,12 +263,13 @@
               name = "layout-switcher.sh";
               runtimeInputs = with pkgs; [
                 hyprland
+                libnotify
                 jq
               ];
               text = ''
                 case $(hyprctl -j getoption general:layout | jq -r '.str') in
-                  "master") hyprctl keyword general:layout dwindle ;;
-                  "dwindle") hyprctl keyword general:layout master ;;
+                  "master") hyprctl keyword general:layout dwindle && notify-send "Hyprland: switched in dwindle layout." ;;
+                  "dwindle") hyprctl keyword general:layout master && notify-send "Hyprland: switched in master layout." ;;
                 esac
               '';
             }
@@ -272,16 +282,25 @@
                 satty
                 grim
                 jq
+                wl-clipboard
+                libnotify
                 config.wayland.windowManager.hyprland.package
               ];
               text = ''
                 grim -o "$(hyprctl -j monitors all | \
                   jq -r '.[] | select(.focused == true) | .name')" - | \
-                  satty --filename - \
-                    --fullscreen \
-                    --early-exit \
-                    --copy-command "wl-copy" \
-                    --initial-tool "crop"
+                    if [ ! -v "$1" ]; then
+                      case "$1" in
+                        "--edit")
+                          satty --filename - --fullscreen --early-exit --copy-command 'wl-copy' --initial-tool 'crop'
+                          ;;
+                        *)
+                          wl-copy && notify-send 'Screenshot: copied to clipboard.'
+                          ;;
+                      esac
+                    else
+                      wl-copy && notify-send 'Screenshot: copied to clipboard.'
+                    fi
               '';
             }
           );
@@ -343,7 +362,7 @@
           "SUPER ALT, K, layoutmsg, orientationtop"
           "SUPER ALT, J, layoutmsg, orientationbottom"
 
-          "SUPER SHIFT, S, exec, ${screenshotActiveMonitor}"
+          "SUPER SHIFT, S, exec, ${screenshotActiveMonitor} --edit"
         ]
         ++ (builtins.concatLists (
           builtins.genList (
@@ -434,7 +453,7 @@
         outline_thickness = 2;
         shadow_passes = 2;
         placeholder_text = "Password...";
-        position = "0, -20";
+        position = "0, -30";
         halign = "center";
         valign = "center";
       };
