@@ -16,6 +16,7 @@
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
       daemonCPUSchedPolicy = "idle";
       daemonIOSchedClass = "idle";
+      channel.enable = false;
       settings = {
         flake-registry = "/etc/nix/registry.json";
         accept-flake-config = true;
