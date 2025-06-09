@@ -20,7 +20,6 @@
   programs.virt-manager.enable = true;
 
   virtualisation = {
-    spiceUSBRedirection.enable = true;
     libvirtd = {
       enable = true;
       onBoot = "ignore";

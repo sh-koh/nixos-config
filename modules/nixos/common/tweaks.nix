@@ -5,7 +5,7 @@
 }:
 {
   hardware = {
-    enableAllFirmware = lib.mkDefault true;
+    enableAllFirmware = true;
   };
 
   boot = {
@@ -40,16 +40,32 @@
     };
   };
 
-  # Perlless
-  boot.initrd.systemd.enable = lib.mkDefault true;
-  system.etc.overlay.enable = lib.mkDefault true;
-  services.userborn.enable = lib.mkDefault true;
-  system.tools.nixos-generate-config.enable = lib.mkDefault false;
-  programs.less.lessopen = lib.mkDefault null;
-  programs.command-not-found.enable = lib.mkDefault false;
-  boot.enableContainers = lib.mkDefault false;
-  boot.loader.grub.enable = lib.mkDefault false;
-  environment.defaultPackages = lib.mkDefault [ ];
-  documentation.info.enable = lib.mkDefault false;
-  documentation.nixos.enable = lib.mkDefault false;
+  system = {
+    rebuild.enableNg = true;
+    switch.enableNg = true;
+  };
+
+  boot.initrd.systemd.enable = true;
+  system.tools.nixos-generate-config.enable = false;
+  programs.less.lessopen = null;
+  programs.command-not-found.enable = false;
+  boot.loader.grub.enable = false;
+  environment.defaultPackages = lib.mkForce [ ];
+  documentation.info.enable = false;
+  documentation.nixos.enable = false;
+  services.orca.enable = false;
+  services.speechd.enable = false;
+
+  /*
+    TODO: ONE of those two options need to be enabled for vaultix but it
+    creates errors using agenix, so we dont do this for now.
+  */
+  # services.userborn.enable = true;
+  # systemd.sysusers.enable = true;
+  /*
+    FIXME,TODO: It mounts a temporary filesystem on top of etc, hiding files
+    located on the previously existant filesystem, so no more ssh keys
+    in /etc/ssh. It might be useless if 'impermanence' is setup.
+  */
+  # system.etc.overlay.enable = true;
 }
