@@ -345,72 +345,88 @@ in
       workspaces =
         {
           atrebois = {
-            "main" = {
+            "1-main" = {
+              name = "main";
               open-on-output = "DP-1";
             };
-            "browser" = {
+            "2-browser" = {
+              name = "browser";
               open-on-output = "HDMI-A-1";
             };
-            "discord" = {
+            "3-discord" = {
+              name = "discord";
               open-on-output = "HDMI-A-1";
             };
-            "gaming" = {
+            "4-gaming" = {
+              name = "gaming";
               open-on-output = "DP-1";
             };
-            "other" = {
+            "5-other" = {
+              name = "other";
               open-on-output = "HDMI-A-1";
             };
-            "tmp" = {
+            "6-tmp" = {
+              name = "tmp";
               open-on-output = "DP-1";
             };
           };
           rocaille = {
-            "main" = { };
-            "browser" = { };
-            "discord" = { };
-            "gaming" = { };
-            "other" = { };
-            "tmp" = { };
+            "1-main".name = "main";
+            "2-browser".name = "browser";
+            "3-discord".name = "discord";
+            "4-gaming".name = "gaming";
+            "5-other".name = "other";
+            "6-tmp".name = "tmp";
           };
         }
         .${config.home.sessionVariables.HOSTNAME};
       window-rules = [
         {
           matches = [
-            { app-id = "^(zen)$"; }
-            { at-startup = true; }
+            {
+              app-id = "^zen$";
+              at-startup = true;
+            }
           ];
           open-maximized = true;
           open-on-workspace = "browser";
         }
         {
           matches = [
-            { app-id = "^(vesktop)$"; }
-            { at-startup = true; }
+            {
+              app-id = "^vesktop$";
+              at-startup = true;
+            }
           ];
           default-column-width.proportion = 0.5;
           open-on-workspace = "discord";
         }
         {
           matches = [
-            { app-id = "^(thunderbird)$"; }
-            { at-startup = true; }
+            {
+              app-id = "^thunderbird$";
+              at-startup = true;
+            }
           ];
           default-column-width.proportion = 0.5;
           open-on-workspace = "other";
         }
         {
           matches = [
-            { app-id = "^(steam)$"; }
-            { title = "^(Steam)$"; }
+            {
+              app-id = "^steam$";
+              title = "^Steam$";
+            }
           ];
           default-column-width.proportion = 0.8;
           open-on-workspace = "gaming";
         }
         {
           matches = [
-            { app-id = "^(steam)$"; }
-            { title = "^(Friends List)$"; }
+            {
+              app-id = "^steam$";
+              title = "^Friends List$";
+            }
           ];
           default-column-width.proportion = 0.2;
           open-on-workspace = "gaming";
