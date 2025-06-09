@@ -128,8 +128,16 @@ in
           dwt = false;
         };
       };
+      hotkey-overlay.skip-at-startup = true;
+      environment = {
+        DISPLAY = ":0";
+      };
       spawn-at-startup = [
-        { command = [ "${lib.getExe pkgs.xwayland-satellite}" ]; }
+        {
+          command = [
+            "${lib.getExe' inputs'.niri.packages.xwayland-satellite-unstable "xwayland-satellite"}"
+          ];
+        }
         {
           command = [
             "${lib.getExe pkgs.xorg.xrandr}"
@@ -145,9 +153,6 @@ in
           ];
         }
       ];
-      environment = {
-        DISPLAY = ":0";
-      };
       overview = {
         backdrop-color = config.lib.stylix.colors.withHashtag.base00;
         zoom = 0.80;
@@ -159,12 +164,7 @@ in
         ];
         "Mod+Space".action.spawn = [ "${lib.getExe config.programs.anyrun.package}" ];
         "Mod+E".action.spawn = [ "${lib.getExe pkgs.nautilus}" ];
-        "Mod+Escape".action.spawn = [
-          "${config.programs.ags.package}"
-          "toggle"
-          "Panel-$(${lib.getExe config.programs.niri.package} msg -j focused-output | ${lib.getExe pkgs.jq} jq -r '.current_mode')"
-        ];
-
+        # "Mod+Alt+F".action = pin-active; # FIXME: https://github.com/YaLTeR/niri/issues/932
         "XF86AudioRaiseVolume" = {
           allow-when-locked = true;
           action.spawn = [
@@ -201,7 +201,22 @@ in
             "toggle"
           ];
         };
-
+        "XF86MonBrightnessUp" = {
+          allow-when-locked = true;
+          action.spawn = [
+            "brightnessctl"
+            "set"
+            "5%+"
+          ];
+        };
+        "XF86MonBrightnessDown" = {
+          allow-when-locked = true;
+          action.spawn = [
+            "brightnessctl"
+            "set"
+            "5%-"
+          ];
+        };
         "Mod+Alt+S".action.spawn = [
           "${lib.getExe' pkgs.systemd "systemctl"}"
           "suspend"
@@ -215,68 +230,39 @@ in
         "Mod+F".action = maximize-column;
         "Mod+Ctrl+F".action = expand-column-to-available-width;
         "Mod+Shift+F".action = fullscreen-window;
-
-        "Mod+O" = {
+        "Mod+Tab" = {
           action = toggle-overview;
           repeat = false;
         };
-
         "Mod+C".action = center-column;
         "Mod+Ctrl+C".action = center-visible-columns;
-
         "Mod+V".action = toggle-window-floating;
         "Mod+Shift+V".action = switch-focus-between-floating-and-tiling;
-
-        #"Mod+Alt+F".action = pin-active; # FIXME: https://github.com/YaLTeR/niri/issues/932
-
         "Mod+G".action = toggle-column-tabbed-display;
-
         "Mod+Shift+Period".action = move-column-to-monitor-right;
         "Mod+Shift+Comma".action = move-column-to-monitor-left;
-
         "Mod+Period".action = focus-monitor-right;
         "Mod+Comma".action = focus-monitor-left;
         "Mod+Ctrl+Period".action = focus-monitor-down;
         "Mod+Ctrl+Comma".action = focus-monitor-up;
-
         "Mod+H".action = focus-column-left;
         "Mod+J".action = focus-window-down;
         "Mod+K".action = focus-window-up;
         "Mod+L".action = focus-column-right;
-
         "Mod+Shift+H".action = move-column-left;
         "Mod+Shift+J".action = move-window-down;
         "Mod+Shift+K".action = move-window-up;
         "Mod+Shift+L".action = move-column-right;
-
         "Mod+Ctrl+H".action = focus-monitor-left;
         "Mod+Ctrl+J".action = focus-workspace-down;
         "Mod+Ctrl+K".action = focus-workspace-up;
         "Mod+Ctrl+L".action = focus-monitor-right;
-
-        "Mod+Alt+H".action = move-workspace-to-monitor-left;
-        "Mod+Alt+J".action = move-workspace-down;
-        "Mod+Alt+K".action = move-workspace-up;
-        "Mod+Alt+L".action = move-workspace-to-monitor-right;
-
-        "Mod+B".action = set-column-width "+5%";
-        "Mod+Shift+B".action = set-column-width "-5%";
-        "Mod+N".action = set-window-height "+5%";
-        "Mod+Shift+N".action = set-window-height "-5%";
-
-        "Mod+Shift+S".action.spawn = [
-          "${screenshotActiveMonitor}"
-          "--edit"
-        ];
-
-        "Mod+BracketLeft".action = consume-or-expel-window-left;
-        "Mod+BracketRight".action = consume-or-expel-window-right;
-
+        "Mod+Ctrl+B".action = consume-or-expel-window-left;
+        "Mod+Ctrl+N".action = consume-or-expel-window-right;
         "Mod+Page_Down".action = focus-workspace-down;
         "Mod+Page_Up".action = focus-workspace-up;
         "Mod+Shift+Page_Down".action = move-column-to-workspace-down;
         "Mod+Shift+Page_Up".action = move-column-to-workspace-up;
-
         "Mod+WheelScrollUp" = {
           cooldown-ms = 150;
           action = focus-workspace-up;
@@ -299,8 +285,6 @@ in
           cooldown-ms = 150;
           action = focus-column-right;
         };
-
-        # TODO: give name to some workspaces to make them 'static'
         "Mod+1".action.focus-workspace = 1;
         "Mod+2".action.focus-workspace = 2;
         "Mod+3".action.focus-workspace = 3;
@@ -311,7 +295,6 @@ in
         "Mod+8".action.focus-workspace = 8;
         "Mod+9".action.focus-workspace = 9;
         "Mod+0".action.focus-workspace = "tmp";
-
         "Mod+Ctrl+1".action.move-column-to-workspace = 1;
         "Mod+Ctrl+2".action.move-column-to-workspace = 2;
         "Mod+Ctrl+3".action.move-column-to-workspace = 3;
@@ -322,11 +305,27 @@ in
         "Mod+Ctrl+8".action.move-column-to-workspace = 8;
         "Mod+Ctrl+9".action.move-column-to-workspace = 9;
         "Mod+Ctrl+0".action.move-column-to-workspace = "tmp";
+        "Mod+Alt+H".action = move-workspace-to-monitor-left;
+        "Mod+Alt+J".action = move-workspace-down;
+        "Mod+Alt+K".action = move-workspace-up;
+        "Mod+Alt+L".action = move-workspace-to-monitor-right;
+        "Mod+B".action = set-column-width "+5%";
+        "Mod+Shift+B".action = set-column-width "-5%";
+        "Mod+N".action = set-window-height "+5%";
+        "Mod+Shift+N".action = set-window-height "-5%";
+        "Ctrl+Print".action = screenshot-window;
+        "Print".action.spawn = [
+          "${screenshotActiveMonitor}"
+          "--edit"
+        ];
+        "Mod+Shift+S".action.spawn = [
+          "${screenshotActiveMonitor}"
+          "--edit"
+        ];
       };
       layout = {
         gaps = 8;
-        center-focused-column = "never";
-        default-column-width.proportion = 0.5;
+        default-column-width.proportion = 0.7;
         focus-ring.width = 4;
         border.width = 2;
         shadow = {
@@ -343,60 +342,22 @@ in
         enable = true;
         slowdown = 1.0;
       };
-      window-rules = [
-        # TODO: Port those to niri
-        # "noblur, class:negate:^(kitty)$"
-        #
-        # "noborder, class:^(Xdg-desktop-portal-gtk)$"
-        # "dimaround, class:^(Xdg-desktop-portal-gtk)$"
-        # "noshadow, class:^(Xdg-desktop-portal-gtk)$"
-        #
-        # "noshadow, class:^(polkit-gnome-authentication-agent-1)$"
-        # "dimaround, class:^(polkit-gnome-authentication-agent-1)$"
-        # "stayfocused, class:^(polkit-gnome-authentication-agent-1)$"
-        #
-        # "tile, class:^(XIVLauncher.Core)$"
-        #
-        # "float, initialTitle:^(Picture-in-Picture)$"
-        # "move 100%-w-0 0%-w-0, initialTitle:^(Picture-in-Picture)$"
-        # "size 533 300, initialTitle:^(Picture-in-Picture)$"
-        # "pin , initialTitle:^(Picture-in-Picture)$"
-        #
-        # "immediate, class:^(steam_app_.*)$"
-        # "immediate, class:^(gamescope)$"
-        # "immediate, class:^(Minecraft.*)$"
-        # "immediate, class:^(osu\\!)$"
-        # "immediate, class:^(overwatch\.exe)$"
-        # "immediate, class:^(ffxiv_dx11\.exe)$"
-        #
-        # "bordersize 0, floating:0, onworkspace:w[t1]"
-        # "rounding 0, floating:0, onworkspace:w[t1]"
-        # "bordersize 0, floating:0, onworkspace:w[tg1]"
-        # "rounding 0, floating:0, onworkspace:w[tg1]"
-        # "bordersize 0, floating:0, onworkspace:f[1]"
-        # "rounding 0, floating:0, onworkspace:f[1]"
-        #
-        # # App dispatch
-        # "workspace 1, class:^(zen)$"
-        # "workspace 2, class:^(vesktop)$"
-        # "workspace 3, class:^(thunderbird)$"
-        # "workspace ${
-        #   if config.home.sessionVariables.HOSTNAME == "atrebois" then "19" else "9"
-        # }, class:^(steam)$"
-        {
-
-        }
-      ];
-      workspaces = # TODO: implement some static workspaces 'the niri-way'
+      workspaces =
         {
           atrebois = {
             "main" = {
               open-on-output = "DP-1";
             };
-            "brwsr" = {
+            "browser" = {
               open-on-output = "HDMI-A-1";
             };
-            "chat" = {
+            "discord" = {
+              open-on-output = "HDMI-A-1";
+            };
+            "gaming" = {
+              open-on-output = "DP-1";
+            };
+            "other" = {
               open-on-output = "HDMI-A-1";
             };
             "tmp" = {
@@ -405,12 +366,56 @@ in
           };
           rocaille = {
             "main" = { };
-            "brwsr" = { };
+            "browser" = { };
+            "discord" = { };
+            "gaming" = { };
             "other" = { };
             "tmp" = { };
           };
         }
         .${config.home.sessionVariables.HOSTNAME};
+      window-rules = [
+        {
+          matches = [
+            { app-id = "^(zen)$"; }
+            { at-startup = true; }
+          ];
+          open-maximized = true;
+          open-on-workspace = "browser";
+        }
+        {
+          matches = [
+            { app-id = "^(vesktop)$"; }
+            { at-startup = true; }
+          ];
+          default-column-width.proportion = 0.5;
+          open-on-workspace = "discord";
+        }
+        {
+          matches = [
+            { app-id = "^(thunderbird)$"; }
+            { at-startup = true; }
+          ];
+          default-column-width.proportion = 0.5;
+          open-on-workspace = "other";
+        }
+        {
+          matches = [
+            { app-id = "^(steam)$"; }
+            { title = "^(Steam)$"; }
+          ];
+          default-column-width.proportion = 0.8;
+          open-on-workspace = "gaming";
+        }
+        {
+          matches = [
+            { app-id = "^(steam)$"; }
+            { title = "^(Friends List)$"; }
+          ];
+          default-column-width.proportion = 0.2;
+          open-on-workspace = "gaming";
+        }
+      ];
     };
   };
 

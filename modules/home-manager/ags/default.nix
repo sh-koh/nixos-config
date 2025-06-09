@@ -40,7 +40,7 @@
       ]);
   };
 
-  # Fix floating tray icon for Wine applications in AGS/Hyprland
+  # Fix floating tray icon for Wine applications in AGS
   services.snixembed.enable = true;
 
   systemd.user.services = {
