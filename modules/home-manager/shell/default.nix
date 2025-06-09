@@ -21,8 +21,8 @@
         fd = "${getExe fd} -H";
         less = "${getExe bat} --style=auto --color=auto --paging=always --number --tabs=2 --wrap=never";
         rg = "${getExe ripgrep} -SpnH";
-        untar = "tar xpvf";
-        mktar = "tar czvf";
+        untar = "tar --zstd -xpvf";
+        mktar = "tar --zstd -cvf";
       };
   };
 }
