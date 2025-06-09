@@ -11,6 +11,7 @@
 
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
+        inputs.home-manager.flakeModules.home-manager
         ./hosts
         ./lib
         ./modules
