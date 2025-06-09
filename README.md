@@ -19,10 +19,11 @@
 - [x] [flake-parts](https://github.com/hercules-ci/flake-parts)
 - [x] [nixvim](https://github.com/nix-community/nixvim)
 - [x] [stylix](https://github.com/danth/stylix)
-- [ ] migration from [agenix](https://github.com/ryantm/agenix) to [vaultix](https://github.com/milieuim/vaultix)
+- [ ] [agenix](https://github.com/ryantm/agenix) -> [vaultix](https://github.com/milieuim/vaultix)
 - [ ] [disko](https://github.com/nix-community/disko)
 - [ ] [lanzaboote](https://github.com/nix-community/lanzaboote)
 - [ ] [impermanence](https://github.com/nix-community/impermanence)
+- [ ] [colmena](https://github.com/zhaofengli/colmena)
 
 
 ### 👼 Credits
