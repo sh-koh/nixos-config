@@ -27,6 +27,7 @@
         extraGroups = [
           "adbusers"
           "audio"
+          "podman"
           "docker"
           "gamemode"
           "input"

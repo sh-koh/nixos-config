@@ -18,8 +18,8 @@ in
 
         bluetooth
         common
-        docker
         nix
+        podman
         {
           nix.settings = {
             cores = 2;

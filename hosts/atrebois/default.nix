@@ -18,12 +18,12 @@ in
 
         bluetooth
         desktop
-        docker
         eni-vpn
         gaming
         niri
         nix
         nvidia
+        podman
         printing
         vfio
         {

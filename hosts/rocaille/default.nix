@@ -18,11 +18,11 @@ in
 
         bluetooth
         desktop
-        docker
         eni-vpn
         intel
         niri
         nix
+        podman
         printing
         {
           nix.settings = {
