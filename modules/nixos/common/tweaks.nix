@@ -42,7 +42,6 @@
 
   system = {
     rebuild.enableNg = true;
-    switch.enableNg = true;
   };
 
   boot.initrd.systemd.enable = true;

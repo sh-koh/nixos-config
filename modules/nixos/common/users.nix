@@ -23,7 +23,7 @@
         uid = 1000;
         isNormalUser = true;
         # shell = pkgs.nushell;
-        hashedPasswordFile = config.age.secrets.shakoh-pwd.path;
+        hashedPasswordFile = lib.mkDefault config.age.secrets.shakoh-pwd.path;
         extraGroups = [
           "adbusers"
           "audio"

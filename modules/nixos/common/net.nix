@@ -18,7 +18,7 @@
     wireless.enable = false;
     dhcpcd.enable = false;
     resolvconf.enable = false;
-    enableIPv6 = false;
+    enableIPv6 = true;
     useNetworkd = true;
     useDHCP = false;
     nftables.enable = true; # TEST
