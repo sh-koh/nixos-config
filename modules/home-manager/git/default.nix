@@ -24,7 +24,7 @@
       userName = "sh-koh";
       userEmail = "70974710+sh-koh@users.noreply.github.com";
       extraConfig = {
-        init.defaultBranch = "main";
+        init.defaultBranch = "master";
         push.autoSetupRemote = true;
         pull.rebase = true;
         url = {
