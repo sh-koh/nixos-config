@@ -7,6 +7,7 @@
 {
   boot = {
     kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_xanmod_latest;
+    kernelModules = [ "ntsync" ];
     kernelParams = [
       "mitigations=off"
       "spectre_v2=off"
@@ -26,6 +27,7 @@
       STAGING_WRITECOPY = "1";
       WINE_LARGE_ADDRESS_AWARE = "1";
       WINE_SIMULATE_WRITECOPY = "1";
+      WINE_DISABLE_HARDWARE_SCHEDULING = "0";
     };
     systemPackages = with pkgs; [
       cemu
@@ -36,7 +38,55 @@
       (xivlauncher-rb.override {
         nvngxPath = "${config.hardware.nvidia.package}/lib/nvidia/wine";
       })
+      fflogs
     ];
+  };
+
+  services = {
+    lact.enable = true;
+    udev.packages = [
+      (pkgs.writeTextFile {
+        name = "ntsync-udev-rules";
+        text = ''KERNEL=="ntsync", MODE="0660", TAG+="uaccess"'';
+        destination = "/etc/udev/rules.d/70-ntsync.rules";
+      })
+    ];
+    sunshine = {
+      enable = true;
+      autoStart = false;
+      capSysAdmin = true;
+    };
+  };
+
+  networking.firewall = {
+    interfaces =
+      let
+        genPorts = port: offsets: map (offset: port + offset) offsets;
+      in
+      {
+        "${
+          {
+            atrebois = "enp34s0";
+            rocaille = "wlan0";
+          }
+          .${config.networking.hostName}
+        }" =
+          {
+            allowedTCPPorts = genPorts config.services.sunshine.settings.port [
+              (-5)
+              0
+              1
+              21
+            ];
+            allowedUDPPorts = genPorts config.services.sunshine.settings.port [
+              9
+              10
+              11
+              13
+              21
+            ];
+          };
+      };
   };
 
   programs = {
@@ -45,12 +95,10 @@
       remotePlay.openFirewall = true;
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
-
     gamescope = {
       enable = true;
-      #capSysNice = true;
+      capSysNice = false;
     };
-
     gamemode = {
       enable = true;
       enableRenice = true;
@@ -74,47 +122,6 @@
         };
       };
     };
-  };
-
-  systemd.services.nvidia-overclock = {
-    serviceConfig =
-      let
-        nvOverclockScript = (
-          pkgs.writers.writePython3Bin "nvidia-overclock"
-            {
-              libraries = with pkgs.python312Packages; [
-                nvidia-ml-py
-                pynvml
-              ];
-            }
-            ''
-              import sys
-              import pynvml as nv
-              nv.nvmlInit()
-              myGPU = nv.nvmlDeviceGetHandleByIndex(0)
-              if sys.argv[1] == "on":
-                  nv.nvmlDeviceSetPowerManagementLimit(myGPU, 200000)
-                  nv.nvmlDeviceSetGpcClkVfOffset(myGPU, 140)
-                  nv.nvmlDeviceSetMemClkVfOffset(myGPU, 1200)
-              else:
-                  nv.nvmlDeviceSetPowerManagementLimit(myGPU, 175000)
-                  nv.nvmlDeviceSetGpcClkVfOffset(myGPU, 0)
-                  nv.nvmlDeviceSetMemClkVfOffset(myGPU, 0)
-            ''
-        );
-      in
-      {
-        Type = "simple";
-        ExecStart = [
-          ""
-          "${lib.getExe nvOverclockScript} on"
-        ];
-        RemainAfterExit = "yes";
-        ExecStop = [
-          ""
-          "${lib.getExe nvOverclockScript} off"
-        ];
-      };
   };
 
   hardware = {
