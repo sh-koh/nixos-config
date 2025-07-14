@@ -8,7 +8,7 @@ default:
   @just --list
 
 deploy-nixos HOST:
-  HOSTNAME={{HOST}} nixos-rebuild --flake .#{{HOST}} --target-host {{HOST}} --use-remote-sudo switch
+  HOSTNAME={{HOST}} nixos-rebuild --flake .#{{HOST}} --target-host {{HOST}} --sudo --ask-sudo-password switch
 
 deploy-home HOST:
   HOSTNAME={{HOST}} nix run 'home-manager#home-manager' -- --flake .#"{{user}}@{{HOST}}" build
