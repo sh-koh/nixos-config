@@ -19,7 +19,7 @@
 }:
 
 let
-  tag = "1.1.2.2";
+  tag = "1.2.1.1-beta";
 in
 buildDotnetModule {
   pname = "xivlauncher";
@@ -29,7 +29,7 @@ buildDotnetModule {
     owner = "rankynbass";
     repo = "XIVLauncher.Core";
     rev = "rb-v${tag}";
-    hash = "sha256-iRjReUa9JQ8PuvPnnl+dZWbe+Jk6QCNQkpXmEZA9+qA=";
+    hash = "sha256-/6BZNV7EyNUnuyyei2M+NToe2vhqqJfvSss5c+OddZs=";
     fetchSubmodules = true;
   };
 
@@ -48,7 +48,7 @@ buildDotnetModule {
   ];
 
   projectFile = "src/XIVLauncher.Core/XIVLauncher.Core.csproj";
-  nugetDeps = ./deps.json; # File generated with `nix build".#xivlauncher-rb.passthru.fetch-deps" && ./result .`
+  nugetDeps = ./deps.json; # File generated with `nix build ".#xivlauncher-rb.passthru.fetch-deps" && ./result .`
 
   # please do not unpin these even if they match the defaults, xivlauncher is sensitive to .NET versions
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
@@ -76,8 +76,9 @@ buildDotnetModule {
           (steam.override {
             extraPkgs =
               pkgs: with pkgs; [
-                libunwind
                 gamemode
+                libunwind
+                zstd
               ];
             extraProfile = ''
               unset TZ
