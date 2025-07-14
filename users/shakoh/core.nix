@@ -16,6 +16,7 @@
       file
       grex
       jq
+      kubectl
       lm_sensors
       lshw
       pciutils

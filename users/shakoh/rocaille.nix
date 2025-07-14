@@ -11,8 +11,8 @@
 
   imports = with inputs.self.homeModules; [
     ags
-    anyrun
     kitty
+    neovim
     niri
     vesktop
   ];
@@ -23,6 +23,7 @@
 
   home.packages = with pkgs; [
     celluloid
+    bottles
     drawio
     libreoffice
     loupe
@@ -36,6 +37,7 @@
     pwvucontrol
     qbittorrent
     remmina
+    sshfs
     teams-for-linux
     telegram-desktop
     thunderbird

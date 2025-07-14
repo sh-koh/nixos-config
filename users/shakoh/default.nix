@@ -32,7 +32,6 @@ let
             }
             common
             git
-            neovim
             shell
             theme
           ]
