@@ -27,15 +27,6 @@
       }
       {
         mode = "n";
-        key = "<leader>F";
-        action = "<cmd>lua MiniFiles.open()<CR>";
-        options = {
-          silent = true;
-          desc = "Open MiniFiles explorer";
-        };
-      }
-      {
-        mode = "n";
         key = "<C-.>";
         action = "<cmd>bnext<CR>";
         options = {

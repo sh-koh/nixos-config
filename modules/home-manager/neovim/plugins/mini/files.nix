@@ -17,8 +17,8 @@
     go_in_plus = "L";
     go_out = "h";
     go_out_plus = "H";
-    mark_goto = "'";
-    mark_set = "m";
+    mark_goto = "m";
+    mark_set = "M";
     reset = "<BS>";
     reveal_cwd = "@";
     show_help = "g?";
@@ -38,14 +38,14 @@
   # Customization of explorer windows
   windows = {
     # Maximum number of windows to show side by side
-    max_number.__raw = "math.huge";
+    max_number = 3;
     # Whether to show preview of file/directory under cursor
     preview = true;
     # Width of focused window
-    width_focus = 75;
+    width_focus = 45;
     # Width of non-focused window
-    width_nofocus = 25;
+    width_nofocus = 35;
     # Width of preview window
-    width_preview = 35;
+    width_preview = 75;
   };
 }

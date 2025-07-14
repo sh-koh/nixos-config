@@ -3,7 +3,7 @@
     keymaps = [
       {
         action = "<cmd>Oil<CR>";
-        key = "<leader>b";
+        key = "<leader>o";
         mode = "n";
         options = {
           silent = true;

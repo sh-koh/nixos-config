@@ -52,7 +52,7 @@
         ansiblels.enable = true;
         terraformls = {
           enable = true;
-          package = pkgs.opentofu-ls;
+          package = pkgs.tofu-ls;
         };
         nginx_language_server.enable = true;
 

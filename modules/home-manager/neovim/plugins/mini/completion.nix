@@ -47,7 +47,7 @@
   # Module mappings. Use `""` (empty string) to disable one. Some of them
   # might conflict with system mappings.
   mappings = {
-    force_twostep = "<C-Space>"; # Force two-step completion
+    force_twostep = "<S-Space>"; # Force two-step completion
     force_fallback = "<A-Space>"; # Force fallback completion
   };
 
