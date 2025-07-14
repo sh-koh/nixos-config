@@ -31,8 +31,6 @@ let
                   wl-copy && notify-send 'Screenshot: copied to clipboard.'
                   ;;
               esac
-            else
-              wl-copy && notify-send 'Screenshot: copied to clipboard.'
             fi
       '';
     }
@@ -71,7 +69,7 @@ in
                 height = 1080;
                 refresh = 239.964;
               };
-              variable-refresh-rate = true;
+              variable-refresh-rate = "on-demand";
               scale = 1;
               position = {
                 x = 2560;
@@ -96,7 +94,7 @@ in
         }
         .${config.home.sessionVariables.HOSTNAME};
       input = {
-        warp-mouse-to-focus = true;
+        warp-mouse-to-focus.enable = true;
         focus-follows-mouse = {
           enable = true;
           max-scroll-amount = "0%";
@@ -129,15 +127,11 @@ in
         };
       };
       hotkey-overlay.skip-at-startup = true;
-      environment = {
-        DISPLAY = ":0";
+      xwayland-satellite = {
+        enable = true;
+        path = lib.getExe inputs'.niri.packages.xwayland-satellite-unstable;
       };
       spawn-at-startup = [
-        {
-          command = [
-            "${lib.getExe' inputs'.niri.packages.xwayland-satellite-unstable "xwayland-satellite"}"
-          ];
-        }
         {
           command = [
             "${lib.getExe pkgs.xorg.xrandr}"
@@ -162,7 +156,11 @@ in
           "${lib.getExe config.programs.kitty.package}"
           "-1"
         ];
-        "Mod+Space".action.spawn = [ "${lib.getExe config.programs.anyrun.package}" ];
+        "Mod+Space".action.spawn = [
+          "${lib.getExe config.programs.ags.package}"
+          "toggle"
+          "applauncher"
+        ];
         "Mod+E".action.spawn = [ "${lib.getExe pkgs.nautilus}" ];
         # "Mod+Alt+F".action = pin-active; # FIXME: https://github.com/YaLTeR/niri/issues/932
         "XF86AudioRaiseVolume" = {
@@ -326,7 +324,6 @@ in
       layout = {
         gaps = 8;
         default-column-width.proportion = 0.7;
-        focus-ring.width = 4;
         border.width = 2;
         shadow = {
           enable = true;
@@ -361,8 +358,8 @@ in
               name = "gaming";
               open-on-output = "DP-1";
             };
-            "5-other" = {
-              name = "other";
+            "5-others" = {
+              name = "others";
               open-on-output = "HDMI-A-1";
             };
             "6-tmp" = {
@@ -374,13 +371,23 @@ in
             "1-main".name = "main";
             "2-browser".name = "browser";
             "3-discord".name = "discord";
-            "4-gaming".name = "gaming";
-            "5-other".name = "other";
-            "6-tmp".name = "tmp";
+            "4-others".name = "others";
+            "5-tmp".name = "tmp";
           };
         }
         .${config.home.sessionVariables.HOSTNAME};
       window-rules = [
+        {
+          matches = [
+            { app-id = "^steam_app_.*$"; }
+            { app-id = "^gamescope$"; }
+            { app-id = "^Minecraft.*$"; }
+            { app-id = "^osu\\!$"; }
+            { app-id = "^overwatch\.exe$"; }
+            { app-id = "^ffxiv_dx11\.exe$"; }
+          ];
+          variable-refresh-rate = true;
+        }
         {
           matches = [
             {
@@ -432,6 +439,13 @@ in
           open-on-workspace = "gaming";
         }
       ];
+      cursor = {
+        hide-after-inactive-ms = null;
+        hide-when-typing = false;
+      };
+      debug = {
+        disable-direct-scanout = [ ];
+      };
     };
   };
 
@@ -504,31 +518,34 @@ in
     };
   };
 
-  services.hypridle = {
-    enable = true;
-    settings = {
-      general = {
-        ignore_dbus_inhibit = false;
-        ignore_systemd_inhibit = false;
-        lock_cmd = "${lib.getExe' pkgs.procps "pidof"} hyprlock || ${lib.getExe pkgs.hyprlock} || cw";
-        before_sleep_cmd = "${lib.getExe' pkgs.systemd "loginctl"} lock-session";
-        after_sleep_cmd = "${lib.getExe pkgs.niri} msg action power-on-monitors";
+  services = {
+    hyprpaper.enable = true;
+    hypridle = {
+      enable = true;
+      settings = {
+        general = {
+          ignore_dbus_inhibit = false;
+          ignore_systemd_inhibit = false;
+          lock_cmd = "${lib.getExe' pkgs.procps "pidof"} hyprlock || ${lib.getExe pkgs.hyprlock} || cw";
+          before_sleep_cmd = "${lib.getExe' pkgs.systemd "loginctl"} lock-session";
+          after_sleep_cmd = "${lib.getExe pkgs.niri} msg action power-on-monitors";
+        };
+        listener = [
+          {
+            timeout = 20 * 60;
+            on-timeout = "${lib.getExe' pkgs.systemd "loginctl"} lock-session";
+          }
+          {
+            timeout = 25 * 60;
+            on-timeout = "${lib.getExe pkgs.niri} msg action power-off-monitors";
+            on-resume = "${lib.getExe pkgs.niri} msg action power-on-monitors";
+          }
+          # {
+          #   timeout = 45 * 60;
+          #   on-timeout = "systemctl suspend";
+          # }
+        ];
       };
-      listener = [
-        {
-          timeout = 20 * 60;
-          on-timeout = "${lib.getExe' pkgs.systemd "loginctl"} lock-session";
-        }
-        {
-          timeout = 25 * 60;
-          on-timeout = "${lib.getExe pkgs.niri} msg action power-off-monitors";
-          on-resume = "${lib.getExe pkgs.niri} msg action power-on-monitors";
-        }
-        # {
-        #   timeout = 45 * 60;
-        #   on-timeout = "systemctl suspend";
-        # }
-      ];
     };
   };
 
