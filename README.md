@@ -1,12 +1,11 @@
 <h1 align="center">Shakoh's NixOS configuration</h1>
 
 ### ❄️ Desktop
-- Wayland compositor: [Hyprland](https://github.com/hyprwm/Hyprland)
-- Font: [FiraCode](https://github.com/tonsky/FiraCode)
+- Wayland compositor: [niri](https://github.com/YaLTeR/niri)
+- Font: [Lilex](https://github.com/mishamyrt/Lilex)
 - Theme: [custom color scheme](https://github.com/sh-koh/nixos-config/blob/master/modules/nixos/theme/default.nix#L61) using [stylix](https://github.com/danth/stylix)
 - Terminal: [kitty](https://github.com/kovidgoyal/kitty)
 - Bar/Widgets: [ags](https://github.com/aylur/ags)
-- App launcher: [anyrun](https://github.com/Kirottu/anyrun)
 - Icon theme: [papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
 - Text editor: [neovim](https://github.com/neovim/neovim) configured with [nixvim](https://github.com/nix-community/nixvim)
 - File managers: [zoxide](https://github.com/ajeetdsouza/zoxide) & [nautilus](https://apps.gnome.org/Nautilus)
