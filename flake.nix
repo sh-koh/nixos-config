@@ -21,7 +21,12 @@
       ];
 
       perSystem =
-        { pkgs, self', ... }:
+        {
+          pkgs,
+          self',
+          inputs',
+          ...
+        }:
         {
           formatter = pkgs.nixfmt-rfc-style;
           devShells.default = pkgs.mkShellNoCC {
@@ -29,25 +34,20 @@
             name = "deployment-shell";
             stdenv.shell = pkgs.bash;
             packages = with pkgs; [
+              inputs'.ags.packages.agsFull
+              inputs'.agenix.packages.agenix
+              inputs'.home-manager.packages.home-manager
+              inputs'.pogit.packages.pogit
+              nixVersions.latest
               deadnix
               git
               just
+              nurl
               statix
             ];
           };
         };
     };
-
-  nixConfig = {
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://cuda-maintainers.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-    ];
-  };
 
   inputs = {
     nixpkgs = {
@@ -98,37 +98,37 @@
       repo = "ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    anyrun = {
-      type = "github";
-      owner = "anyrun-org";
-      repo = "anyrun";
-      ref = "master";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-    };
     niri = {
       type = "github";
       owner = "sodiboo";
       repo = "niri-flake";
       ref = "main";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs";
+      };
     };
     nixvim = {
       type = "github";
       owner = "nix-community";
       repo = "nixvim";
       ref = "main";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
     pogit = {
-      type = "github";
-      owner = "y-syo";
-      repo = "pogit";
-      ref = "master";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
+      # type = "github";
+      # owner = "y-syo";
+      # repo = "pogit";
+      # ref = "master";
+      type = "path";
+      path = "/tmp/pogit";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
     raspberry-pi = {
       type = "github";
@@ -141,9 +141,10 @@
       owner = "nix-community";
       repo = "stylix";
       ref = "master";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.flake-parts.follows = "flake-parts";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
     zen-browser-flake = {
       type = "github";
@@ -152,5 +153,41 @@
       ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+  };
+
+  nixConfig = {
+    accept-flake-config = true;
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://cuda-maintainers.cachix.org"
+      "https://niri.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+    ];
+    extra-experimental-features = [
+      "auto-allocate-uids"
+      "ca-derivations"
+      "cgroups"
+      "configurable-impure-env"
+      "daemon-trust-override"
+      "dynamic-derivations"
+      "fetch-closure"
+      "fetch-tree"
+      "flakes"
+      "git-hashing"
+      "impure-derivations"
+      "local-overlay-store"
+      "mounted-ssh-store"
+      "nix-command"
+      "no-url-literals"
+      "parse-toml-timestamps"
+      "pipe-operators"
+      "read-only-local-store"
+      "recursive-nix"
+      "verified-fetches"
+    ];
   };
 }
