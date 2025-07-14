@@ -17,19 +17,19 @@
       terminal = 0.96;
     };
     cursor = {
-      name = "BreezeX-Black";
+      name = "BreezeX-Light";
       package = self'.packages.breezex-cursor;
       size = 32;
     };
     fonts = {
       sansSerif = config.stylix.fonts.serif;
       serif = {
-        package = pkgs.nerd-fonts.fira-mono;
-        name = "FiraMono Nerd Font";
+        package = pkgs.nerd-fonts.lilex;
+        name = "Lilex Nerd Font";
       };
       monospace = {
-        package = pkgs.nerd-fonts.fira-code;
-        name = "FiraCode Nerd Font Mono";
+        package = pkgs.nerd-fonts.lilex;
+        name = "Lilex Nerd Font";
       };
       emoji = {
         name = "Noto Color Emoji";
