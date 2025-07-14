@@ -1,9 +1,14 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   imports = with inputs.raspberry-pi.nixosModules; [
     raspberry-pi
     sd-image
   ];
+
+  boot.initrd.systemd = {
+    enable = lib.mkForce false;
+    tpm2.enable = false;
+  };
 
   raspberry-pi-nix = {
     board = "bcm2712";
