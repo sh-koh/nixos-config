@@ -580,14 +580,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1752116394,
-        "narHash": "sha256-OLxAnC8nzFCnnNqSaT5CPyX9vdyr9e4KzPRZXqyGGUY=",
-        "path": "/tmp/pogit",
-        "type": "path"
+        "lastModified": 1749310715,
+        "narHash": "sha256-MYaYMHNHrgBklZtfckZVBDtJ1/NWxan4NYEMNN+m8+U=",
+        "owner": "y-syo",
+        "repo": "pogit",
+        "rev": "41ff687e0de434dfea979e3f8bc037434aa5d086",
+        "type": "github"
       },
       "original": {
-        "path": "/tmp/pogit",
-        "type": "path"
+        "owner": "y-syo",
+        "ref": "master",
+        "repo": "pogit",
+        "type": "github"
       }
     },
     "raspberry-pi": {

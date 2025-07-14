@@ -34,16 +34,15 @@
             name = "deployment-shell";
             stdenv.shell = pkgs.bash;
             packages = with pkgs; [
-              inputs'.ags.packages.agsFull
-              inputs'.agenix.packages.agenix
-              inputs'.home-manager.packages.home-manager
-              inputs'.pogit.packages.pogit
               nixVersions.latest
               deadnix
               git
               just
               nurl
               statix
+              inputs'.ags.packages.agsFull
+              inputs'.agenix.packages.agenix
+              inputs'.home-manager.packages.home-manager
             ];
           };
         };
@@ -119,12 +118,10 @@
       };
     };
     pogit = {
-      # type = "github";
-      # owner = "y-syo";
-      # repo = "pogit";
-      # ref = "master";
-      type = "path";
-      path = "/tmp/pogit";
+      type = "github";
+      owner = "y-syo";
+      repo = "pogit";
+      ref = "master";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";

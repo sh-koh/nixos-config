@@ -20,6 +20,9 @@
               hash = "sha256-DJ7bRjzJehSFIyBo+oJyyWui+a3udGxc38P9Hw+xU9U=";
             };
           });
+          pogit = prev.pogit.overrideAttrs (old: {
+            pyproject = true;
+          });
         }
       );
   };
