@@ -1,44 +1,44 @@
-import { Gtk, Gdk } from "astal/gtk3"
-import { bind } from "astal"
+import Gtk from "gi://Gtk?version=4.0"
+import Gdk from "gi://Gdk?version=4.0"
+import { createBinding } from "ags"
 import Wp from "gi://AstalWp"
 
-let mic_vol = 1;
 export default function MicrophoneStatus() {
   const audio = Wp.get_default();
   if (!audio) return <></>
   const default_microphone = audio?.defaultMicrophone;
-  const volume = bind(default_microphone, "volume").as(v => Math.ceil(v * 100));
-  return <button
-    className="audio-microphone"
-    onClickRelease={(_, event) => {
-      if (default_microphone.volume != 0) mic_vol = default_microphone.volume;
-      switch (event.button) {
-        case Gdk.BUTTON_PRIMARY: default_microphone.volume == 0 ? default_microphone.volume = mic_vol : default_microphone.volume = 0;
-      }
-    }}
-    onScroll={(_, event) => {
-      event.delta_y > 0
-        ? default_microphone.volume = default_microphone.volume - 0.05
-        : default_microphone.volume + 0.05 > 1
-          ? default_microphone.volume = 1
-          : default_microphone.volume = default_microphone.volume + 0.05;
-    }}
-    cursor="pointer"
-    tooltipText={bind(default_microphone, "description")}
+  const volume = createBinding(default_microphone, "volume");
+  return <menubutton
+    class="audio-microphone"
+    cursor={Gdk.Cursor.new_from_name('pointer', null)}
+    tooltipText={createBinding(default_microphone, "description")}
     valign={Gtk.Align.FILL}
-    halign={Gtk.Align.CENTER} >
+    halign={Gtk.Align.FILL} >
     <box
-      vertical={false}
+      orientation={Gtk.Orientation.HORIZONTAL}
       valign={Gtk.Align.FILL}
-      halign={Gtk.Align.START}
+      halign={Gtk.Align.FILL}
       spacing={10} >
-      <icon className="logo" icon={bind(default_microphone, "volumeIcon")} />
-      <label className="text"
+      <image
+        class="logo"
+        iconName={createBinding(default_microphone, "volumeIcon")}
+        valign={Gtk.Align.CENTER}
+        halign={Gtk.Align.CENTER}
+        pixelSize={14} />
+      <Gtk.Separator visible />
+      <label
+        class="text"
         valign={Gtk.Align.FILL}
         halign={Gtk.Align.FILL}
-        truncate={true}
-        css={`font-size: 80%;`}
-        label={volume.as(v => `${v}%`)} />
+        label={volume.as(v => `${Math.ceil(v * 100)}%`)}
+      />
     </box>
-  </button >
+    <popover>
+      <slider
+        widthRequest={220}
+        value={volume}
+        onChangeValue={({ value }) => default_microphone.set_volume(value)}
+      />
+    </popover>
+  </menubutton >
 }

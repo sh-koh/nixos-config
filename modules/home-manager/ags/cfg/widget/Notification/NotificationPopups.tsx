@@ -1,80 +1,51 @@
-import { Astal, Gtk, Gdk } from "astal/gtk3"
+import app from "ags/gtk4/app"
+import Gtk from "gi://Gtk?version=4.0"
+import Gdk from "gi://Gdk?version=4.0"
+import { Astal } from "ags/gtk4"
 import Notifd from "gi://AstalNotifd"
 import Notification from "./Notification"
-import { type Subscribable } from "astal/binding"
-import { Variable, bind, timeout } from "astal"
-
-// The purpose if this class is to replace Variable<Array<Widget>>
-// with a Map<number, Widget> type in order to track notification widgets
-// by their id, while making it conviniently bindable as an array
-class NotificationMap implements Subscribable {
-  // the underlying map to keep track of id widget pairs
-  private map: Map<number, Gtk.Widget> = new Map()
-
-  // it makes sense to use a Variable under the hood and use its
-  // reactivity implementation instead of keeping track of subscribers ourselves
-  private var: Variable<Array<Gtk.Widget>> = Variable([])
-
-  // notify subscribers to rerender when state changes
-  private notifiy() {
-    this.var.set([...this.map.values()].reverse())
-  }
-
-  constructor() {
-    const notifd = Notifd.get_default()
-    notifd.ignoreTimeout = true
-    notifd.connect("notified", (_, id) => {
-      this.set(id, Notification({
-        notification: notifd.get_notification(id)!,
-        setup: () => {
-          const expire_timeout = notifd.get_notification(id).get_expire_timeout() < 10000 ? 10000 : notifd.get_notification(id).get_expire_timeout();
-          timeout(expire_timeout, () => this.delete(id))
-        }
-      }))
-    })
-
-    // notifications can be closed by the outside before
-    // any user input, which have to be handled too
-    notifd.connect("resolved", (_, id) => {
-      this.delete(id)
-    })
-  }
-
-  private set(key: number, value: Gtk.Widget) {
-    // in case of replacecment destroy previous widget
-    this.map.get(key)?.destroy()
-    this.map.set(key, value)
-    this.notifiy()
-  }
-
-  private delete(key: number) {
-    this.map.get(key)?.destroy()
-    this.map.delete(key)
-    this.notifiy()
-  }
-
-  // needed by the Subscribable interface
-  get() {
-    return this.var.get()
-  }
-
-  // needed by the Subscribable interface
-  subscribe(callback: (list: Array<Gtk.Widget>) => void) {
-    return this.var.subscribe(callback)
-  }
-}
+import { For, createState } from "ags"
 
 export default function NotificationPopups(gdkmonitor: Gdk.Monitor) {
-  const { TOP, RIGHT } = Astal.WindowAnchor
-  const notifs = new NotificationMap()
+  const notifd = Notifd.get_default()
+
+  const [notifications, setNotifications] = createState(
+    new Array<Notifd.Notification>(),
+  )
+
+  const notifiedHandler = notifd.connect("notified", (_, id, replaced) => {
+    const notification = notifd.get_notification(id)
+
+    if (replaced && notifications.get().some(n => n.id === id)) {
+      setNotifications((ns) => ns.map((n) => (n.id === id ? notification : n)))
+    } else {
+      setNotifications((ns) => [notification, ...ns])
+    }
+  })
+
+  const resolvedHandler = notifd.connect("resolved", (_, id) => {
+    setNotifications((ns) => ns.filter((n) => n.id !== id))
+  })
 
   return <window
-    className="NotificationPopups"
+    class="NotificationPopups"
     gdkmonitor={gdkmonitor}
-    exclusivity={Astal.Exclusivity.EXCLUSIVE}
-    anchor={TOP | RIGHT}>
-    <box vertical noImplicitDestroy>
-      {bind(notifs)}
+    visible={notifications((ns) => ns.length > 0)}
+    anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
+  >
+    <box orientation={Gtk.Orientation.VERTICAL}>
+      <For each={notifications}>
+        {(notification) => (
+          <Notification
+            notification={notification}
+            onHoverLost={() =>
+              setNotifications((ns) =>
+                ns.filter((n) => n.id !== notification.id),
+              )
+            }
+          />
+        )}
+      </For>
     </box>
   </window>
 }

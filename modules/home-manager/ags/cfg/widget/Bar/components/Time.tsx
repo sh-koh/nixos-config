@@ -1,31 +1,37 @@
-import { Gtk } from "astal/gtk3"
-import { Variable, bind } from "astal"
+import Gtk from "gi://Gtk?version=4.0"
+import Gdk from "gi://Gdk?version=4.0"
+import GLib from "gi://GLib"
+import { createPoll } from "ags/time"
 
 export default function Time() {
-  const time = Variable("").poll(1000, `date "+%H:%M"`);
-  const fullDate = Variable("").poll(1000, `date "+%a %d %B %Y"`);
-  return <button
-    className="time"
-    onClickRelease={""}
-    cursor="pointer"
-    tooltipText={fullDate()}
+  const date = (fmt: string) => createPoll("", 1000, () => {
+    return GLib.DateTime.new_now_local().format(fmt)!
+  })
+  return <menubutton
+    class="time"
+    cursor={Gdk.Cursor.new_from_name('pointer', null)}
+    tooltipText={date("%a %d %B %Y")}
     valign={Gtk.Align.FILL}
-    halign={Gtk.Align.CENTER} >
+    halign={Gtk.Align.FILL} >
     <box
-      vertical={false}
+      orientation={Gtk.Orientation.HORIZONTAL}
       valign={Gtk.Align.FILL}
-      halign={Gtk.Align.START}
+      halign={Gtk.Align.FILL}
       spacing={10} >
-      <label
-        className="logo"
+      <image
+        class="logo"
         valign={Gtk.Align.CENTER}
         halign={Gtk.Align.CENTER}
-        label="" css={`font-size: 140%;`} />
+        iconName="preferences-system-time-symbolic" />
+      <Gtk.Separator visible />
       <label
-        className="text"
+        class="text"
         valign={Gtk.Align.FILL}
         halign={Gtk.Align.FILL}
-        label={time()} css={`font-size: 80%;`} />
+        label={date("%H:%M")} />
     </box>
-  </button>
+    <popover>
+      <Gtk.Calendar />
+    </popover>
+  </menubutton >
 }

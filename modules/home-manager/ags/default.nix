@@ -11,10 +11,16 @@
 
   programs.ags = {
     enable = true;
-    package = inputs'.ags.packages.agsFull;
+    package = inputs'.ags.packages.ags;
     systemd.enable = true;
     configDir = ./cfg;
     #configDir = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Documents/git/nixos-config/modules/home-manager/ags/cfg";
+    astal = {
+      gtk3Package = inputs'.ags.packages.astal3;
+      gtk4Package = inputs'.ags.packages.astal4;
+      ioPackage = inputs'.ags.packages.io;
+      gjsPackage = inputs'.ags.packages.gjsPackage;
+    };
     extraPackages =
       with inputs'.ags.packages;
       [
@@ -22,7 +28,6 @@
         battery
         bluetooth
         hyprland
-        io
         mpris
         network
         # niri # TODO: waiting for https://github.com/Aylur/astal/pull/70
@@ -32,7 +37,7 @@
         wireplumber
       ]
       ++ (with pkgs; [
-        config.wayland.windowManager.hyprland.package
+        # config.wayland.windowManager.hyprland.package
         config.programs.niri.package
         bash
         dart-sass
@@ -40,14 +45,10 @@
       ]);
   };
 
-  # Fix floating tray icon for Wine applications in AGS
   services.snixembed.enable = true;
+  systemd.user.services.ags.Unit.After = lib.mkForce "graphical-session.target";
 
-  systemd.user.services = {
-    ags.Unit.After = lib.mkForce "graphical-session.target";
-  };
-
-  home.file.".cache/.ags_colors.scss" = {
+  xdg.configFile."stylix/palette.scss" = {
     inherit (config.programs.ags) enable;
     onChange = ''${pkgs.systemd}/bin/systemctl --user restart ags.service'';
     text = with config.lib.stylix.colors.withHashtag; ''

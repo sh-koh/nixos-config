@@ -1,25 +1,36 @@
-import { Gtk } from "astal/gtk3"
-import { bind } from "astal"
+import Gtk from "gi://Gtk?version=4.0"
+import Gdk from "gi://Gdk?version=4.0"
+import { createBinding } from "ags"
 import Bluetooth from "gi://AstalBluetooth"
 
 export default function BluetoothStatus() {
   const bluetooth = Bluetooth.get_default();
-  return <button
-    className="bluetooth"
-    onClickRelease={""}
-    cursor="pointer"
-    tooltipText={bind(bluetooth, "adapter").as(adapter => `Device name: ${adapter.name}`)}
+  return <menubutton
+    class="bluetooth"
+    cursor={Gdk.Cursor.new_from_name('pointer', null)}
+    tooltipText={createBinding(bluetooth, "adapter").as(adapter => `Device name: ${adapter.name}`)}
     valign={Gtk.Align.FILL}
-    halign={Gtk.Align.CENTER}
-    visible={bind(bluetooth, "isPowered")} >
-    <box >
-      <icon className="logo" css={`margin-right: 8px;`} icon={bind(bluetooth, "isConnected").as(s => s ? "bluetooth-active-symbolic" : "bluetooth-disabled-symbolic")} />
-      <label className="text"
+    halign={Gtk.Align.FILL}
+    visible={createBinding(bluetooth, "isPowered")} >
+    <box
+      orientation={Gtk.Orientation.HORIZONTAL}
+      valign={Gtk.Align.FILL}
+      halign={Gtk.Align.FILL}
+      spacing={10}>
+      <image class="logo"
+        pixelSize={14}
+        valign={Gtk.Align.CENTER}
+        halign={Gtk.Align.CENTER}
+        iconName={createBinding(bluetooth, "isConnected").as(s => s ? "bluetooth-active-symbolic" : "bluetooth-disabled-symbolic")}
+      />
+      <Gtk.Separator visible />
+      <label class="text"
         valign={Gtk.Align.FILL}
         halign={Gtk.Align.FILL}
-        truncate={true}
-        css={`font-size: 80%;`}
-        label={bind(bluetooth, "devices").as(devices => devices[0].connected ? devices[0].name : "Not connected")} />
+        label={createBinding(bluetooth, "devices").as(devices => devices[0].connected ? devices[0].name : "N/A")} />
     </box>
-  </button>
+    <popover>
+      <label label={createBinding(bluetooth, "devices").as(devices => devices[0].connected ? devices[0].name : "N/A")} />
+    </popover>
+  </menubutton>
 }

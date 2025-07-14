@@ -1,18 +1,36 @@
-import { App } from "astal/gtk3"
+import Gdk from "gi://Gdk?version=4.0"
+import GLib from "gi://GLib"
+import Gtk from "gi://Gtk?version=4.0"
+import app from "ags/gtk4/app"
 import style from "./style.scss"
 import Bar from "./widget/Bar/Bar"
-import LeftPanel from "./widget/LeftPanel/LeftPanel"
 import RightPanel from "./widget/RightPanel/RightPanel"
-import NotificationPopups from "./widget/Notification/NotificationPopups"
+import AppLauncher from "./widget/AppLauncher/AppLauncher"
 
-App.start({
+let applauncher: Gtk.Window
+
+app.start({
   css: style,
+  gtkTheme: "adw-gtk3",
+  requestHandler(request, res) {
+    const [, argv] = GLib.shell_parse_argv(request)
+    if (!argv) return res("argv parse error")
+
+    switch (argv[0]) {
+      case "toggle":
+        applauncher.visible = !applauncher.visible
+        return res("ok")
+      default:
+        return res("unknown command")
+    }
+  },
   main() {
-    App.get_monitors().forEach((v, i) => {
-      Bar(v, i)
-      RightPanel(i)
-      LeftPanel(i)
-      NotificationPopups(v)
+    applauncher = AppLauncher() as Gtk.Window
+    app.add_window(applauncher)
+    applauncher.present()
+    app.get_monitors().forEach((gdk: Gdk.Monitor, id: number) => {
+      Bar(gdk, id)
+      RightPanel(id)
     })
   },
 })

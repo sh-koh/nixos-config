@@ -1,24 +1,22 @@
-import { App, Gtk, Gdk } from "astal/gtk3"
+import app from "ags/gtk4/app"
+import Gtk from "gi://Gtk?version=4.0"
+import Gdk from "gi://Gdk?version=4.0"
 
-export default function OpenRightPanel(monitorID: number) {
+export default function RightPanelButton(monitorID: number) {
   return <button
-    className="rightpanel"
-    cursor="pointer"
+    class="rightpanel"
+    cursor={Gdk.Cursor.POINTER}
     tooltipText={"Show/Hide right panel"}
-    valign={Gtk.Align.CENTER}
-    halign={Gtk.Align.CENTER}
-    onClickRelease={(_, event) => {
-      const panel = App.get_window(`RightPanel-${monitorID}`);
-      switch (event.button) {
-        case Gdk.BUTTON_PRIMARY:
-          if (panel != null) panel.visible = !panel.visible
-          break;
-        case Gdk.BUTTON_SECONDARY:
-          break;
-        default:
-          break;
-      }
+    valign={Gtk.Align.FILL}
+    halign={Gtk.Align.END}
+    onClicked={() => {
+      const panel = app.get_window(`RightPanel-${monitorID}`);
+      if (panel != null) panel.visible = !panel.visible
     }} >
-    <label label="󱗼" css={`font-size: 130%; `} />
-  </button>
+    <image
+      valign={Gtk.Align.CENTER}
+      halign={Gtk.Align.CENTER}
+      iconName="orientation-portrait-inverse-symbolic"
+    />
+  </button >
 }

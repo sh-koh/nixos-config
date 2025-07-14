@@ -1,61 +1,46 @@
-@use '/home/shakoh/.cache/.ags_colors' as *;
+@use '/home/shakoh/.config/stylix/palette.scss' as *;
+@use "sass:string";
 
-
-@mixin btn($clr) {
-  transition: 150ms;
-  min-width: 18px;
-  padding: 2px 6px;
-  margin: 2px;
+@mixin ws-btn($clr) {
+  transition: 100ms;
+  min-width: 12px;
   color: $clr;
-  background: rgba($clr, 0.1);
+  background: rgba($clr, 0.01);
   border-radius: 2px;
 
   &:hover {
-    background: rgba($clr, 0.4);
+    background: rgba($clr, 0.1);
     color: $clr;
   }
 
   &:active {
-    background: rgba($base03, 0.3);
-    color: $base03;
-    border-bottom: 1px solid $base03;
+    background: rgba($clr, 0.2);
+    color: $clr;
   }
 }
 
-@mixin text-btn($clr) {
-  @include btn($clr);
+@mixin menu-btn($clr) {
   padding: 0px;
-
-  &:hover {
-    .text {
-      margin: 0px;
-      padding: 0px 6px;
-      min-width: 20px;
-      background-color: rgba($base01, 0.5);
-    }
-  }
-
-  &:active {
-    .text {
-      margin: 0px;
-      padding: 0px 6px;
-      min-width: 20px;
-      color: rgba($clr, 0.5)
-    }
-  }
+  transition: 100ms;
+  color: $clr;
+  background: rgba($clr, 0.01);
 
   .logo {
-    padding: 0px;
-    margin-left: 8px;
     min-width: 10px;
   }
 
   .text {
-    margin: 0px;
-    padding: 0px 6px;
-    min-width: 20px;
-    background-color: $base01;
+    min-width: 10px;
+    font-size: 80%;
+    background: transparent;
+  }
 
+  &:hover {
+    background: rgba($clr, 0.1);
+  }
+
+  &:active {
+    background: rgba($clr, 0.2);
   }
 }
 
@@ -74,14 +59,14 @@
 
 * {
   border-radius: 0px;
-  font-family: "FiraCode Nerd Font Mono";
+  font-family: "Lilex Nerd Font";
 }
 
-window.Bar {
+.bar {
   color: $base04;
-  background: transparent;
+  background-color: $base00;
   padding: 2px 6px;
-  margin: 2px;
+  margin: 0px;
 
   >centerbox {
     background: $base00;
@@ -89,63 +74,65 @@ window.Bar {
 
   .start {
     .leftpanel {
-      @include text-btn($base0C);
+      @include menu-btn($base0C);
     }
 
-    .music {
-      @include text-btn($base08)
-    }
+    .music {}
 
     .audio-speaker {
-      @include text-btn($base09);
+      @include menu-btn($base0B);
     }
 
     .audio-microphone {
-      @include text-btn($base0B);
+      @include menu-btn($base08);
     }
   }
 
   .middle {
     .focused {
-      @include btn($base0D);
+      @include ws-btn($base0D);
       border-bottom: 2px solid rgba($base0D, 0.6);
     }
 
     .occupied {
-      @include btn($base0D);
+      @include ws-btn($base0D);
       border-bottom: 2px dotted rgba($base0D, 0.4);
     }
 
     .empty {
-      @include btn($base03);
+      @include ws-btn($base03);
     }
   }
 
   .end {
     .tray-icons {
       button {
-        @include btn($base04);
+        @include ws-btn($base04);
       }
     }
 
     .bluetooth {
-      @include text-btn($base0D);
+      @include menu-btn($base0D);
     }
 
     .networking {
-      @include text-btn($base0E);
+      @include menu-btn($base0E);
     }
 
     .battery {
-      @include text-btn($base0C);
+      @include menu-btn($base0C);
+
+      & low {
+        @include menu-btn($base08);
+      }
     }
 
     .time {
-      @include text-btn($base0B);
+      @include menu-btn($base0B);
     }
 
     .rightpanel {
-      @include btn($base0A);
+      @include ws-btn($base0A);
 
       >box {
         min-width: 350px;
@@ -193,91 +180,86 @@ window.LeftPanel {
   .end {}
 }
 
-eventbox.Notification {
+/*
+  --------------------------------------
+  ---------Notifications: FIXME---------
+  --------------------------------------
+*/
 
-  font-size: 90%;
+window.NotificationPopups {
+  all: unset;
+}
 
-  &:first-child>box {
-    margin-top: 1rem;
-  }
+.Notification {
+  border-radius: 13px;
+  background-color: $base01;
+  margin: 0.5rem 1rem 0.5rem 1rem;
+  box-shadow: 2px 3px 8px 0 rgba(black, 0.4);
+  border: 1pt solid rgba($base06, 0.03);
 
-  &:last-child>box {
-    margin-bottom: 1rem;
-  }
-
-  // eventboxes can not take margins so we style its inner box instead
-  >box {
-    min-width: 350px;
-    border-radius: 2px;
-    background-color: $base00;
-    margin: .5rem 1rem .5rem 1rem;
-    box-shadow: 2px 3px 8px 0 rgba($base00, 0.5);
-    border: 1px solid $base03;
-  }
-
-  &.critical>box {
-    border: 1pt solid rgba($base08, .4);
+  &.critical {
+    border: 1pt solid rgba($base08, 0.4);
 
     .header {
       .app-name {
-        color: rgba($base08, .8);
+        color: rgba($base08, 0.8);
       }
 
       .app-icon {
-        color: rgba($base08, .6);
+        color: rgba($base08, 0.6);
       }
     }
   }
 
   .header {
-    padding: .5rem;
-    color: rgba($base0D, 0.5);
+    padding: 0.5rem;
+    color: rgba($base06, 0.5);
 
     .app-icon {
-      margin: 0 .4rem;
+      margin: 0 0.4rem;
     }
 
     .app-name {
-      margin-right: .3rem;
+      margin-right: 0.3rem;
       font-weight: bold;
 
       &:first-child {
-        margin-left: .4rem;
+        margin-left: 0.4rem;
       }
     }
 
     .time {
-      margin: 0 .4rem;
+      margin: 0 0.4rem;
     }
 
     button {
-      padding: .2rem;
+      padding: 0.2rem;
       min-width: 0;
       min-height: 0;
     }
   }
 
   separator {
-    margin: 0 .4rem;
-    background-color: rgba($base0D, .1);
+    margin: 0 0.4rem;
+    background-color: rgba($base06, 0.1);
   }
 
   .content {
     margin: 1rem;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
 
     .summary {
       font-size: 1.2em;
-      color: $base0D;
+      color: $base06;
     }
 
     .body {
-      color: rgba($base0D, 0.8);
+      color: rgba($base06, 0.8);
     }
 
     .image {
-      border: 1px solid rgba($base0D, .02);
-      margin-right: .5rem;
+      border: 1px solid rgba($base06, 0.02);
+      margin-right: 0.5rem;
       border-radius: 9px;
       min-width: 100px;
       min-height: 100px;
@@ -291,7 +273,7 @@ eventbox.Notification {
     margin-top: 0;
 
     button {
-      margin: 0 .3rem;
+      margin: 0 0.3rem;
 
       &:first-child {
         margin-left: 0;
@@ -299,6 +281,34 @@ eventbox.Notification {
 
       &:last-child {
         margin-right: 0;
+      }
+    }
+  }
+}
+
+.applauncher {
+  background: transparent;
+  color: $base06;
+
+  box#applauncher-content {
+    background: $base00;
+    min-width: 400px;
+    border-radius: 2px;
+    padding: 6px;
+
+    entry {
+      background: $base01;
+      border-radius: 2px;
+    }
+
+    box#applauncher-applist {
+      button {
+        border-radius: 2px;
+        background: rgba($base01, 0.5);
+      }
+
+      image {
+        padding-right: 10px;
       }
     }
   }

@@ -1,55 +1,64 @@
-import { App, Astal, Gtk, Gdk } from "astal/gtk3"
+import app from "ags/gtk4/app"
+import { Astal } from "ags/gtk4"
+import Gtk from "gi://Gtk?version=4.0"
+import Gdk from "gi://Gdk?version=4.0"
 import BatteryStatus from "./components/Battery"
 import BluetoothStatus from "./components/Bluetooth"
 import MicrophoneStatus from "./components/Microphone"
 import MusicStatus from "./components/Mpris"
 import NetworkStatus from "./components/Network"
-import OpenLeftPanel from "./components/LeftPanelButton"
-import OpenRightPanel from "./components/RightPanelButton"
+import StartMenu from "./components/StartMenu"
+import RightPanelButton from "./components/RightPanelButton"
 import SpeakerStatus from "./components/Speaker"
 import Time from "./components/Time"
-import TrayIcons from "./components/TrayIcons"
+import TrayIcons from "./components/Tray"
 import Workspaces from "./components/Workspaces"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, monitorID: number) {
+  const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
   return <window
-    name={`Bar - ${monitorID} `}
-    className="Bar"
-    monitor={monitorID}
+    visible
+    class="bar"
     gdkmonitor={gdkmonitor}
     exclusivity={Astal.Exclusivity.EXCLUSIVE}
-    anchor={Astal.WindowAnchor.LEFT | Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-    application={App}>
-    <centerbox vertical={false} >
+    anchor={TOP | LEFT | RIGHT}
+    application={app}>
+    <centerbox orientation={Gtk.Orientation.HORIZONTAL} >
       <box
-        className="Bar start"
-        vertical={false}
-        valign={Gtk.Align.CENTER}
+        class="Bar start"
+        orientation={Gtk.Orientation.HORIZONTAL}
+        $type="start"
+        spacing={3}
+        valign={Gtk.Align.FILL}
         halign={Gtk.Align.START} >
-        {OpenLeftPanel(monitorID)}
+        <StartMenu />
         <SpeakerStatus />
         <MicrophoneStatus />
         <MusicStatus />
       </box>
       <box
-        className="Bar middle"
-        vertical={false}
-        valign={Gtk.Align.CENTER}
+        class="Bar middle"
+        orientation={Gtk.Orientation.HORIZONTAL}
+        $type="center"
+        spacing={3}
+        valign={Gtk.Align.FILL}
         halign={Gtk.Align.CENTER} >
         {Workspaces(monitorID)}
       </box>
       <box
-        className="Bar end"
-        vertical={false}
-        valign={Gtk.Align.CENTER}
+        class="Bar end"
+        orientation={Gtk.Orientation.HORIZONTAL}
+        $type="end"
+        spacing={3}
+        valign={Gtk.Align.FILL}
         halign={Gtk.Align.END} >
         <TrayIcons />
         <BluetoothStatus />
         <NetworkStatus />
         <BatteryStatus />
         <Time />
-        {OpenRightPanel(monitorID)}
+        {RightPanelButton(monitorID)}
       </box>
-    </centerbox>
-  </window>
+    </centerbox >
+  </window >
 }

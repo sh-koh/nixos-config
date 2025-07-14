@@ -1,16 +1,13 @@
 import Gtk from "gi://Gtk?version=4.0"
 import Gdk from "gi://Gdk?version=4.0"
-import { createBinding } from "ags"
-import Battery from "gi://AstalBattery"
 
-export default function BatteryStatus() {
-  const bat = Battery.get_default();
+export default function StartMenu(monitorID: number) {
   return <menubutton
-    class={createBinding(bat, "percentage").as(p => p > 0.2 ? "battery low" : "battery")}
+    class="leftpanel"
     cursor={Gdk.Cursor.new_from_name('pointer', null)}
+    tooltipText={"Show/Hide left panel"}
     valign={Gtk.Align.FILL}
-    halign={Gtk.Align.FILL}
-    visible={createBinding(bat, "isPresent")} >
+    halign={Gtk.Align.FILL} >
     <box
       orientation={Gtk.Orientation.HORIZONTAL}
       valign={Gtk.Align.FILL}
@@ -18,18 +15,21 @@ export default function BatteryStatus() {
       spacing={10} >
       <image
         class="logo"
-        pixelSize={14}
         valign={Gtk.Align.CENTER}
         halign={Gtk.Align.CENTER}
-        iconName={createBinding(bat, "batteryIconName")} />
+        iconName="nix-snowflake" />
       <Gtk.Separator visible />
       <label
         class="text"
         valign={Gtk.Align.FILL}
         halign={Gtk.Align.FILL}
-        label={createBinding(bat, "percentage").as(p => `${Math.floor(p * 100)}%`)} />
+        label="Start" />
     </box>
     <popover>
+      <label
+        valign={Gtk.Align.FILL}
+        halign={Gtk.Align.FILL}
+        label="TODO" />
     </popover>
   </menubutton >
 }
