@@ -1,9 +1,18 @@
 { pkgs, config, ... }:
 {
-  fonts.packages = with pkgs; [ lexend ];
+  fonts.packages = with pkgs; [
+    lexend
+    # nerd-fonts.ubuntu-mono
+    # nerd-fonts.droid-sans-mono
+    # nerd-fonts.hack
+    # intel-one-mono
+    # julia-mono
+    # nerd-fonts.lilex
+    # nerd-fonts.noto
+    # nerd-fonts.roboto-mono
+  ];
   security.polkit.enable = true;
   gtk.iconCache.enable = true;
-
   programs.regreet = {
     enable = true;
     cageArgs = [
@@ -12,6 +21,11 @@
       "-m"
       "last"
     ];
+  };
+
+  programs.goldwarden = {
+    enable = true;
+    useSshAgent = true;
   };
 
   services = {
@@ -42,6 +56,7 @@
   services.pipewire = {
     enable = true;
     audio.enable = true;
+    jack.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
