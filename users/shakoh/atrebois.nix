@@ -39,6 +39,12 @@
     };
   };
 
+  home.file = {
+    ".steam/root/compatibilitytools.d/XIV-Proton" = {
+      source = pkgs.proton-xiv-bin.steamcompattool;
+    };
+  };
+
   home.packages = with pkgs; [
     celluloid
     blender

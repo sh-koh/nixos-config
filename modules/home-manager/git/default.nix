@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  inputs',
   ...
 }:
 {
@@ -52,7 +53,6 @@
 
     pogit = {
       inherit (config.programs.git) enable;
-      package = pkgs.pogit;
       config = {
         /*
           %i = icon

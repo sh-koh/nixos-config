@@ -119,9 +119,9 @@
     };
     pogit = {
       type = "github";
-      owner = "y-syo";
+      owner = "sh-koh";
       repo = "pogit";
-      ref = "master";
+      ref = "fix-nix-build";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";

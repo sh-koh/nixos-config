@@ -580,16 +580,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1749310715,
-        "narHash": "sha256-MYaYMHNHrgBklZtfckZVBDtJ1/NWxan4NYEMNN+m8+U=",
-        "owner": "y-syo",
+        "lastModified": 1752538309,
+        "narHash": "sha256-0x6S6Ea4FxRDlKqvXeAJpYQ6N7KYKMNUtm/dUx4kSrE=",
+        "owner": "sh-koh",
         "repo": "pogit",
-        "rev": "41ff687e0de434dfea979e3f8bc037434aa5d086",
+        "rev": "dc1c8ca672522331e8aacbb03b8956ede439efe8",
         "type": "github"
       },
       "original": {
-        "owner": "y-syo",
-        "ref": "master",
+        "owner": "sh-koh",
+        "ref": "fix-nix-build",
         "repo": "pogit",
         "type": "github"
       }

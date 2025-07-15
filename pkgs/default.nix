@@ -25,6 +25,7 @@
           };
           aarch64-linux = { };
           i686-linux = { }; # FIXME
+          wasm32-wasi = { }; # FIXME
         }
         .${system};
     };
