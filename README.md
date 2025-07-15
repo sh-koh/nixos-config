@@ -18,7 +18,7 @@
 - [x] [flake-parts](https://github.com/hercules-ci/flake-parts)
 - [x] [nixvim](https://github.com/nix-community/nixvim)
 - [x] [stylix](https://github.com/danth/stylix)
-- [ ] [agenix](https://github.com/ryantm/agenix) -> [vaultix](https://github.com/milieuim/vaultix)
+- [x] [vaultix](https://github.com/milieuim/vaultix)
 - [ ] [disko](https://github.com/nix-community/disko)
 - [ ] [lanzaboote](https://github.com/nix-community/lanzaboote)
 - [ ] [impermanence](https://github.com/nix-community/impermanence)

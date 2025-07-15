@@ -6,10 +6,7 @@
   ...
 }:
 {
-  imports = [
-    inputs.self.nixosModules.secrets
-    inputs.self.nixosModules.nushell
-  ];
+  imports = [ inputs.self.nixosModules.nushell ];
 
   users = {
     mutableUsers = false;
@@ -23,12 +20,11 @@
         uid = 1000;
         isNormalUser = true;
         # shell = pkgs.nushell;
-        hashedPasswordFile = lib.mkDefault config.age.secrets.shakoh-pwd.path;
+        hashedPasswordFile = lib.mkDefault config.vaultix.secrets.shakoh-passwd.path;
         extraGroups = [
           "adbusers"
           "audio"
           "podman"
-          "docker"
           "gamemode"
           "input"
           "kvm"

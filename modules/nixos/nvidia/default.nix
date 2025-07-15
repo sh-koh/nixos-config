@@ -35,8 +35,10 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware = {
-    nvidia-container-toolkit.enable =
-      config.virtualisation.podman.enable || config.virtualisation.docker.enable;
+    nvidia-container-toolkit = {
+      enable = config.virtualisation.podman.enable || config.virtualisation.docker.enable;
+      suppressNvidiaDriverAssertion = true;
+    };
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.beta;
       open = true;

@@ -1,7 +1,10 @@
 {
   ssh = {
+    atrebois = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK8mSODPWJ3LYjemvdAQuyX8D99BWE2jJb8FwnfPveod";
+    rocaille = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJyWP+oDfP9EgQEACGNQmDU1aF7eEJMSRN7aIK+HOIp6";
+    cravite = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIFbyRpBemQ8F3OOy7Jt7b4eykij33kdyaC4EUl+e4C7";
     shakoh = {
-      # TODO: renew all keys.
+      # TODO: Renew all keys and use ed25519 instead of rsa.
       # to ...
       atrebois = {
         # from ...

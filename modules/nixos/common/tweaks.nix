@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -54,13 +55,8 @@
   documentation.nixos.enable = false;
   services.orca.enable = false;
   services.speechd.enable = false;
+  services.userborn.enable = true;
 
-  /*
-    TODO: ONE of those two options need to be enabled for vaultix but it
-    creates errors using agenix, so we dont do this for now.
-  */
-  # services.userborn.enable = true;
-  # systemd.sysusers.enable = true;
   /*
     FIXME,TODO: It mounts a temporary filesystem on top of etc, hiding files
     located on the previously existant filesystem, so no more ssh keys

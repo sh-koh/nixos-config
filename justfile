@@ -34,3 +34,9 @@ build HOST:
 clean:
   sudo nix-collect-garbage -d
   nix-collect-garbage -d
+
+sec-upd:
+  nix run .#vaultix.app.{{arch()}}-linux.renc
+
+sec-add NAME:
+  nix run .#vaultix.app.{{arch()}}-linux.edit -- ./secrets/{{NAME}}.age

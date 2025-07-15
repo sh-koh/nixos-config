@@ -12,12 +12,14 @@
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         inputs.home-manager.flakeModules.home-manager
+        inputs.vaultix.flakeModules.default
         ./hosts
         ./lib
         ./modules
         ./overlays
         ./pkgs
         ./users
+        ./secrets
       ];
 
       perSystem =
@@ -25,6 +27,7 @@
           pkgs,
           self',
           inputs',
+          system,
           ...
         }:
         {
@@ -41,7 +44,6 @@
               nurl
               statix
               inputs'.ags.packages.agsFull
-              inputs'.agenix.packages.agenix
               inputs'.home-manager.packages.home-manager
             ];
           };
@@ -76,21 +78,7 @@
       ref = "main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mysecrets = {
-      type = "git";
-      url = "ssh://git@github.com/sh-koh/nix-secrets.git";
-      ref = "main";
-      shallow = true;
-      flake = false;
-    };
     # Dependencies (in alphabetical order)
-    agenix = {
-      type = "github";
-      owner = "ryantm";
-      repo = "agenix";
-      ref = "main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     ags = {
       type = "github";
       owner = "aylur";
@@ -138,6 +126,16 @@
       owner = "nix-community";
       repo = "stylix";
       ref = "master";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
+    vaultix = {
+      type = "github";
+      owner = "milieuim";
+      repo = "vaultix";
+      ref = "main";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";

@@ -32,13 +32,6 @@
     };
   };
 
-  users.users.shakoh = {
-    initialPassword = lib.mkForce "cravite";
-    hashedPasswordFile = lib.mkForce null;
-  };
-
-  age.secrets = lib.mkForce { };
-
   services.k3s = {
     enable = true;
   };
