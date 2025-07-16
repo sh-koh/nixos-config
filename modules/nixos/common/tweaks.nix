@@ -10,6 +10,7 @@
   };
 
   boot = {
+    initrd.systemd.enable = true;
     kernelPackages =
       lib.mkDefault
         pkgs.linuxKernel.packages."linux_${lib.concatStringsSep "_" (lib.take 2 (lib.splitVersion pkgs.linuxKernel.kernels.linux_latest.version))}";
@@ -45,7 +46,6 @@
     rebuild.enableNg = true;
   };
 
-  boot.initrd.systemd.enable = true;
   system.tools.nixos-generate-config.enable = false;
   programs.less.lessopen = null;
   programs.command-not-found.enable = false;

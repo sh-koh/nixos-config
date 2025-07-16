@@ -7,6 +7,7 @@
 
   boot.initrd.systemd = {
     enable = lib.mkForce false;
+    network.enable = lib.mkForce false;
     tpm2.enable = false;
   };
 
