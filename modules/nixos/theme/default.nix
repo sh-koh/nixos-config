@@ -15,10 +15,10 @@
   stylix = {
     enable = true;
     opacity = {
-      applications = 0.98;
-      desktop = 0.98;
-      popups = 0.96;
-      terminal = 0.96;
+      applications = 1.0;
+      desktop = 1.0;
+      popups = 1.0;
+      terminal = 1.0;
     };
     cursor = {
       name = "BreezeX-Light";
