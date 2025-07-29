@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   programs.nixvim = {
     plugins = {
@@ -6,9 +5,5 @@
         enable = true;
       };
     };
-    extraPackages = with pkgs; [
-      vale
-      tflint
-    ];
   };
 }

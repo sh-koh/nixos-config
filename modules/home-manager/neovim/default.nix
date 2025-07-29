@@ -16,6 +16,10 @@
       providers.wl-copy.enable = true;
       register = "unnamedplus";
     };
+    globals = {
+      rustfmt_autosave = 1;
+      rustfmt_fail_silently = 1;
+    };
     opts = {
       title = true;
       number = true;

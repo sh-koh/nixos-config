@@ -13,16 +13,16 @@
   # Use `""` (empty string) to not create one.
   mappings = {
     close = "q";
-    go_in = "l";
-    go_in_plus = "L";
-    go_out = "h";
-    go_out_plus = "H";
+    go_in = "L";
+    go_in_plus = "<C-l>";
+    go_out = "H";
+    go_out_plus = "<C-h>";
     mark_goto = "m";
     mark_set = "M";
     reset = "<BS>";
     reveal_cwd = "@";
     show_help = "g?";
-    synchronize = "=";
+    synchronize = "<CR>";
     trim_left = "<";
     trim_right = ">";
   };

@@ -3,7 +3,7 @@
     keymaps = [
       {
         action = "<cmd>Oil<CR>";
-        key = "<leader>o";
+        key = "<leader>F";
         mode = "n";
         options = {
           silent = true;
@@ -15,7 +15,7 @@
       oil = {
         enable = true;
         settings = {
-          default_file_explorer = true;
+          default_file_explorer = false;
           cleanup_delay_ms = 2000;
           constrain_cursor = "editable"; # One of editable, name or false
           delete_to_trash = true;

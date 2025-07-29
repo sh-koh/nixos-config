@@ -20,7 +20,8 @@
         close_on_exit = false;
         direction = "float";
         float_opts = {
-          border = "rounded";
+          #border = "rounded";
+          border = "single";
           # col = null;
           height = 40;
           # row = null;
