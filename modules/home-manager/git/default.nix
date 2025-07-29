@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   inputs,
@@ -19,36 +20,45 @@
   programs = {
     git = {
       enable = true;
-      package = pkgs.gitFull;
-      lfs.enable = true;
-      delta.enable = true;
       userName = "sh-koh";
       userEmail = "70974710+sh-koh@users.noreply.github.com";
+      package = pkgs.gitFull;
+      lfs.enable = true;
+      delta = {
+        enable = true;
+        options = {
+          syntax-theme = "base16-stylix";
+          dark = true;
+          navigate = true;
+          line-numbers = true;
+          hyperlinks = true;
+          side-by-side = true;
+          color-moved = "default";
+        };
+      };
       extraConfig = {
         init.defaultBranch = "master";
         push.autoSetupRemote = true;
         pull.rebase = true;
-        url = {
-          "ssh://git@github.com/sh-koh".insteadOf = "https://github.com/sh-koh";
-          "ssh://git@gitlab.com/sh-koh".insteadOf = "https://gitlab.com/sh-koh";
-        };
+        url = lib.concatMapAttrs (k: _v: {
+          "ssh://git@${k}.com/${config.programs.git.userName}".insteadOf =
+            "https://${k}.com/${config.programs.git.userName}";
+        }) (lib.genAttrs [ "github" "gitlab" ] (x: x));
       };
     };
 
     ssh = {
-      addKeysToAgent = "yes";
-      matchBlocks = {
-        "github" = {
-          host = "github.com";
-          user = "git";
-          identityFile = "~/.ssh/id_github";
-        };
-        "gitlab" = {
-          host = "gitlab.com";
-          user = "git";
-          identityFile = "~/.ssh/id_gitlab";
-        };
-      };
+      matchBlocks =
+        lib.genAttrs
+          [
+            "github"
+            "gitlab"
+          ]
+          (host: {
+            host = "${host}.com";
+            user = "git";
+            identityFile = "~/.ssh/id_${host}";
+          });
     };
 
     pogit = {
