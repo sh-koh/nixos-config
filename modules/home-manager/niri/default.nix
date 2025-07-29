@@ -13,25 +13,24 @@ let
       name = "screenshot-active-monitor.sh";
       runtimeInputs = with pkgs; [
         satty
-        grim
-        jq
-        wl-clipboard
+        wl-clipboard-rs
         libnotify
         config.programs.niri.package
       ];
       text = ''
-        grim -o "$(niri -j monitors all | \
-          niri msg -j focused-output | jq -r '.name')" - | \
-            if [ ! -v "$1" ]; then
-              case "$1" in
-                "--edit")
-                  satty --filename - --fullscreen --early-exit --copy-command 'wl-copy' --initial-tool 'crop'
-                  ;;
-                *)
-                  wl-copy && notify-send 'Screenshot: copied to clipboard.'
-                  ;;
-              esac
-            fi
+        niri msg action screenshot-screen
+        if [[ ! -v "$1" && "$1" == "--edit" ]]; then
+        sleep 0.03 && wl-paste | \
+        satty \
+          --filename - \
+          --fullscreen \
+          --early-exit \
+          --no-window-decoration \
+          --copy-command 'wl-copy' \
+          --initial-tool 'crop'
+        else
+          wl-copy && notify-send 'Screenshot: copied to clipboard.'
+        fi
       '';
     }
   );
@@ -152,10 +151,7 @@ in
         zoom = 0.80;
       };
       binds = with config.lib.niri.actions; {
-        "Mod+Return".action.spawn = [
-          "${lib.getExe config.programs.kitty.package}"
-          "-1"
-        ];
+        "Mod+Return".action.spawn = [ "${lib.getExe config.programs.ghostty.package}" ];
         "Mod+Space".action.spawn = [
           "${lib.getExe config.programs.ags.package}"
           "toggle"
@@ -291,7 +287,12 @@ in
         "Mod+6".action.focus-workspace = 6;
         "Mod+7".action.focus-workspace = 7;
         "Mod+8".action.focus-workspace = 8;
-        "Mod+9".action.focus-workspace = 9;
+        "Mod+9".action.focus-workspace =
+          {
+            atrebois = "gaming";
+            rocaille = 9;
+          }
+          .${config.home.sessionVariables.HOSTNAME};
         "Mod+0".action.focus-workspace = "tmp";
         "Mod+Ctrl+1".action.move-column-to-workspace = 1;
         "Mod+Ctrl+2".action.move-column-to-workspace = 2;
@@ -312,10 +313,7 @@ in
         "Mod+N".action = set-window-height "+5%";
         "Mod+Shift+N".action = set-window-height "-5%";
         "Ctrl+Print".action = screenshot-window;
-        "Print".action.spawn = [
-          "${screenshotActiveMonitor}"
-          "--edit"
-        ];
+        "Print".action = screenshot;
         "Mod+Shift+S".action.spawn = [
           "${screenshotActiveMonitor}"
           "--edit"
@@ -324,7 +322,7 @@ in
       layout = {
         gaps = 8;
         default-column-width.proportion = 0.7;
-        border.width = 2;
+        border.width = 1;
         shadow = {
           enable = true;
           softness = 10;
@@ -519,6 +517,7 @@ in
   };
 
   services = {
+    gnome-keyring.enable = true;
     hyprpaper.enable = true;
     hypridle = {
       enable = true;
@@ -566,7 +565,10 @@ in
     portal = {
       enable = true;
       xdgOpenUsePortal = true;
-      extraPortals = with pkgs; [ xdg-desktop-portal-gnome ];
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
+      ];
       config.common.default = [ "gnome" ];
     };
     autostart = {

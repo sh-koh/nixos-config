@@ -11,7 +11,7 @@
 
   imports = with inputs.self.homeModules; [
     ags
-    kitty
+    terminal
     neovim
     niri
     vesktop
@@ -25,10 +25,6 @@
         obs-vkcapture
       ];
     };
-  };
-
-  services = {
-    gnome-keyring.enable = true;
   };
 
   xdg = {
@@ -50,6 +46,7 @@
     blender
     bottles
     drawio
+    euphonica
     libreoffice
     loupe
     ghidra
@@ -62,11 +59,9 @@
     pwvucontrol
     qbittorrent
     remmina
-    sshfs
     teams-for-linux
     telegram-desktop
     thunderbird
-    wl-clipboard
     inputs'.zen-browser-flake.packages.zen-browser
   ];
 

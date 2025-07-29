@@ -11,20 +11,17 @@
 
   imports = with inputs.self.homeModules; [
     ags
-    kitty
+    terminal
     neovim
     niri
     vesktop
   ];
 
-  services = {
-    gnome-keyring.enable = true;
-  };
-
   home.packages = with pkgs; [
     celluloid
     bottles
     drawio
+    euphonica
     libreoffice
     loupe
     ghidra
@@ -37,11 +34,9 @@
     pwvucontrol
     qbittorrent
     remmina
-    sshfs
     teams-for-linux
     telegram-desktop
     thunderbird
-    wl-clipboard
     inputs'.zen-browser-flake.packages.zen-browser
   ];
 }

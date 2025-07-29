@@ -13,18 +13,22 @@
       btop
       coreutils
       curl
+      dua
       file
       grex
-      jq
+      jaq
       kubectl
       lm_sensors
       lshw
+      oha
       pciutils
+      presenterm
       psmisc
-      tldr
+      sshfs
+      strace
+      tealdeer
       usbutils
       wget
-      wikiman
       xxd
     ];
   };
