@@ -20,12 +20,7 @@ in
         common
         nix
         podman
-        {
-          nix.settings = {
-            cores = 2;
-            max-jobs = 2;
-          };
-        }
+        { nix.settings.max-jobs = 2; }
       ]
     )
   );

@@ -26,12 +26,7 @@ in
         podman
         printing
         vfio
-        {
-          nix.settings = {
-            cores = 4;
-            max-jobs = 4;
-          };
-        }
+        { nix.settings.max-jobs = 8; }
       ]
     )
   );

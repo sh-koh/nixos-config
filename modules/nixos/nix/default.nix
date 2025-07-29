@@ -6,6 +6,7 @@
   ...
 }:
 {
+  environment.variables.NIX_BUILD_CORES = "$(( $(nproc) / 2 < 1 ? 1 : $(nproc) / 2 ))";
   nix =
     let
       flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;

@@ -24,12 +24,7 @@ in
         nix
         podman
         printing
-        {
-          nix.settings = {
-            cores = 2;
-            max-jobs = 2;
-          };
-        }
+        { nix.settings.max-jobs = 2; }
       ]
     )
   );
