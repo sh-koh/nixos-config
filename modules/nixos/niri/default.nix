@@ -9,7 +9,10 @@
 
   xdg = {
     portal = {
-      extraPortals = with pkgs; [ xdg-desktop-portal-gnome ];
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
+      ];
       config.common = {
         default = [ "gnome" ];
         "org.freedesktop.impl.portal.FileChooser" = [ "gnome" ];

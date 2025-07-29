@@ -41,7 +41,15 @@
     };
   };
 
-  security.sudo.execWheelOnly = true;
+  security.sudo-rs = {
+    enable = true;
+    execWheelOnly = true;
+  };
+
+  security.sudo = {
+    enable = false;
+    execWheelOnly = true;
+  };
 
   time.timeZone = "Europe/Paris";
   console.keyMap = "us-acentos";

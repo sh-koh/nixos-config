@@ -11,7 +11,6 @@
     # nerd-fonts.noto
     # nerd-fonts.roboto-mono
   ];
-  security.polkit.enable = true;
   gtk.iconCache.enable = true;
   programs.regreet = {
     enable = true;
@@ -25,12 +24,20 @@
 
   programs.goldwarden = {
     enable = true;
-    useSshAgent = true;
+    useSshAgent = false;
   };
 
   services = {
     greetd.enable = true;
     gnome.gnome-keyring.enable = true;
+  };
+
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
+    pam.services = {
+      greetd.enableGnomeKeyring = true;
+    };
   };
 
   xdg = {
@@ -52,7 +59,6 @@
     GDK_BACKEND = "wayland";
   };
 
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     audio.enable = true;
