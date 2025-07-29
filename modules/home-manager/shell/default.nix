@@ -16,10 +16,10 @@
         "..." = "cd ../..";
         "...." = "cd ../../..";
         "....." = "cd ../../../..";
-        cat = "${getExe bat} --style=auto --color=auto --paging=never --tabs=2 --wrap=never";
         cd = "__zoxide_z";
         fd = "${getExe fd} -H";
-        less = "${getExe bat} --style=auto --color=auto --paging=always --number --tabs=2 --wrap=never";
+        cat = "${getExe bat} --style=changes,numbers --color=auto --paging=never --italic-text=always --tabs=2 --wrap=never --binary=as-text";
+        less = "${getExe bat} --style=changes,numbers --color=auto --paging=always --italic-text=always --tabs=2 --wrap=never --binary=no-printing";
         rg = "${getExe ripgrep} -SpnH";
         untar = "tar --zstd -xpvf";
         mktar = "tar --zstd -cvf";

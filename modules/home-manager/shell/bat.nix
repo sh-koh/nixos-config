@@ -6,8 +6,7 @@
   programs.bat = {
     enable = true;
     config = {
-      pager = "less -FR";
-      theme = "base16-stylix";
+      pager = config.programs.bash.sessionVariables.PAGER;
     };
   };
 }
