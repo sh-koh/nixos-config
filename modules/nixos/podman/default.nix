@@ -1,3 +1,4 @@
+{ config, pkgs, ... }:
 {
   virtualisation = {
     podman = {
@@ -15,4 +16,5 @@
       backend = "podman";
     };
   };
+  environment.systemPackages = [ pkgs.podman-compose ];
 }

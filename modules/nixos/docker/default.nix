@@ -1,3 +1,4 @@
+{ config, pkgs, ... }:
 {
   virtualisation = {
     docker = {
@@ -16,4 +17,5 @@
       backend = "docker";
     };
   };
+  environment.systemPackages = [ pkgs.docker-compose ];
 }
