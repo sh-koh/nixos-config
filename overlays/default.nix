@@ -7,6 +7,8 @@
         { inputs', ... }:
         {
           coreutils-full = final.uutils-coreutils-noprefix;
+          diffutils = prev.lib.hiPrio prev.uutils-diffutils;
+          findutils = prev.lib.hiPrio prev.uutils-findutils;
           zoxide = prev.zoxide.override { withFzf = false; };
           steam = prev.steam.override { extraArgs = "-pipewire -pipewire-dmabuf -system-composer"; };
           xivlauncher-rb = prev.xivlauncher-rb.override {
