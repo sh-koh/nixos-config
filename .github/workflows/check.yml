@@ -27,4 +27,4 @@ jobs:
         run: nix flake show --all-systems
 
       - name: Check flake
-        run: nix flake check --all-systems --verbose
+        run: nix flake check --all-systems .?submodules=1#
