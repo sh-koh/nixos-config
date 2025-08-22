@@ -52,39 +52,39 @@
           sort_alphabetically = true;
         };
       };
-      keybindings = {
-        quit = [
-          "esc"
-          "ctrl-c"
-        ];
-        select_next_entry = [
-          "down"
-          "ctrl-n"
-          "ctrl-j"
-        ];
-        select_prev_entry = [
-          "up"
-          "ctrl-p"
-          "ctrl-k"
-        ];
-        select_prev_page = "alt-up";
-        select_next_page = "alt-down";
-        toggle_selection_down = "tab";
-        toggle_selection_up = "backtab";
-        confirm_selection = "enter";
-        scroll_preview_half_page_down = [
-          "alt-j"
-          "pagedown"
-        ];
-        scroll_preview_half_page_up = [
-          "alt-k"
-          "pageup"
-        ];
-        copy_entry_to_clipboard = "ctrl-y";
-        toggle_remote_control = "ctrl-t";
-        toggle_preview = "ctrl-o";
-        toggle_help = "ctrl-h";
-      };
+      # keybindings = {
+      #   quit = [
+      #     "esc"
+      #     "ctrl-c"
+      #   ];
+      #   select_next_entry = [
+      #     "down"
+      #     "ctrl-n"
+      #     "ctrl-j"
+      #   ];
+      #   select_prev_entry = [
+      #     "up"
+      #     "ctrl-p"
+      #     "ctrl-k"
+      #   ];
+      #   select_prev_page = "alt-up";
+      #   select_next_page = "alt-down";
+      #   toggle_selection_down = "tab";
+      #   toggle_selection_up = "backtab";
+      #   confirm_selection = "enter";
+      #   scroll_preview_half_page_down = [
+      #     "alt-j"
+      #     "pagedown"
+      #   ];
+      #   scroll_preview_half_page_up = [
+      #     "alt-k"
+      #     "pageup"
+      #   ];
+      #   copy_entry_to_clipboard = "ctrl-y";
+      #   toggle_remote_control = "ctrl-t";
+      #   toggle_preview = "ctrl-o";
+      #   toggle_help = "ctrl-h";
+      # };
       shell_integration = {
         fallback_channel = "files";
         channel_triggers = {
@@ -156,19 +156,15 @@
       };
     };
     channels = {
-      "custom" = {
-        cable_channel = [
-          {
-            name = "nix";
-            source_command = "${lib.getExe pkgs.nix-search-tv} print";
-            preview_command = "${lib.getExe pkgs.nix-search-tv} preview {}";
-          }
-          {
-            name = "zoxide";
-            source_command = "${lib.getExe pkgs.zoxide} query -l";
-            preview_command = "${lib.getExe pkgs.eza} -la --color=always {}";
-          }
-        ];
+      "nix" = {
+        metadata.name = "nix";
+        source.command = "${lib.getExe pkgs.nix-search-tv} print";
+        preview.command = "${lib.getExe pkgs.nix-search-tv} preview {}";
+      };
+      "zoxide" = {
+        metadata.name = "zoxide";
+        source.command = "${lib.getExe pkgs.zoxide} query -l";
+        preview.command = "${lib.getExe pkgs.eza} -la --color=always {}";
       };
     };
   };
