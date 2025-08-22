@@ -28,13 +28,17 @@
       WINE_LARGE_ADDRESS_AWARE = "1";
       WINE_SIMULATE_WRITECOPY = "1";
       WINE_DISABLE_HARDWARE_SCHEDULING = "0";
+      PROTON_ENABLE_WAYLAND = "1";
+      PROTON_ENABLE_HIDRAW = "1";
+      PROTON_USE_NTSYNC = "1";
+      PROTON_USE_WOW64 = "1";
     };
     systemPackages = with pkgs; [
       cemu
       dolphin-emu
       lutris
       prismlauncher
-      ryujinx
+      ryubing
       (xivlauncher-rb.override {
         nvngxPath = "${config.hardware.nvidia.package}/lib/nvidia/wine";
       })
@@ -47,8 +51,8 @@
     udev.packages = [
       (pkgs.writeTextFile {
         name = "ntsync-udev-rules";
-        text = ''KERNEL=="ntsync", MODE="0660", TAG+="uaccess"'';
         destination = "/etc/udev/rules.d/70-ntsync.rules";
+        text = ''KERNEL=="ntsync", MODE="0660", TAG+="uaccess"'';
       })
     ];
     sunshine = {

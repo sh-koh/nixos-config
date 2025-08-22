@@ -5,23 +5,21 @@
 }:
 {
   boot = {
-    extraModprobeConfig = ''
-      options nvidia NVreg_UsePageAttributeTable=1
-      options nvidia NVreg_InitializeSystemMemoryAllocations=1
-      options nvidia NVreg_EnableGpuFirmware=1
-      options nvidia NVreg_EnablePCIeGen3=1
-      options nvidia NVreg_EnableMSI=1
-      options nvidia NVreg_RegistryDwords="PerfLevelSrc=0x2222"
-    '';
+    kernelParams = [
+      "nvidia.NVreg_UsePageAttributeTable=1"
+      "nvidia.NVreg_EnableGpuFirmware=1"
+      "nvidia.NVreg_EnableMSI=1"
+      "nvidia.NVreg_RegistryDwords=RmEnableAggressiveVblank=1"
+      "nvidia.NVreg_RegistryDwords=RMIntrLockingMode=1"
+      "nvidia.NVreg_EnableS0ixPowerManagement=1"
+      "nvidia.NVreg_DynamicPowerManagement=0x02"
+    ];
   };
 
   environment.variables = {
-    GBM_BACKEND = "nvidia-drm";
-    LIBVA_DRIVER_NAME = "nvidia";
-    VDPAU_DRIVER = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     __GL_SHADER_DISK_CACHE = "1";
-    __GL_SYNC_DISPLAY_DEVICE = "DP-1";
+    __GL_SYNC_DISPLAY_DEVICE = { atrebois = "DP-1"; }.${config.networking.hostName};
     __GL_YIELD = "USLEEP";
     __GL_SYNC_TO_VBLANK = "1";
     __GL_GSYNC_ALLOWED = "1";
@@ -30,6 +28,9 @@
     __GL_ALLOW_UNOFFICIAL_PROTOCOL = "1";
     NVD_BACKEND = "direct";
     __NV_DISABLE_EXPLICIT_SYNC = "0";
+    GBM_BACKEND = "nvidia-drm";
+    LIBVA_DRIVER_NAME = "nvidia";
+    VDPAU_DRIVER = "nvidia";
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
