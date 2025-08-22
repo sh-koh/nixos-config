@@ -1,6 +1,6 @@
 {
   config,
-  mkNixos,
+  mkSystem,
   withSystem,
   ...
 }:
@@ -10,7 +10,7 @@ in
 {
   flake.nixosConfigurations.atrebois = withSystem system (
     _:
-    mkNixos system (
+    mkSystem system (
       with config.flake.nixosModules;
       [
         ./cfg.nix
@@ -26,7 +26,11 @@ in
         podman
         printing
         vfio
-        { nix.settings.max-jobs = 8; }
+        {
+          nix.settings.max-jobs = 8;
+          time.timeZone = "Europe/Paris";
+          console.keyMap = "us-acentos";
+        }
       ]
     )
   );

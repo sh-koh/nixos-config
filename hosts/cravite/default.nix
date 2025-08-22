@@ -1,6 +1,6 @@
 {
   config,
-  mkNixos,
+  mkSystem,
   withSystem,
   ...
 }:
@@ -10,7 +10,7 @@ in
 {
   flake.nixosConfigurations.cravite = withSystem system (
     _:
-    mkNixos system (
+    mkSystem system (
       with config.flake.nixosModules;
       [
         ./cfg.nix
@@ -20,7 +20,11 @@ in
         common
         nix
         podman
-        { nix.settings.max-jobs = 2; }
+        {
+          nix.settings.max-jobs = 2;
+          time.timeZone = "Europe/Paris";
+          console.keyMap = "us-acentos";
+        }
       ]
     )
   );

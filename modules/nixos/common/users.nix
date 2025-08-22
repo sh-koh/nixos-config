@@ -6,16 +6,8 @@
   ...
 }:
 {
-  imports = [ inputs.self.nixosModules.nushell ];
-
   users = {
-    mutableUsers = false;
     users = {
-      root = {
-        uid = 0;
-        home = "/root";
-        hashedPassword = "!";
-      };
       shakoh = {
         uid = 1000;
         isNormalUser = true;
@@ -41,16 +33,22 @@
     };
   };
 
-  security.sudo-rs = {
-    enable = true;
-    execWheelOnly = true;
+  vaultix = {
+    settings = {
+      hostPubkey = inputs.self.lib.pubKeys.ssh.${config.networking.hostName};
+      decryptedDir = "/run/vaultix";
+      decryptedDirForUser = "/run/vaultix-for-user";
+      decryptedMountPoint = "/run/vaultix.d";
+    };
+    secrets = {
+      shakoh-passwd = {
+        file = inputs.self + /secrets/shakoh/shakoh-passwd.age;
+        mode = "0400";
+        owner = "root";
+        group = "root";
+      };
+    };
+    templates = { };
+    beforeUserborn = [ "shakoh-passwd" ];
   };
-
-  security.sudo = {
-    enable = false;
-    execWheelOnly = true;
-  };
-
-  time.timeZone = "Europe/Paris";
-  console.keyMap = "us-acentos";
 }

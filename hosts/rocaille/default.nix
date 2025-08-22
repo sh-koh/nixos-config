@@ -1,6 +1,6 @@
 {
   config,
-  mkNixos,
+  mkSystem,
   withSystem,
   ...
 }:
@@ -10,7 +10,7 @@ in
 {
   flake.nixosConfigurations.rocaille = withSystem system (
     _:
-    mkNixos system (
+    mkSystem system (
       with config.flake.nixosModules;
       [
         ./cfg.nix
@@ -24,7 +24,11 @@ in
         nix
         podman
         printing
-        { nix.settings.max-jobs = 2; }
+        {
+          nix.settings.max-jobs = 2;
+          time.timeZone = "Europe/Paris";
+          console.keyMap = "us-acentos";
+        }
       ]
     )
   );

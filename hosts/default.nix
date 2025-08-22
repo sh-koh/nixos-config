@@ -5,7 +5,7 @@
   ...
 }:
 let
-  mkNixos =
+  mkSystem =
     system: extraModules:
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = withSystem system (
@@ -48,6 +48,6 @@ in
   ];
 
   _module.args = {
-    inherit mkNixos;
+    inherit mkSystem;
   };
 }

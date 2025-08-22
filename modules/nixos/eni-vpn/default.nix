@@ -16,27 +16,27 @@
   vaultix = {
     secrets = with inputs; {
       vpn-eni-cfg = {
-        file = inputs.self + /secrets/vpn-eni-cfg.age;
+        file = inputs.self + /secrets/pro/vpn-eni-cfg.age;
         mode = "0400";
         owner = "root";
       };
       vpn-eni-crt = {
-        file = inputs.self + /secrets/vpn-eni-crt.age;
+        file = inputs.self + /secrets/pro/vpn-eni-crt.age;
         mode = "0400";
         owner = "root";
       };
       vpn-eni-key = {
-        file = inputs.self + /secrets/vpn-eni-key.age;
+        file = inputs.self + /secrets/pro/vpn-eni-key.age;
         mode = "0400";
         owner = "root";
       };
       vpn-eni-up = {
-        file = inputs.self + /secrets/vpn-eni-up.age;
+        file = inputs.self + /secrets/pro/vpn-eni-up.age;
         mode = "0500";
         owner = "root";
       };
       eni-logins = {
-        file = inputs.self + /secrets/eni-logins.age;
+        file = inputs.self + /secrets/pro/eni-logins.age;
         mode = "0400";
         owner = "root";
       };

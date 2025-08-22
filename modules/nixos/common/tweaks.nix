@@ -5,6 +5,11 @@
   ...
 }:
 {
+  imports = [
+    inputs.vaultix.nixosModules.default
+    inputs.self.nixosModules.nushell
+  ];
+
   hardware = {
     enableAllFirmware = true;
   };
@@ -53,6 +58,12 @@
 
   zramSwap.enable = true;
 
+  security.sudo.enable = false;
+  security.sudo-rs = {
+    enable = true;
+    execWheelOnly = true;
+  };
+
   services = {
     dbus = {
       enable = true;
@@ -62,6 +73,17 @@
     fwupd.enable = true;
     gvfs.enable = true;
     upower.enable = true;
+  };
+
+  users = {
+    mutableUsers = false;
+    users = {
+      root = {
+        uid = 0;
+        home = "/root";
+        hashedPassword = "!";
+      };
+    };
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";

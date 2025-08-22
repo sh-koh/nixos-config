@@ -39,7 +39,11 @@ clean:
     nix-collect-garbage -d
 
 sec-renc:
-    nix run .?submodules=1#vaultix.app.{{ arch() }}-linux.renc
+    nix run .?submodules=1#vaultix.app.{{ arch() }}-{{ os() }}.renc
+    pushd secrets
+    git add secrets
+    git commit -m "[🔒] vaultix: renc secrets"
+    popd
 
 sec-edit NAME:
     nix run .?submodules=1#vaultix.app.{{ arch() }}-linux.edit -- ./secrets/{{ NAME }}.age
