@@ -23,6 +23,7 @@
 - [ ] [lanzaboote](https://github.com/nix-community/lanzaboote)
 - [ ] [impermanence](https://github.com/nix-community/impermanence)
 - [ ] [colmena](https://github.com/zhaofengli/colmena)
+- [ ] [raspberry-pi-nix](https://github.com/nix-community/raspberry-pi-nix) -> [nixos-raspberrypi](https://github.com/nvmd/nixos-raspberrypi)
 
 
 ### 👼 Credits
