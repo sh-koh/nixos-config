@@ -16,5 +16,8 @@
       BROWSER = "xdg-open";
       GNOME_KEYRING_CONTROL = "/run/user/$UID/keyring";
     };
+    initExtra = ''
+      shopt -s autocd cdspell extglob extquote globstar
+    '';
   };
 }

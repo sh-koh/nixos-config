@@ -11,7 +11,7 @@
     stateVersion = lib.mkDefault "23.05";
     packages = with pkgs; [
       btop
-      coreutils
+      coreutils-full
       curl
       dua
       file
@@ -27,8 +27,11 @@
       sshfs
       strace
       tealdeer
+      typst
       usbutils
+      watchexec
       wget
+      wl-clipboard-rs
       xxd
     ];
   };

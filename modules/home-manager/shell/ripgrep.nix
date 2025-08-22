@@ -1,6 +1,9 @@
 {
   programs.ripgrep = {
     enable = true;
-    arguments = [ "--colors=line:style:bold" ];
+    arguments = [
+      "--colors=line:style:bold"
+      "-SpnH"
+    ];
   };
 }

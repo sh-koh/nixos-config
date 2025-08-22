@@ -19,7 +19,6 @@
       gtk3Package = inputs'.ags.packages.astal3;
       gtk4Package = inputs'.ags.packages.astal4;
       ioPackage = inputs'.ags.packages.io;
-      gjsPackage = inputs'.ags.packages.gjsPackage;
     };
     extraPackages =
       with inputs'.ags.packages;
@@ -37,11 +36,11 @@
         wireplumber
       ]
       ++ (with pkgs; [
-        # config.wayland.windowManager.hyprland.package
-        config.programs.niri.package
+        (lib.mkIf config.wayland.windowManager.hyprland.enable config.wayland.windowManager.hyprland.package)
+        (lib.mkIf config.programs.niri.enable config.programs.niri.package)
         bash
         dart-sass
-        coreutils
+        coreutils-full
       ]);
   };
 

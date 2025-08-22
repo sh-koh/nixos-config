@@ -27,17 +27,15 @@
     };
   };
 
-  xdg = {
-    dataFile = {
-      "lutris/runners/proton/GE-Proton" = {
-        source = pkgs.proton-ge-bin.steamcompattool;
-      };
+  xdg.dataFile = {
+    "lutris/runners/proton/GE-Proton" = {
+      source = pkgs.proton-ge-bin.steamcompattool;
     };
   };
 
   home.file = {
-    ".steam/root/compatibilitytools.d/XIV-Proton" = {
-      source = pkgs.proton-xiv-bin.steamcompattool;
+    ".steam/root/compatibilitytools.d/GE-Proton" = {
+      source = pkgs.proton-ge-bin.steamcompattool;
     };
   };
 

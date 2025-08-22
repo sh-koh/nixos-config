@@ -1,4 +1,9 @@
-{ inputs, lib, ... }:
+{
+  inputs,
+  config,
+  lib,
+  ...
+}:
 {
   services.ssh-agent.enable = true;
   programs.ssh = {
@@ -21,10 +26,12 @@
             serverAliveCountMax = 3;
           };
         })
-        {
-          atrebois = 201;
-          rocaille = 202;
-          cravite = 210;
-        };
+        (
+          builtins.removeAttrs {
+            atrebois = 201;
+            rocaille = 202;
+            cravite = 210;
+          } [ config.home.sessionVariables.HOSTNAME ]
+        );
   };
 }
