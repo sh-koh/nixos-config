@@ -102,6 +102,19 @@
     gamescope = {
       enable = true;
       capSysNice = false;
+      package =
+        {
+          atrebois = pkgs.symlinkJoin {
+            name = "gamescope";
+            paths = [ pkgs.gamescope ];
+            buildInputs = [ pkgs.makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/gamescope \
+                --add-flags "-f -h 1080 -r 240 -o 40 --adaptive-sync --immediate-flips --force-grab-cursor --force-windows-fullscreen --rt --ready-fd --expose-wayland --backend wayland --"
+            '';
+          };
+        }
+        .${config.networking.hostName};
     };
     gamemode = {
       enable = true;
