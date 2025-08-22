@@ -582,30 +582,6 @@
         "type": "github"
       }
     },
-    "pogit": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1752560492,
-        "narHash": "sha256-0x6S6Ea4FxRDlKqvXeAJpYQ6N7KYKMNUtm/dUx4kSrE=",
-        "owner": "y-syo",
-        "repo": "pogit",
-        "rev": "28c74d71e0accb7677d36ad807191a041671bbda",
-        "type": "github"
-      },
-      "original": {
-        "owner": "y-syo",
-        "ref": "master",
-        "repo": "pogit",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -665,7 +641,6 @@
         "niri": "niri",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
-        "pogit": "pogit",
         "raspberry-pi": "raspberry-pi",
         "stylix": "stylix",
         "utils": "utils",

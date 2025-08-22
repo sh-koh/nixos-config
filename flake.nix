@@ -27,7 +27,6 @@
           pkgs,
           self',
           inputs',
-          system,
           ...
         }:
         {
@@ -43,7 +42,6 @@
               just
               nurl
               statix
-              inputs'.ags.packages.agsFull
               inputs'.home-manager.packages.home-manager
             ];
           };
@@ -75,7 +73,7 @@
       type = "github";
       owner = "sh-koh";
       repo = "nix-utils";
-      ref = "main";
+      ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Dependencies (in alphabetical order)
@@ -105,17 +103,18 @@
         flake-parts.follows = "flake-parts";
       };
     };
-    pogit = {
-      type = "github";
-      owner = "y-syo";
-      repo = "pogit";
-      ref = "master";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-      };
-    };
     raspberry-pi = {
+      /*
+        TODO: raspberry-pi-nix is deprecated, a migration to
+        [nixos-raspberrypi](https://github.com/nvmd/nixos-raspberrypi)
+        is needed.
+      */
+      /*
+        type = "github";
+        owner = "nvmd";
+        repo = "nixos-raspberrypi";
+        ref = "develop";
+      */
       type = "github";
       owner = "nix-community";
       repo = "raspberry-pi-nix";

@@ -7,10 +7,6 @@
   ...
 }:
 {
-  imports = [
-    inputs.pogit.homeManagerModules.default
-  ];
-
   home.packages = with pkgs; [
     act
     gist
@@ -36,6 +32,30 @@
           color-moved = "default";
         };
       };
+      hooks = {
+        prepare-commit-msg = lib.getExe (
+          pkgs.writeShellApplication {
+            name = "prepare-commit-msg-hook.sh";
+            runtimeInputs = with pkgs; [ ];
+            text = ''
+              cat << 'EOF' >> "$1"
+              # Commit types:
+              # [🗑️] clean(_): cleaned project.
+              # [✨] feat(_): added a very cool feature !
+              # [🎉] init(_): hello world !
+              # [✏️] norm(_): normed project.
+              # [🚧] test(_): testing things, might broke.
+              # [🏗️] wip(_): work in progress, not done yet.
+              # [🔨] fix(_): fixed some things.
+              # [📝] doc(_): added documentation.
+              # [❄️] nix(_): nix related changes.
+              # [🔄] revert(_): reverted some changes.
+              # [💡] update(_): updated!
+              EOF
+            '';
+          }
+        );
+      };
       extraConfig = {
         init.defaultBranch = "master";
         push.autoSetupRemote = true;
@@ -59,31 +79,6 @@
             user = "git";
             identityFile = "~/.ssh/id_${host}";
           });
-    };
-
-    pogit = {
-      inherit (config.programs.git) enable;
-      config = {
-        /*
-          %i = icon
-          %t = type (nix, norm, fix, etc.)
-          %d = denominator (surrounded by parenthesis)
-          %m = commit message
-        */
-        # format = "[%i] %t%d: %m"; # TODO: fix upstream
-        nix = {
-          icon = "❄️";
-          msg = "nix related changes.";
-        };
-        revert = {
-          icon = "🔄";
-          msg = "reverted some changes.";
-        };
-        update = {
-          icon = "💡";
-          msg = "updated!";
-        };
-      };
     };
   };
 }
