@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -34,7 +35,10 @@
       fsType = "btrfs";
       options = [
         "nofail"
-        "compress=zstd"
+        "noatime"
+        "compress=zstd:3"
+        "space_cache=v2"
+        "ssd"
       ];
     };
     "/media/SSHD" = {
@@ -42,7 +46,9 @@
       fsType = "btrfs";
       options = [
         "nofail"
-        "compress=zstd"
+        "noatime"
+        "compress=zstd:3"
+        "space_cache=v2"
       ];
     };
   };

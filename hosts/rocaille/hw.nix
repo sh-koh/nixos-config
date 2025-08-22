@@ -1,6 +1,9 @@
 {
   boot = {
     kernelModules = [ "kvm-intel" ];
+    kernel.sysctl = {
+      "rcutree.enable_rcu_lazy" = 1;
+    };
     initrd.availableKernelModules = [
       "ahci"
       "xhci_pci"
