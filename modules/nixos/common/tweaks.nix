@@ -36,26 +36,6 @@
         pkgs.linuxKernel.packages."linux_${lib.concatStringsSep "_" (lib.take 2 (lib.splitVersion pkgs.linuxKernel.kernels.linux_latest.version))}";
   };
 
-  services.udev.packages = [
-    (pkgs.writeTextFile {
-      name = "sata-udev-rules";
-      destination = "/etc/udev/rules.d/60-sata.rules";
-      text = ''
-        ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", \
-            ATTR{link_power_management_policy}=="*", \
-            ATTR{link_power_management_policy}="max_performance"
-      '';
-    })
-    (pkgs.writeTextFile {
-      name = "hdparm-udev-rules";
-      destination = "/etc/udev/rules.d/69-hdparm.rules";
-      text = ''
-        ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", \
-            RUN+="${lib.getExe pkgs.hdparm} -B 254 -S 0 /dev/%k"
-      '';
-    })
-  ];
-
   zramSwap.enable = true;
 
   security.sudo.enable = false;
@@ -73,6 +53,36 @@
     fwupd.enable = true;
     gvfs.enable = true;
     upower.enable = true;
+    udev.packages = [
+      (pkgs.writeTextFile {
+        name = "sata-udev-rules";
+        destination = "/etc/udev/rules.d/60-sata.rules";
+        text = ''
+          ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", \
+              ATTR{link_power_management_policy}=="*", \
+              ATTR{link_power_management_policy}="max_performance"
+        '';
+      })
+      (pkgs.writeTextFile {
+        name = "hdparm-udev-rules";
+        destination = "/etc/udev/rules.d/69-hdparm.rules";
+        text = ''
+          ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", \
+              RUN+="${lib.getExe pkgs.hdparm} -B 254 -S 0 /dev/%k"
+        '';
+      })
+    ];
+    openssh = {
+      enable = true;
+      startWhenNeeded = true;
+      ports = [ 72 ];
+      settings = {
+        KbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+        AllowUsers = [ "shakoh" ];
+      };
+    };
+
   };
 
   users = {
@@ -87,17 +97,6 @@
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
-
-  services.openssh = {
-    enable = true;
-    startWhenNeeded = true;
-    ports = [ 72 ];
-    settings = {
-      KbdInteractiveAuthentication = false;
-      PasswordAuthentication = false;
-      AllowUsers = [ "shakoh" ];
-    };
-  };
 
   system = {
     rebuild.enableNg = true;

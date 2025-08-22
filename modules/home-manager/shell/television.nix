@@ -172,7 +172,7 @@
   programs.television.settings.ui.theme =
     if config.programs.television.enable then "stylix" else null;
   xdg.configFile."television/themes/stylix.toml" = {
-    enable = config.programs.television.enable;
+    inherit (config.programs.television) enable;
     text = with config.lib.stylix.colors.withHashtag; ''
       background = '${base00}'
       border_fg = '${base03}'

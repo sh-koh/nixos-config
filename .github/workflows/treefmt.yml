@@ -1,0 +1,29 @@
+name: Check
+on: [ push, pull_request]
+jobs:
+  tests:
+    name: Treefmt
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout from GitHub
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.NIX_SECRETS_ACCESS_TOKEN }}
+
+      - name: Check flake inputs
+        uses: DeterminateSystems/flake-checker-action@main
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = auto-allocate-uids ca-derivations cgroups configurable-impure-env daemon-trust-override dynamic-derivations fetch-closure fetch-tree flakes git-hashing impure-derivations local-overlay-store mounted-ssh-store nix-command no-url-literals parse-toml-timestamps pipe-operators read-only-local-store recursive-nix verified-fetches
+            sandbox = true
+            preallocate-contents = true
+            require-sigs = true
+
+      - name: Check flake
+        run: nix build .?submodules=1#checks.x86_64-linux.treefmt --accept-flake-config

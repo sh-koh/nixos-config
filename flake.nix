@@ -11,7 +11,9 @@
 
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
+        inputs.git-hooks-nix.flakeModule
         inputs.home-manager.flakeModules.home-manager
+        inputs.treefmt-nix.flakeModule
         inputs.vaultix.flakeModules.default
         ./hosts
         ./lib
@@ -26,23 +28,45 @@
           pkgs,
           self',
           inputs',
+          config,
           ...
         }:
         {
-          formatter = pkgs.nixfmt-rfc-style;
           devShells.default = pkgs.mkShellNoCC {
             inherit (self') formatter;
             name = "deployment-shell";
             stdenv.shell = pkgs.bash;
+            shellHook = "${config.pre-commit.installationScript}";
             packages = with pkgs; [
               nixVersions.latest
-              deadnix
               git
               just
               nurl
               statix
               inputs'.home-manager.packages.home-manager
+              config.treefmt.build.wrapper
             ];
+          };
+          pre-commit.settings.hooks = {
+            treefmt = {
+              enable = true;
+              settings = {
+                formatters = with pkgs; [
+                  nixfmt-rfc-style
+                  yamlfmt
+                ];
+              };
+            };
+            deadnix = {
+              enable = true;
+              settings = {
+                edit = true;
+                quiet = true;
+              };
+            };
+            statix = {
+              enable = true;
+            };
           };
         };
       flake.vaultix = {
@@ -74,6 +98,20 @@
       repo = "flake-parts";
       ref = "main";
       inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    treefmt-nix = {
+      type = "github";
+      owner = "numtide";
+      repo = "treefmt-nix";
+      ref = "main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    git-hooks-nix = {
+      type = "github";
+      owner = "cachix";
+      repo = "git-hooks.nix";
+      ref = "master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     utils = {
       type = "github";
