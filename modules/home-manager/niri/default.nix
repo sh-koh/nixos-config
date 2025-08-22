@@ -151,7 +151,7 @@ in
         zoom = 0.80;
       };
       binds = with config.lib.niri.actions; {
-        "Mod+Return".action.spawn = [ "${lib.getExe config.programs.ghostty.package}" ];
+        "Mod+Return".action.spawn = [ "${lib.getExe config.programs.wezterm.package}" ];
         "Mod+Space".action.spawn = [
           "${lib.getExe config.programs.ags.package}"
           "toggle"
@@ -352,13 +352,13 @@ in
               name = "discord";
               open-on-output = "HDMI-A-1";
             };
-            "4-gaming" = {
-              name = "gaming";
-              open-on-output = "DP-1";
-            };
-            "5-others" = {
+            "4-others" = {
               name = "others";
               open-on-output = "HDMI-A-1";
+            };
+            "5-gaming" = {
+              name = "gaming";
+              open-on-output = "DP-1";
             };
             "6-tmp" = {
               name = "tmp";
@@ -376,15 +376,15 @@ in
         .${config.home.sessionVariables.HOSTNAME};
       window-rules = [
         {
-          matches = [
-            { app-id = "^steam_app_.*$"; }
-            { app-id = "^gamescope$"; }
-            { app-id = "^Minecraft.*$"; }
-            { app-id = "^osu\\!$"; }
-            { app-id = "^overwatch\.exe$"; }
-            { app-id = "^ffxiv_dx11\.exe$"; }
-          ];
-          variable-refresh-rate = true;
+          matches = [ { is-window-cast-target = true; } ];
+          border = {
+            active.color = config.lib.stylix.colors.withHashtag.base08;
+            inactive.color = config.lib.stylix.colors.withHashtag.base0A;
+          };
+          tab-indicator = {
+            active.color = config.lib.stylix.colors.withHashtag.base08;
+            inactive.color = config.lib.stylix.colors.withHashtag.base0A;
+          };
         }
         {
           matches = [
@@ -414,7 +414,33 @@ in
             }
           ];
           default-column-width.proportion = 0.5;
-          open-on-workspace = "other";
+          open-on-workspace = "others";
+        }
+        {
+          matches = [
+            { app-id = "^ffxiv_dx11\\.exe$"; }
+            { app-id = "^osu\\!$"; }
+            { app-id = "^overwatch\.exe$"; }
+            { app-id = "^net\\.lutris\\.Lutris$"; }
+            { app-id = "^info\\.cemu\\.Cemu$"; }
+            { app-id = "^dolphin-emu$"; }
+            { app-id = "^org\\.prismlauncher\\.PrismLauncher$"; }
+            { app-id = "^Minecraft.*$"; }
+            { app-id = "^gamescope$"; }
+          ];
+          default-column-width.proportion = 0.8;
+          open-on-workspace = "gaming";
+        }
+        {
+          matches = [
+            { app-id = "^steam_app_.*$"; }
+            { app-id = "^gamescope$"; }
+            { app-id = "^Minecraft.*$"; }
+            { app-id = "^osu\\!$"; }
+            { app-id = "^overwatch\\.exe$"; }
+            { app-id = "^ffxiv_dx11\\.exe$"; }
+          ];
+          variable-refresh-rate = true;
         }
         {
           matches = [
@@ -442,7 +468,7 @@ in
         hide-when-typing = false;
       };
       debug = {
-        disable-direct-scanout = [ ];
+        # disable-direct-scanout = [ ];
       };
     };
   };
