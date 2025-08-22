@@ -4,6 +4,8 @@
   ...
 }:
 {
+  imports = [ ./rustaceanvim.nix ];
+
   programs.nixvim = {
     plugins = {
       nix.enable = true;
@@ -30,33 +32,52 @@
               };
           };
 
-          gopls.enable = true;
+          gopls = {
+            enable = true;
+            package = null;
+          };
           hls = {
             enable = true;
+            package = null;
             installGhc = false;
           };
-          lua_ls.enable = true;
-          ruff.enable = true;
-          rust_analyzer = {
+          lua_ls = {
             enable = true;
-            installRustc = false;
-            installCargo = false;
+            package = null;
           };
-          ts_ls.enable = true;
-          zls.enable = true;
+          ruff = {
+            enable = true;
+            package = null;
+          };
+          ts_ls = {
+            enable = true;
+            package = null;
+          };
+          zls = {
+            enable = true;
+            package = null;
+          };
 
-          dockerls.enable = true;
-          ansiblels.enable = true;
+          dockerls = {
+            enable = true;
+            package = null;
+          };
+          ansiblels = {
+            enable = true;
+            package = null;
+          };
           terraformls = {
             enable = true;
-            package = pkgs.tofu-ls;
+            package = null;
           };
-          nginx_language_server.enable = true;
+          nginx_language_server = {
+            enable = true;
+            package = null;
+          };
 
           yamlls.enable = true;
           jsonls.enable = true;
           taplo.enable = true;
-          sqls.enable = true;
           html.enable = true;
           cssls.enable = true;
           marksman.enable = true;

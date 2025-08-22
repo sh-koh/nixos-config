@@ -30,7 +30,7 @@
           # winblend = null;
           # zindex = null;
         };
-        hide_numbers = true;
+        hide_numbers = false;
         # on_close.__raw = '''';
         # on_create.__raw = '''';
         # on_exit.__raw = ''''

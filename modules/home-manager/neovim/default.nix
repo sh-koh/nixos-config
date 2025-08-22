@@ -1,7 +1,12 @@
-{ config, inputs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./keymaps.nix
     ./plugins
   ];
@@ -13,7 +18,10 @@
     vimAlias = true;
     defaultEditor = true;
     clipboard = {
-      providers.wl-copy.enable = true;
+      providers.wl-copy = {
+        enable = true;
+        package = pkgs.wl-clipboard-rs;
+      };
       register = "unnamedplus";
     };
     globals = {
@@ -57,6 +65,18 @@
     highlightOverride = with config.lib.stylix.colors.withHashtag; {
       WinSeparator.fg = base02;
       MiniIndentscopeSymbol.fg = base02;
+    };
+    performance = {
+      byteCompileLua = {
+        enable = true;
+        configs = true;
+        luaLib = true;
+        nvimRuntime = true;
+        plugins = true;
+      };
+      combinePlugins = {
+        enable = true;
+      };
     };
   };
 }
